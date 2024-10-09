@@ -1,7 +1,15 @@
 const baseUrl = "https://wrd-fit.info";
 
 let globalPodaci = [];
-let preuzmi = () => {
+
+let pretragaDugme = ()=>{
+
+    let traziVrijednost = document.querySelector(".search-input").value;
+
+    preuzmi(traziVrijednost);
+}
+
+let preuzmi = (traziVrijednost) => {
     //https://wrd-fit.info/ -> Ispit20240921 -> GetPonuda
 
     let url = `${baseUrl}/Ispit20240921/GetNovePonude`
@@ -17,7 +25,11 @@ let preuzmi = () => {
                 let b = 0;
                 globalPodaci = t.podaci //setujemo globalnu varijablu
 
-                for (const x of t.podaci) {
+                if (traziVrijednost){
+                    globalPodaci= globalPodaci.filter(x=> x.drzava === traziVrijednost || x.boravakGradovi.filter(g=>g.nazivGrada === traziVrijednost).length > 0 )
+                }
+
+                for (const x of globalPodaci) {
                     destinacije.innerHTML += `
                     <article class="offer">
                         <div class="akcija">Polazak za <br>${x.naredniPolazak.zaDana} dana</div>
