@@ -1,4 +1,4 @@
-<div *ngIf="showHeader()">
+<div *ngIf="showHeader()" [ngStyle]="getHeaderStyle()" >
 
   <h1>{{ name }}</h1>
   <p>
@@ -9,8 +9,9 @@
 
 {{ counter }}
 
-<ng-container *ngFor="let x of arrayOfNumbers">
+<ng-container *ngFor="let x of arrayOfNumbers; let i = index">
   <p>
+    <span>{{i+1}}</span>
     {{x}}
   </p>
 
@@ -22,3 +23,11 @@
 <hr>
 <label>My name</label>
 <input [(ngModel)]="name">
+
+<button (click)="fetchData()">Button fetch</button>
+
+<div *ngFor="let x of studentArray">
+  {{x.id}}
+  {{x.ime}}
+  {{x.prezime}}
+</div>
