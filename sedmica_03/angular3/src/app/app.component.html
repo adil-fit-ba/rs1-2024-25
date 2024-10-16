@@ -1,0 +1,24 @@
+<div *ngIf="showHeader()">
+
+  <h1>{{ name }}</h1>
+  <p>
+    {{ getName() }}
+  </p>
+
+</div>
+
+{{ counter }}
+
+<ng-container *ngFor="let x of arrayOfNumbers">
+  <p>
+    {{x}}
+  </p>
+
+</ng-container>
+
+
+<button (click)="button1Click()">Button 1</button>
+
+<hr>
+<label>My name</label>
+<input [(ngModel)]="name">
