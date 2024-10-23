@@ -1,0 +1,10 @@
+├───admin
+│   ├───dashboard
+│   ├───destination
+│   └───order
+└───public
+    ├───about
+    ├───blog
+    ├───contact-us
+    ├───home
+    └───travels
