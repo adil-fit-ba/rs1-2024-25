@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DestinationComponent } from './destination/destination.component';
 import { OrderComponent } from './order/order.component';
 import { LayoutComponent } from './layout/layout.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { LayoutComponent } from './layout/layout.component';
     DashboardComponent,
     DestinationComponent,
     OrderComponent,
-    LayoutComponent
+    LayoutComponent,
+    ErrorPageComponent
   ],
   imports: [
     CommonModule,

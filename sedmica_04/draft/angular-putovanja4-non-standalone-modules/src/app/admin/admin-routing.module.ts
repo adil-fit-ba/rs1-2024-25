@@ -4,6 +4,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {DestinationComponent} from './destination/destination.component';
 import {OrderComponent} from './order/order.component';
 import {LayoutComponent} from './layout/layout.component';
+import {ErrorPageComponent} from './error-page/error-page.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'destination', component: DestinationComponent},
       {path: 'order', component: OrderComponent},
-      {path: '**', redirectTo: 'dashboard', pathMatch: 'full'}  // Default ruta koja vodi na public
+      {path: '**', component: ErrorPageComponent}  // Default ruta koja vodi na public
     ]
   },
 

@@ -1,10 +1,13 @@
-├───admin
+
+├───admin (module)
 │   ├───dashboard
 │   ├───destination
+│   ├───layout
 │   └───order
-└───public
+└───public (module)
     ├───about
     ├───blog
     ├───contact-us
     ├───home
+    ├───layout
     └───travels

@@ -165,77 +165,7 @@
 
 </div>
 
-<div class="part6">
-  <div class="contact">
-
-    <div class="booking-header">
-      <h1>6 Book your destination</h1>
-
-    </div>
-    <div id="contact-form">
-      <div class="container2">
-        <div class="item">
-          <label for="drzavaText">Drzava</label>
-          <input type="text" id="drzavaText" disabled />
-        </div>
-        <div class="item">
-          <label for="datumPolaska">Datum polaska</label>
-          <input type="text" id="datumPolaska" disabled />
-        </div>
-      </div>
-
-      <hr />
-
-      <div class="container2">
-        <div class="item">
-          <label class="bold" for="brojGostiju">Broj gostiju</label>
-          <input type="number" id="brojGostiju" value="1" min="1" max="5" oninput="promjenaBrojaGostiju()" />
-        </div>
-        <div class="item">
-          <label for="cijenaPoGostu">Cijena po gostu</label>
-          <input type="text" id="cijenaPoGostu" disabled />
-        </div>
-      </div>
-
-      <div class="container2">
-        <div class="item"></div>
-        <div class="item">
-          <label class="bold" for="ukupnaCijena">Sumarno za sve goste</label>
-          <input type="text" id="ukupnaCijena" disabled />
-        </div>
-      </div>
-      <hr />
-      <div id="gosti"></div>
-      <br />
-      <br />
-      <div class="container3">
-        <div class="item-container">
-          <div class="item">
-            <label for="brojPasosa">Broj pasoša</label>
-            <input id="brojPasosa" oninput="provjeriBrojPasosa()" />
-          </div>
-          <div class="item">
-            <label for="datumVazenjaPasosa">Datum važenja pasoša</label>
-            <input id="datumVazenjaPasosa" oninput="provjeriPasos()" />
-          </div>
-        </div>
-        <div class="item-container">
-          <div class="item">
-            <label for="email">E-mail</label>
-            <input id="email" oninput="provjeriEmail()" />
-          </div>
-          <div class="item">
-            <label for="phone">Broj telefona</label>
-            <input id="phone" oninput="provjeriTelefon()" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <button class="button" onclick="posalji()">Send</button>
-  </div>
-</div>
-
+<app-booking></app-booking>
 <script src="/dialog/fit-dialog.js"></script>
 <script src="/js/cities/arrow.js"></script>
 <script src="/js/cities/propeler.js"></script>

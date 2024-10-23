@@ -9,6 +9,7 @@ import { TravelsComponent } from './travels/travels.component';
 import { BlogComponent } from './blog/blog.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { LayoutComponent } from './layout/layout.component';
+import { BookingComponent } from './home/booking/booking.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { LayoutComponent } from './layout/layout.component';
     TravelsComponent,
     BlogComponent,
     ContactUsComponent,
-    LayoutComponent
+    LayoutComponent,
+    BookingComponent
   ],
   imports: [
     CommonModule,
