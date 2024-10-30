@@ -1,0 +1,34 @@
+<link href="/css/shared-style.css" rel="stylesheet"/>
+<link href="/css/1header.css" rel="stylesheet"/>
+<link href="/css/2search.css" rel="stylesheet"/>
+<link href="/css/3offers.css" rel="stylesheet"/>
+<link href="/css/4details.css" rel="stylesheet"/>
+<link href="/css/5cities.css" rel="stylesheet"/>
+<link href="/css/6contact.css" rel="stylesheet"/>
+<link href="/dialog/fit-dialog.css" rel="stylesheet"/>
+
+<div class="part1">
+  <div class="nav">
+
+    <div class="logo">
+      TRAVELS
+    </div>
+    <div class="menu">
+      <ul>
+        <li routerLink="home">Home</li>
+        <li routerLink="about">About</li>
+        <li routerLink="travels">Travels</li>
+        <li routerLink="blog">Blog</li>
+        <li routerLink="contact-us">Contact us</li>
+      </ul>
+    </div>
+    <div class="user-profile">
+      <span>Login</span>
+      <img src="images/user.png">
+    </div>
+  </div>
+</div>
+
+<div style="border: 1px solid red">
+  <router-outlet></router-outlet>
+</div>
