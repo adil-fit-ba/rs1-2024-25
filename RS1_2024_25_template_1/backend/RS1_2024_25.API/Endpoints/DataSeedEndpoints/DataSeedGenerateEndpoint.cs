@@ -9,18 +9,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class DataSeedGenerateEndpoint
+public class DataSeedGenerateEndpoint(ApplicationDbContext db)
     : MyEndpointBaseAsync
     .WithoutRequest
     .WithResult<string>
 {
-    ApplicationDbContext db;
-
-    public DataSeedGenerateEndpoint(ApplicationDbContext db)
-    {
-        this.db = db;
-    }
-
     [HttpPost]
     public override async Task<string> HandleAsync(CancellationToken cancellationToken = default)
     {

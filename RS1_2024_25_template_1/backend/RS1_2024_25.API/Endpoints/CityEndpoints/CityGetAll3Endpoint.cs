@@ -8,18 +8,10 @@ using static RS1_2024_25.API.Endpoints.CityEndpoints.CityGetAll3Endpoint;
 namespace RS1_2024_25.API.Endpoints.CityEndpoints;
 
 //sa paging i sa filterom
-public class CityGetAll3Endpoint : MyEndpointBaseAsync
+public class CityGetAll3Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithRequest<CityGetAll3Request>
     .WithResult<MyPagedList<CityGetAll3Response>>
 {
-
-    ApplicationDbContext db;
-
-    public CityGetAll3Endpoint(ApplicationDbContext db)
-    {
-        this.db = db;
-    }
-
     [HttpGet]
     public override async Task<MyPagedList<CityGetAll3Response>> HandleAsync([FromQuery] CityGetAll3Request request, CancellationToken cancellationToken = default)
     {

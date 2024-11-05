@@ -6,18 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
-public class MyAuthorizationAttribute : Attribute, IAuthorizationFilter
+public class MyAuthorizationAttribute(bool isAdmin, bool isManager) : Attribute, IAuthorizationFilter
 {
-    bool isAdmin;
-
-    bool isManager;
-
-    public MyAuthorizationAttribute(bool isAdmin, bool isManager)
-    {
-        this.isAdmin = isAdmin;
-        this.isManager = isManager;
-    }
-
     public void OnAuthorization(AuthorizationFilterContext context)
     {
         // Dobavi MyAuthService iz servisa

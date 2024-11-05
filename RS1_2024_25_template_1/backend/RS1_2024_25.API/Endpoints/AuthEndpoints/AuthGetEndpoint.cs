@@ -9,22 +9,15 @@ using static RS1_2024_25.API.Endpoints.AuthEndpoints.AuthGetEndpoint;
 namespace RS1_2024_25.API.Endpoints.AuthEndpoints
 {
 
-    public class AuthGetEndpoint : MyEndpointBaseAsync
+    public class AuthGetEndpoint(MyAuthService authService) : MyEndpointBaseAsync
         .WithoutRequest
         .WithActionResult<AuthGetResponse>
     {
-        private readonly MyAuthService AuthService;
-
-        public AuthGetEndpoint(MyAuthService authService){
-            this.AuthService = authService;
-        }
-
-
         [HttpGet]
         public override async Task<ActionResult<AuthGetResponse>> HandleAsync(CancellationToken cancellationToken = default)
         {
             // Retrieve user info based on the token
-            var authInfo = AuthService.GetAuthInfo();
+            var authInfo = authService.GetAuthInfo();
 
             if (authInfo == null)
             {
