@@ -39,7 +39,6 @@
   </div>
 
 </div>
-
 <div class="part3">
   <div class="travel-destinations">
 
@@ -47,30 +46,30 @@
   <section id="best-offers">
     <h1>3 Best offers</h1>
     <p>Here is a list of best travels that our company offers</p>
-    <div class="offers-container" id="destinacije">
+    <div id="destinacije" class="offers-container">
 
-      <article *ngFor="let x of getFiltiratiPodaci(); let b = index" class="offer">
-        <div class="akcija">Polazak za <br>{{ x.naredniPolazak.zaDana }} dana</div>
-        <div class="offer-image" style="background-image: url('{{x.slikaUrl}}');"></div>
+      <article *ngFor="let x of globalPodaci; let b = index" class="offer">
+        <div class="akcija">Polazak za <br>{{x.naredniPolazak.zaDana}} dana</div>
+        <div class="offer-image" style="background-image: url('{{x.slikaUrl}}');" ></div>
         <div class="offer-details">
-          <div class="offer-destination">{{ x.drzava }}</div>
-          <div class="offer-description">{{ x.opisPonude }} {{ x.opisPonude }}</div>
+          <div class="offer-destination">{{x.drzava}}</div>
+          <div class="offer-description">{{x.opisPonude}} {{x.opisPonude}}</div>
         </div>
 
         <div class="offer-footer">
           <div class="offer-info">
-            <div class="offer-price">
-              {{ x.naredniPolazak.cijenaPoOsobiEur }} €
+            <div class="offer-price">{{x.naredniPolazak.cijenaPoOsobiEur}} €
             </div>
             <div class="offer-free">
                                     <span>
-                                        Slobodno mjesta: {{ x.naredniPolazak.countSlobodnoMjesta }}
+                                        Slobodno mjesta: {{x.naredniPolazak.countSlobodnoMjesta}}
                                     </span>
             </div>
           </div>
-          <div (click)="K2_odaberiDestinaciju(x)" class="ponuda-dugme">K2 Pogledaj</div>
+          <div class="ponuda-dugme" (click)="K2_odaberiDestinaciju(x)">K2 Pogledaj</div>
         </div>
       </article>
+
 
     </div>
   </section>
@@ -108,7 +107,16 @@
         <th>Odaberi</th>
       </tr>
       </thead>
-      <tbody id="putovanjaTabela">
+      <tbody id="putovanjaTabela" *ngIf="odabranaDrzava">
+      <tr *ngFor="let o of odabranaDrzava.planiranaPutovanja;let rbPolaska = index">
+        <td>ID {{o.idPutovanje}}</td>
+        <td>{{o.datumPol}}</td>
+        <td>{{o.datumPov}}</td>
+        <td>{{o.countSlobodnoMjesta}}</td>
+        <td>{{o.brojDana}}</td>
+        <td>{{o.cijenaPoOsobiEur}} €</td>
+        <td><button (click)="K3_OdaberiPutovanje(o)">K3 Odaberi putovanje</button></td>
+      </tr>
       </tbody>
     </table>
   </div>
@@ -137,7 +145,6 @@
   </div>
 
 </div>
-
 <div class="part6">
   <div class="contact">
 

@@ -21,7 +21,7 @@ namespace RS1_2024_25.API.Services
         }
 
         // Method to retrieve authentication information based on a token from Request header
-        public MyAuthInfo? GetAuthInfo()
+        public MyAuthInfo GetAuthInfo()
         {
             // Step 1: Retrieve the token from the request headers
             string? authToken = _httpContextAccessor.HttpContext?.Request.Headers["my-auth-token"];
@@ -29,8 +29,7 @@ namespace RS1_2024_25.API.Services
             // Step 2: Check if the token is present
             if (string.IsNullOrEmpty(authToken))
             {
-                // Token is missing, return null or handle as unauthorized
-                return null;
+                return GetAuthInfo(null);
             }
 
             // Step 3: Look up the token in the database
@@ -41,13 +40,18 @@ namespace RS1_2024_25.API.Services
             return GetAuthInfo(myAuthToken);
         }
 
-        public MyAuthInfo? GetAuthInfo(MyAuthenticationToken? myAuthToken)
+        public MyAuthInfo GetAuthInfo(MyAuthenticationToken? myAuthToken)
         {
             // Step 1: Check if the token was found and valid
             if (myAuthToken == null)
             {
                 // Token is invalid, return null or handle as unauthorized
-                return null;
+                return new MyAuthInfo
+                {
+                    IsAdmin = false,
+                    IsManager = false,
+                    IsLoggedIn = false,
+                };
             }
 
             // Step 2: Return authentication information
@@ -59,6 +63,7 @@ namespace RS1_2024_25.API.Services
                 LastName = myAuthToken.MyAppUser.LastName,
                 IsAdmin = myAuthToken.MyAppUser.IsAdmin,
                 IsManager = myAuthToken.MyAppUser.IsManager,
+                IsLoggedIn = true
             };
         }
     }
@@ -72,5 +77,6 @@ namespace RS1_2024_25.API.Services
         public string LastName { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsManager { get; set; }
+        public bool IsLoggedIn { get; internal set; }
     }
 }

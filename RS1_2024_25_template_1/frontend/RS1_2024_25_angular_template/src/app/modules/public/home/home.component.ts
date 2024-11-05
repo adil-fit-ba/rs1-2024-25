@@ -78,7 +78,6 @@ export class HomeComponent implements OnInit {
 
   K2_odaberiDestinaciju(drzave: Drzava) {
     this.odabranaDrzava = drzave;
-
   }
 
   K3_OdaberiPutovanje(polazak: PlaniranaPutovanja) {
