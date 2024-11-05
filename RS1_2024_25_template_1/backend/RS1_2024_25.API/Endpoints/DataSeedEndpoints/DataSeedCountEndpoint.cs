@@ -9,11 +9,19 @@
 
     namespace FIT_Api_Example.Endpoints
     {
-        public class DataSeedCountEndpoint(ApplicationDbContext db)
+        public class DataSeedCountEndpoint
             : MyEndpointBaseAsync
             .WithoutRequest
             .WithResult<Dictionary<string, int>>
         {
+
+            ApplicationDbContext db;
+
+            public DataSeedCountEndpoint(ApplicationDbContext db)
+            {
+                this.db = db;
+            }
+
             [HttpGet]
             public override async Task<Dictionary<string, int>> HandleAsync(CancellationToken cancellationToken = default)
             {

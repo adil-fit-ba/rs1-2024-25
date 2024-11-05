@@ -14,10 +14,19 @@ using static RS1_2024_25.API.Endpoints.Auth.AuthLoginEndpoint;
 namespace RS1_2024_25.API.Endpoints.Auth
 {
 
-    public class AuthLoginEndpoint(ApplicationDbContext db, MyAuthService authService) : MyEndpointBaseAsync
+    public class AuthLoginEndpoint : MyEndpointBaseAsync
         .WithRequest<LoginRequest>
         .WithActionResult<LoginResponse>
     {
+        private readonly ApplicationDbContext db;
+        private readonly MyAuthService authService;
+
+        public AuthLoginEndpoint(ApplicationDbContext db, MyAuthService authService)
+        {
+            this.db = db;
+            this.authService = authService;
+        }
+
         [HttpPost]
         public override async Task<ActionResult<LoginResponse>> HandleAsync(LoginRequest request, CancellationToken cancellationToken = default)
         {

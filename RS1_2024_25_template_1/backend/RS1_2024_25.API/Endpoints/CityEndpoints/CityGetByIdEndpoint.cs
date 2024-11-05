@@ -6,10 +6,17 @@ using static RS1_2024_25.API.Endpoints.CityEndpoints.CityGetByIdEndpoint;
 
 namespace RS1_2024_25.API.Endpoints.CityEndpoints;
 
-public class CityGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
+public class CityGetByIdEndpoint: MyEndpointBaseAsync
     .WithRequest<int>
     .WithResult<CityGetByIdResponse>
 {
+    ApplicationDbContext db;
+
+    public CityGetByIdEndpoint(ApplicationDbContext db)
+    {
+        this.db = db;
+    }
+
     [HttpGet("{id}")]
     public override async Task<CityGetByIdResponse> HandleAsync(int id, CancellationToken cancellationToken = default)
     {

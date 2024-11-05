@@ -9,10 +9,16 @@ using static RS1_2024_25.API.Endpoints.AuthEndpoints.AuthLogoutEndpoint;
 namespace RS1_2024_25.API.Endpoints.AuthEndpoints;
 
 
-public class AuthLogoutEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
+public class AuthLogoutEndpoint : MyEndpointBaseAsync
     .WithRequest<LogoutRequest>
     .WithResult<LogoutResponse>
 {
+    private readonly ApplicationDbContext db;
+
+    public AuthLogoutEndpoint(ApplicationDbContext db){
+        this.db = db;
+    }
+
     [HttpPost]
     public override async Task<LogoutResponse> HandleAsync([FromBody] LogoutRequest request, CancellationToken cancellationToken = default)
     {
