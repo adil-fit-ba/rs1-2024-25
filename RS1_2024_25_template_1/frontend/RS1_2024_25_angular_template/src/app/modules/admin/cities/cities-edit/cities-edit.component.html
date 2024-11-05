@@ -9,8 +9,12 @@
   </div>
 
   <div>
-    <label for="countryId">Country Name:</label>
-    <input [value]="city.countryName" disabled id="countryId"/>
+    <label for="countryId">Country:</label>
+    <select [(ngModel)]="city.countryId" id="countryId" name="countryId" required>
+      <option *ngFor="let country of countries" [value]="country.id">
+        {{ country.name }}
+      </option>
+    </select>
   </div>
 
   <button type="submit">Save Changes</button>

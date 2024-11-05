@@ -1,4 +1,4 @@
-export interface PagingRequest {
+export interface MyPagedRequest {
   pageNumber: number;
   pageSize: number;
 }

@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {PagingRequest} from '../../helper/paging-request';
+import {MyPagedRequest} from '../../helper/my-paged-request';
 import {MyConfig} from '../../my-config';
 import {buildHttpParams} from '../../helper/http-params.helper';
 
-export interface CityGetAll3Request extends PagingRequest {
+export interface CityGetAll3Request extends MyPagedRequest {
   filterCityName?: string;
   filterCountryName?: string;
 }
@@ -20,7 +20,7 @@ export interface CityGetAll3Response {
   providedIn: 'root'
 })
 export class CityGetAll3EndpointService {
-  private apiUrl = `${MyConfig.api_address}/api/CityGetAll3Endpoint`;
+  private apiUrl = `${MyConfig.api_address}/filter`;
 
   constructor(private httpClient: HttpClient) {
   }

@@ -5,6 +5,7 @@ import {tap} from 'rxjs/operators';
 import {MyConfig} from '../../my-config';
 import {MyAuthService} from '../../services/auth-services/my-auth.service';
 import {LoginTokenDto} from '../../services/auth-services/dto/login-token-dto';
+import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
 
 export interface LoginRequest {
   username: string;
@@ -14,13 +15,13 @@ export interface LoginRequest {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthLoginEndpointService {
-  private apiUrl = `${MyConfig.api_address}/api/AuthLoginEndpoint`;
+export class AuthLoginEndpointService implements MyBaseEndpointAsync<LoginRequest, LoginTokenDto> {
+  private apiUrl = `${MyConfig.api_address}/auth/login`;
 
   constructor(private httpClient: HttpClient, private myAuthService: MyAuthService) {
   }
 
-  login(request: LoginRequest): Observable<LoginTokenDto> {
+  handleAsync(request: LoginRequest): Observable<LoginTokenDto> {
     return this.httpClient.post<LoginTokenDto>(`${this.apiUrl}`, request).pipe(
       tap((response) => {
         // Use MyAuthService to store login token and auth info

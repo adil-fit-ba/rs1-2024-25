@@ -6,7 +6,6 @@ import {MyConfig} from '../../my-config';
 export interface CityGetByIdResponse {
   id: number;
   name: string;
-  countryName: string;
   countryId: number;
 }
 
@@ -14,7 +13,7 @@ export interface CityGetByIdResponse {
   providedIn: 'root'
 })
 export class CityGetByIdEndpointService {
-  private apiUrl = `${MyConfig.api_address}/api/CityGetByIdEndpoint`;
+  private apiUrl = `${MyConfig.api_address}/cities`;
 
   constructor(private httpClient: HttpClient) {
   }

@@ -10,6 +10,7 @@ import {AdminErrorPageComponent} from './admin-error-page/admin-error-page.compo
 import {CitiesComponent} from './cities/cities.component';
 import {CitiesEditComponent} from './cities/cities-edit/cities-edit.component';
 import {FormsModule} from '@angular/forms';
+import {SharedModule} from '../shared/shared.module';
 
 
 @NgModule({
@@ -20,12 +21,13 @@ import {FormsModule} from '@angular/forms';
     ReservationComponent,
     AdminErrorPageComponent,
     CitiesComponent,
-    CitiesEditComponent
+    CitiesEditComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     FormsModule,
+    SharedModule // Omogućava pristup svemu što je eksportovano iz SharedModule
   ],
   providers: []
 })

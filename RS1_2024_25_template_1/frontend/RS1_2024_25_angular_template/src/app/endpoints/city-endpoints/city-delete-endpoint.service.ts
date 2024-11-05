@@ -7,7 +7,7 @@ import {MyConfig} from '../../my-config';
   providedIn: 'root'
 })
 export class CityDeleteEndpointService {
-  private apiUrl = `${MyConfig.api_address}/api/CityDeleteEndpoint`;
+  private apiUrl = `${MyConfig.api_address}/cities`;
 
   constructor(private httpClient: HttpClient) {
   }

@@ -19,7 +19,7 @@ export interface CityUpdateOrInsertResponse {
   providedIn: 'root'
 })
 export class CityUpdateOrInsertEndpointService {
-  private apiUrl = `${MyConfig.api_address}/api/CityUpdateOrInsertEndpoint`; // Match backend endpoint name
+  private apiUrl = `${MyConfig.api_address}/cities`;
 
   constructor(private httpClient: HttpClient) {
   }

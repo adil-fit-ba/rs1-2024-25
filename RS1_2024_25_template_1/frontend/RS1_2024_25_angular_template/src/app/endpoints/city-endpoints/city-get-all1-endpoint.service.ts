@@ -13,7 +13,7 @@ export interface CityGetAll1Response {
   providedIn: 'root'
 })
 export class CityGetAll1EndpointService {
-  private apiUrl = `${MyConfig.api_address}/api/CityGetAll1Endpoint`;
+  private apiUrl = `${MyConfig.api_address}/cities/all`;
 
   constructor(private httpClient: HttpClient) {
   }

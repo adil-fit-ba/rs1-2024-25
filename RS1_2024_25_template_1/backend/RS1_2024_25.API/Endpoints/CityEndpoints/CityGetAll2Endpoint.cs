@@ -8,12 +8,13 @@ using static RS1_2024_25.API.Endpoints.CityEndpoints.CityGetAll1Endpoint;
 namespace RS1_2024_25.API.Endpoints.CityEndpoints;
 
 //sa paging i bez filtera
+[Route("cities")]
 public class CityGetAll2Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
-    .WithRequest<MyPagingRequest>
+    .WithRequest<MyPagedRequest>
     .WithResult<MyPagedList<CityGetAll1Response>>
 {
-    [HttpGet]
-    public override async Task<MyPagedList<CityGetAll1Response>> HandleAsync([FromQuery] MyPagingRequest request, CancellationToken cancellationToken = default)
+    [HttpGet("paged")]
+    public override async Task<MyPagedList<CityGetAll1Response>> HandleAsync([FromQuery] MyPagedRequest request, CancellationToken cancellationToken = default)
     {
         var query = db.Cities
                         .Select(c => new CityGetAll1Response

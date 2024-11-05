@@ -7,11 +7,12 @@ using static RS1_2024_25.API.Endpoints.CityEndpoints.CityGetAll1Endpoint;
 namespace RS1_2024_25.API.Endpoints.CityEndpoints;
 
 //bez paging i bez filtera
+[Route("cities")]
 public class CityGetAll1Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithoutRequest
     .WithResult<CityGetAll1Response[]>
 {
-    [HttpGet]
+    [HttpGet("all")]
     public override async Task<CityGetAll1Response[]> HandleAsync(CancellationToken cancellationToken = default)
     {
         var result = await db.Cities

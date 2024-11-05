@@ -8,11 +8,12 @@ using static RS1_2024_25.API.Endpoints.CityEndpoints.CityGetAll3Endpoint;
 namespace RS1_2024_25.API.Endpoints.CityEndpoints;
 
 //sa paging i sa filterom
+[Route("cities")]
 public class CityGetAll3Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithRequest<CityGetAll3Request>
     .WithResult<MyPagedList<CityGetAll3Response>>
 {
-    [HttpGet]
+    [HttpGet("filter")]
     public override async Task<MyPagedList<CityGetAll3Response>> HandleAsync([FromQuery] CityGetAll3Request request, CancellationToken cancellationToken = default)
     {
         // Kreiranje osnovnog query-a
@@ -45,7 +46,7 @@ public class CityGetAll3Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
 
         return result;
     }
-    public class CityGetAll3Request : MyPagingRequest //naslijeđujemo
+    public class CityGetAll3Request : MyPagedRequest //naslijeđujemo
     {
         public string FilterCityName { get; set; } = string.Empty;
         public string FilterCountryName { get; set; } = string.Empty;

@@ -22,7 +22,7 @@ public class MyPagedList<T>
     public bool HasNext => CurrentPage < TotalPages;
 
     // Asynchronous Create method
-    public static async Task<MyPagedList<T>> CreateAsync(IQueryable<T> source, MyPagingRequest pagingRequest, CancellationToken cancellationToken)
+    public static async Task<MyPagedList<T>> CreateAsync(IQueryable<T> source, MyPagedRequest pagingRequest, CancellationToken cancellationToken)
     {
         var totalCount = await source.CountAsync();
         var items = await source.Skip((pagingRequest.PageNumber - 1) * pagingRequest.PageSize).Take(pagingRequest.PageSize).ToArrayAsync(cancellationToken);
@@ -30,7 +30,7 @@ public class MyPagedList<T>
         return new MyPagedList<T>(items, totalCount, pagingRequest.PageNumber, pagingRequest.PageSize);
     }
 }
-public class MyPagingRequest
+public class MyPagedRequest
 {
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 20;
