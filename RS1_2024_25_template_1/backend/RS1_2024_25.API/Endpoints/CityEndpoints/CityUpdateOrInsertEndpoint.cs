@@ -2,19 +2,25 @@
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models;
 using RS1_2024_25.API.Helper.Api;
+using RS1_2024_25.API.Services;
 using static RS1_2024_25.API.Endpoints.CityEndpoints.CityUpdateOrInsertEndpoint;
 
 namespace RS1_2024_25.API.Endpoints.CityEndpoints
 {
-    public class CityUpdateOrInsertEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
+    public class CityUpdateOrInsertEndpoint(ApplicationDbContext db, MyAuthService myAuthService) : MyEndpointBaseAsync
         .WithRequest<CityUpdateOrInsertRequest>
-        .WithResult<CityUpdateOrInsertResponse>
+        .WithActionResult<CityUpdateOrInsertResponse>
     {
         [HttpPost]  // Using POST to support both create and update
-        public override async Task<CityUpdateOrInsertResponse> HandleAsync([FromBody] CityUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<CityUpdateOrInsertResponse>> HandleAsync([FromBody] CityUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
         {
+
+            if (!myAuthService.GetAuthInfo().IsLoggedIn)
+            {
+                return Unauthorized();
+            }
             // Check if we're performing an insert or update based on the ID value
-            var isInsert = request.ID == null || request.ID == 0;
+            bool isInsert = (request.ID == null || request.ID == 0);
             City? city;
 
             if (isInsert)
