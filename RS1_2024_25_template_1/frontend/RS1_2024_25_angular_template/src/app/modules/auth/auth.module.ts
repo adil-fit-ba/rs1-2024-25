@@ -7,6 +7,8 @@ import {RegisterComponent} from './register/register.component';
 import {ForgetPasswordComponent} from './forget-password/forget-password.component';
 import {TwoFactorComponent} from './two-factor/two-factor.component';
 import {FormsModule} from '@angular/forms';
+import { LogoutComponent } from './logout/logout.component';
+import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import {FormsModule} from '@angular/forms';
     LoginComponent,
     RegisterComponent,
     ForgetPasswordComponent,
-    TwoFactorComponent
+    TwoFactorComponent,
+    LogoutComponent,
+    AuthLayoutComponent
   ],
   imports: [
     CommonModule,

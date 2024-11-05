@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 [MyAuthorization(isAdmin: true, isManager : false)]
+[Route("cities")]
 public class CityDeleteEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithRequest<int>
     .WithoutResult

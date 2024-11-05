@@ -7,6 +7,7 @@ using static RS1_2024_25.API.Endpoints.CityEndpoints.CityUpdateOrInsertEndpoint;
 
 namespace RS1_2024_25.API.Endpoints.CityEndpoints
 {
+    [Route("cities")]
     public class CityUpdateOrInsertEndpoint(ApplicationDbContext db, MyAuthService myAuthService) : MyEndpointBaseAsync
         .WithRequest<CityUpdateOrInsertRequest>
         .WithActionResult<CityUpdateOrInsertResponse>

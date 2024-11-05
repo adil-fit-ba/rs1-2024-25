@@ -30,8 +30,9 @@ label {
   margin-bottom: 5px;
 }
 
-/* Input styling */
-input {
+/* Input and Select styling */
+input,
+select {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -41,7 +42,8 @@ input {
 }
 
 /* Disabled input styling */
-input[disabled] {
+input[disabled],
+select[disabled] {
   background-color: #e9ecef;
   color: #6c757d;
 }

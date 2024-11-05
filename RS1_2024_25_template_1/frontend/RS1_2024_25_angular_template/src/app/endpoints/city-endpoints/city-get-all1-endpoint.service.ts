@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
 import {MyConfig} from '../../my-config';
+import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
 
 export interface CityGetAll1Response {
   id: number;
@@ -12,13 +12,13 @@ export interface CityGetAll1Response {
 @Injectable({
   providedIn: 'root'
 })
-export class CityGetAll1EndpointService {
-  private apiUrl = `${MyConfig.api_address}/api/CityGetAll1Endpoint`;
+export class CityGetAll1EndpointService implements MyBaseEndpointAsync<void, CityGetAll1Response[]> {
+  private apiUrl = `${MyConfig.api_address}/cities/all`;
 
   constructor(private httpClient: HttpClient) {
   }
 
-  getAllCities(): Observable<CityGetAll1Response[]> {
+  handleAsync() {
     return this.httpClient.get<CityGetAll1Response[]>(`${this.apiUrl}`);
   }
 }

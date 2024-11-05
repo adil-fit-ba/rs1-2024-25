@@ -21,7 +21,7 @@ export class CitiesComponent {
   }
 
   fetchCities(): void {
-    this.cityService.getAllCities().subscribe({
+    this.cityService.handleAsync().subscribe({
       next: (data) => this.cities = data,
       error: (err) => console.error('Error fetching cities:', err)
     });

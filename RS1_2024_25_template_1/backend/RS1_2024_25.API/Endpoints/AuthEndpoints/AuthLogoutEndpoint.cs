@@ -1,42 +1,43 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper.Api;
+using RS1_2024_25.API.Services;
 using System.Threading;
 using System.Threading.Tasks;
 using static RS1_2024_25.API.Endpoints.AuthEndpoints.AuthLogoutEndpoint;
 
 namespace RS1_2024_25.API.Endpoints.AuthEndpoints;
 
-
-public class AuthLogoutEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
-    .WithRequest<LogoutRequest>
+[Route("auth")]
+public class AuthLogoutEndpoint(ApplicationDbContext db, MyAuthService authService) : MyEndpointBaseAsync
+    .WithoutRequest
     .WithResult<LogoutResponse>
 {
-    [HttpPost]
-    public override async Task<LogoutResponse> HandleAsync([FromBody] LogoutRequest request, CancellationToken cancellationToken = default)
+    [HttpPost("logout")]
+    public override async Task<LogoutResponse> HandleAsync(CancellationToken cancellationToken = default)
     {
-        // Step 1: Find the token in the database
-        var authToken = await db.MyAuthenticationTokens
-            .FirstOrDefaultAsync(t => t.Value == request.Token, cancellationToken);
+        // Dohvatanje tokena iz headera
+        string? authToken = Request.Headers["my-auth-token"];
 
-        if (authToken == null)
+        if (string.IsNullOrEmpty(authToken))
         {
-            // Token not found, possibly already invalidated
-            return new LogoutResponse { IsSuccess = false, Message = "Invalid token or already logged out." };
+            return new LogoutResponse
+            {
+                IsSuccess = false,
+                Message = "Token is missing in the request header."
+            };
         }
 
-        // Step 2: Remove or invalidate the token
-        db.MyAuthenticationTokens.Remove(authToken);
-        await db.SaveChangesAsync(cancellationToken);
+        // Pokušaj revokacije tokena
+        bool isRevoked = await authService.RevokeAuthToken(authToken, cancellationToken);
 
-        // Step 3: Return success response
-        return new LogoutResponse { IsSuccess = true, Message = "Logout successful." };
-    }
-
-    public class LogoutRequest
-    {
-        public string Token { get; set; }
+        return new LogoutResponse
+        {
+            IsSuccess = isRevoked,
+            Message = isRevoked ? "Logout successful." : "Invalid token or already logged out."
+        };
     }
 
     public class LogoutResponse

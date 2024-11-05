@@ -8,7 +8,7 @@ using static RS1_2024_25.API.Endpoints.AuthEndpoints.AuthGetEndpoint;
 
 namespace RS1_2024_25.API.Endpoints.AuthEndpoints
 {
-
+    [Route("auth")]
     public class AuthGetEndpoint(MyAuthService authService) : MyEndpointBaseAsync
         .WithoutRequest
         .WithActionResult<AuthGetResponse>
@@ -19,22 +19,21 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
             // Retrieve user info based on the token
             var authInfo = authService.GetAuthInfo();
 
-            if (authInfo == null)
+            if (!authInfo.IsLoggedIn)
             {
-                // Incorrect username or password
-                return Unauthorized(new { Message = "Invalid token value or expired", });
+                return Unauthorized("Invalid or expired token");
             }
 
             // Return user information if the token is valid
-            return new AuthGetResponse
+            return Ok(new AuthGetResponse
             {
                 MyAuthInfo = authInfo
-            };
+            });
         }
 
         public class AuthGetResponse
         {
-            public required MyAuthInfo? MyAuthInfo { get; set; }
+            public required MyAuthInfo MyAuthInfo { get; set; }
         }
     }
 }

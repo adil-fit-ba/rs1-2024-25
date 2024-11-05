@@ -10,16 +10,18 @@ import {CitiesEditComponent} from './cities/cities-edit/cities-edit.component';
 
 const routes: Routes = [
   {
-    path: '', component: AdminLayoutComponent, children: [
+    path: '',
+    component: AdminLayoutComponent,
+    children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'cities', component: CitiesComponent},
       {path: 'cities/edit/:id', component: CitiesEditComponent},
       {path: 'destination', component: DestinationComponent},
       {path: 'order', component: ReservationComponent},
-      {path: '**', component: AdminErrorPageComponent}  // Default ruta koja vodi na public
+      {path: '**', component: AdminErrorPageComponent} // Default ruta
     ]
-  }
+  },
 ];
 
 @NgModule({

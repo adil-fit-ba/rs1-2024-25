@@ -9,6 +9,7 @@
 
     namespace FIT_Api_Example.Endpoints
     {
+        [Route("data-seed")]
         public class DataSeedCountEndpoint(ApplicationDbContext db)
             : MyEndpointBaseAsync
             .WithoutRequest

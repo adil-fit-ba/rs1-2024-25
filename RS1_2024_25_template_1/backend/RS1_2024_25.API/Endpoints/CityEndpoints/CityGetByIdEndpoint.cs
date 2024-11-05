@@ -6,6 +6,7 @@ using static RS1_2024_25.API.Endpoints.CityEndpoints.CityGetByIdEndpoint;
 
 namespace RS1_2024_25.API.Endpoints.CityEndpoints;
 
+[Route("cities")]
 public class CityGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithRequest<int>
     .WithResult<CityGetByIdResponse>
@@ -19,7 +20,6 @@ public class CityGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
                             {
                                 ID = c.ID,
                                 Name = c.Name,
-                                CountryName = c.Country != null ? c.Country.Name : "",
                                 CountryId = c.CountryId
                             })
                             .FirstOrDefaultAsync(x => x.ID == id, cancellationToken);
@@ -34,7 +34,6 @@ public class CityGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     {
         public required int ID { get; set; }
         public required string Name { get; set; }
-        public required string CountryName { get; set; }
         public required int CountryId { get; set; }
     }
 }

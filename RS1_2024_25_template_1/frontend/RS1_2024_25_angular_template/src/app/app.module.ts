@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MyAuthInterceptor} from './services/auth-services/my-auth-interceptor.service';
 import {MyAuthService} from './services/auth-services/my-auth.service';
+import {SharedModule} from './modules/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {MyAuthService} from './services/auth-services/my-auth.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule // Replace provideHttpClient() with HttpClientModule
+    HttpClientModule,
+    SharedModule // Omogućava korištenje UnauthorizedComponent u AppRoutingModule
   ],
   providers: [
     {

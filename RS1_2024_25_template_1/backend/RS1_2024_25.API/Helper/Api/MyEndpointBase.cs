@@ -7,7 +7,6 @@ namespace RS1_2024_25.API.Helper.Api;
 /// A base class for an API controller with single action (endpoint).
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
 public abstract class MyEndpointBase : ControllerBase
 {
 }

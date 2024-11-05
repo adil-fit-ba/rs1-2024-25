@@ -1,9 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {UnauthorizedComponent} from './modules/shared/unauthorized/unauthorized.component';
+import {AuthGuard} from './auth-guards/auth-guard.service';
 
 const routes: Routes = [
+  {path: 'unauthorized', component: UnauthorizedComponent},
   {
     path: 'admin',
+    canActivate: [AuthGuard],
+    data: {isAdmin: true}, // Proslijeđivanje potrebnih prava pristupa, ako je potrebno
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)  // Lazy load  modula
   },
   {
