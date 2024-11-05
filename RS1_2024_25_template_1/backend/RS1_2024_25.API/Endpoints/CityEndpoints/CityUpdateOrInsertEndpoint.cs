@@ -7,10 +7,20 @@ using static RS1_2024_25.API.Endpoints.CityEndpoints.CityUpdateOrInsertEndpoint;
 
 namespace RS1_2024_25.API.Endpoints.CityEndpoints
 {
-    public class CityUpdateOrInsertEndpoint(ApplicationDbContext db, MyAuthService myAuthService) : MyEndpointBaseAsync
+    public class CityUpdateOrInsertEndpoint : MyEndpointBaseAsync
         .WithRequest<CityUpdateOrInsertRequest>
         .WithActionResult<CityUpdateOrInsertResponse>
     {
+
+        ApplicationDbContext db;
+        MyAuthService myAuthService;
+
+        public CityUpdateOrInsertEndpoint(MyAuthService myAuthService, ApplicationDbContext db)
+        {
+            this.myAuthService = myAuthService;
+            this.db = db;
+        }
+
         [HttpPost]  // Using POST to support both create and update
         public override async Task<ActionResult<CityUpdateOrInsertResponse>> HandleAsync([FromBody] CityUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
         {

@@ -1,2 +1,2 @@
-ng g module moj-admin-modul --routing
-ng g component moj-admin-modul/moja-komonenta -name
+bit.ly/fit-ajoldic
+
