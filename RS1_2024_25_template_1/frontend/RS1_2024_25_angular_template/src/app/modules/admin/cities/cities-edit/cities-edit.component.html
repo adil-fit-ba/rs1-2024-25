@@ -1,0 +1,18 @@
+<p>cities-edit works!</p>
+
+<h2>Edit City</h2>
+
+<form (ngSubmit)="updateCity()">
+  <div>
+    <label for="name">City Name:</label>
+    <input [(ngModel)]="city.name" id="name" name="name" required/>
+  </div>
+
+  <div>
+    <label for="countryId">Country Name:</label>
+    <input [value]="city.countryName" disabled id="countryId"/>
+  </div>
+
+  <button type="submit">Save Changes</button>
+  <button routerLink="/admin/cities" type="button">Cancel</button>
+</form>

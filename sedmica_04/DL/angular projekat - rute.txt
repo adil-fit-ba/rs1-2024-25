@@ -1,5 +1,10 @@
+napraviti novi angular projekat // iskljuciti standalone checkbox
+ng g module moj-admin-modul --routing
+ng g component moj-admin-modul/moja-komonenta -name
 
-├───admin (module)
+app.module
+ <router-outlet></router-outlet>
+├───admin (module) 
 │   ├───dashboard
 │   ├───destination
 │   ├───layout
@@ -11,3 +16,10 @@
     ├───home
     ├───layout
     └───travels
+
+
+bit.ly/fit-rs1
+
+https://github.com/adil-fit-ba/rs1-2024-25 (svaka sedmica/vježbe - novi folder u glavnom branchu)
+
+https://github.com/adil-fit-ba/rs1-2023-24 (svaka sedmica/vježbe - novi branch)
