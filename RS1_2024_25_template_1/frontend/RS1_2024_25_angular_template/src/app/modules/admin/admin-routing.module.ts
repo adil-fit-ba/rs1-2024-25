@@ -16,6 +16,7 @@ const routes: Routes = [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'cities', component: CitiesComponent},
+      {path: 'cities/new', component: CitiesEditComponent},
       {path: 'cities/edit/:id', component: CitiesEditComponent},
       {path: 'destination', component: DestinationComponent},
       {path: 'order', component: ReservationComponent},

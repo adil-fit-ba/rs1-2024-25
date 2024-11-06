@@ -1,6 +1,7 @@
 <p>cities-edit works!</p>
 
-<h2>Edit City</h2>
+<h2 *ngIf="cityId!=0">Edit City</h2>
+<h2 *ngIf="cityId==0">Add new City</h2>
 
 <form (ngSubmit)="updateCity()">
   <div>

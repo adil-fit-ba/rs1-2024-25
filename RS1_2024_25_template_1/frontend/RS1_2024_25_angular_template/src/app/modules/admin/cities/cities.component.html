@@ -1,6 +1,8 @@
 <p>cities works!</p>
 
 <h2>City Management</h2>
+
+<button routerLink="./new">New city</button>
 <table>
   <thead>
   <tr>
@@ -17,6 +19,7 @@
     <td>{{ city.countryName }}</td>
     <td>
       <button (click)="editCity(city.id)">Edit</button>
+      <button (click)="deleteCity(city.id)">Delete</button>
     </td>
   </tr>
   </tbody>
