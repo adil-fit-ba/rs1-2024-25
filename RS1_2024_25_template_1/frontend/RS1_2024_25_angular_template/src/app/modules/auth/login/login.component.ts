@@ -20,7 +20,7 @@ export class LoginComponent {
         console.log('Login successful');
         this.router.navigate(['/admin']); // Redirect to
       },
-      error: (error) => {
+      error: (error: any) => {
         this.errorMessage = 'Incorrect username or password';
         console.error('Login error:', error);
       }
