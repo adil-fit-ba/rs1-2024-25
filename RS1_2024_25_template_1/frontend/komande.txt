@@ -1,4 +1,50 @@
+cd app
+md modules
+cd modules
 
-ng g module moj-admin-modul --routing
+ng g module shared
+ng g module public --routing
+ng g module admin --routing
 
-ng g component moj-admin-modul/moja-komonenta -name
+cd admin
+ng g component cities
+
+cd cities
+ng g component cities-edit
+
+
+└───app
+    ├───auth-guards
+    ├───endpoints
+    │   ├───auth-endpoints
+    │   ├───city-endpoints
+    │   └───country-endpoints
+    ├───helper
+    ├───modules
+    │   ├───admin
+    │   │   ├───admin-error-page
+    │   │   ├───admin-layout
+    │   │   ├───cities
+    │   │   │   └───cities-edit
+    │   │   ├───dashboard
+    │   │   ├───destination
+    │   │   └───reservation
+    │   ├───auth
+    │   │   ├───auth-layout
+    │   │   ├───forget-password
+    │   │   ├───login
+    │   │   ├───logout
+    │   │   ├───register
+    │   │   └───two-factor
+    │   ├───public
+    │   │   ├───about
+    │   │   ├───blog
+    │   │   ├───contact-us
+    │   │   ├───home
+    │   │   ├───public-layout
+    │   │   └───travels
+    │   └───shared
+    │       └───unauthorized
+    └───services
+        └───auth-services
+            └───dto
