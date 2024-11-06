@@ -1,6 +1,8 @@
-﻿namespace RS1_2024_25.API.Data.Models;
+﻿using RS1_2024_25.API.Helper;
 
-public class Country
+namespace RS1_2024_25.API.Data.Models;
+
+public class Country : IMyBaseEntity
 {
     public int ID { get; set; }
     public string Name { get; set; }
