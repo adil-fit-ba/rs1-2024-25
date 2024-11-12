@@ -106,5 +106,6 @@ namespace RS1_2024_25.API.Services
         public bool IsAdmin { get; set; }
         public bool IsManager { get; set; }
         public bool IsLoggedIn { get; set; }
+        public string SlikaPath {  get; set; }
     }
 }
