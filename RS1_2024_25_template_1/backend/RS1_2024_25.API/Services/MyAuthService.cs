@@ -9,33 +9,24 @@ using RS1_2024_25.API.Helper;
 
 namespace RS1_2024_25.API.Services
 {
-    public class MyAuthService
+    public class MyAuthService(ApplicationDbContext applicationDbContext, IHttpContextAccessor httpContextAccessor, MyTokenGenerator myTokenGenerator)
     {
-        private readonly ApplicationDbContext _applicationDbContext;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        // Constructor with dependency injection
-        public MyAuthService(ApplicationDbContext applicationDbContext, IHttpContextAccessor httpContextAccessor)
-        {
-            _applicationDbContext = applicationDbContext;
-            _httpContextAccessor = httpContextAccessor;
-        }
 
         // Generisanje novog tokena za korisnika
         public async Task<MyAuthenticationToken> GenerateAuthToken(MyAppUser user, CancellationToken cancellationToken = default)
         {
-            string randomToken = MyTokenGenerator.Generate(10);
+            string randomToken = myTokenGenerator.Generate(10);
 
             var authToken = new MyAuthenticationToken
             {
-                IpAddress = _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
+                IpAddress = httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
                 Value = randomToken,
                 MyAppUser = user,
                 RecordedAt = DateTime.Now
             };
 
-            _applicationDbContext.MyAuthenticationTokens.Add(authToken);
-            await _applicationDbContext.SaveChangesAsync(cancellationToken);
+            applicationDbContext.MyAuthenticationTokens.Add(authToken);
+            await applicationDbContext.SaveChangesAsync(cancellationToken);
 
             return authToken;
         }
@@ -43,14 +34,14 @@ namespace RS1_2024_25.API.Services
         // Uklanjanje tokena iz baze podataka
         public async Task<bool> RevokeAuthToken(string tokenValue, CancellationToken cancellationToken = default)
         {
-            var authToken = await _applicationDbContext.MyAuthenticationTokens
+            var authToken = await applicationDbContext.MyAuthenticationTokens
                 .FirstOrDefaultAsync(t => t.Value == tokenValue, cancellationToken);
 
             if (authToken == null)
                 return false;
 
-            _applicationDbContext.MyAuthenticationTokens.Remove(authToken);
-            await _applicationDbContext.SaveChangesAsync(cancellationToken);
+            applicationDbContext.MyAuthenticationTokens.Remove(authToken);
+            await applicationDbContext.SaveChangesAsync(cancellationToken);
 
             return true;
         }
@@ -58,13 +49,13 @@ namespace RS1_2024_25.API.Services
         // Dohvatanje informacija o autentifikaciji korisnika
         public MyAuthInfo GetAuthInfo()
         {
-            string? authToken = _httpContextAccessor.HttpContext?.Request.Headers["my-auth-token"];
+            string? authToken = httpContextAccessor.HttpContext?.Request.Headers["my-auth-token"];
             if (string.IsNullOrEmpty(authToken))
             {
                 return GetAuthInfo(null);
             }
 
-            var myAuthToken = _applicationDbContext.MyAuthenticationTokens
+            var myAuthToken = applicationDbContext.MyAuthenticationTokens
                 .Include(x => x.MyAppUser)
                 .SingleOrDefault(x => x.Value == authToken);
 
