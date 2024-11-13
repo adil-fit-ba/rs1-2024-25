@@ -18,6 +18,10 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
     [HttpPost]
     public override async Task<string> HandleAsync(CancellationToken cancellationToken = default)
     {
+        if (db.MyAppUsers.Any())
+        {
+            throw new Exception("Podaci su vec generisani");
+        }
         // Kreiranje država
         var countries = new List<Country>
         {
