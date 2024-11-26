@@ -7,11 +7,11 @@ import {
 import {CityDeleteEndpointService} from '../../../endpoints/city-endpoints/city-delete-endpoint.service';
 
 @Component({
-  selector: 'app-cities',
-  templateUrl: './cities.component.html',
-  styleUrls: ['./cities.component.css']
+  selector: 'app-cities2',
+  templateUrl: './cities2.component.html',
+  styleUrls: ['./cities2.component.css']
 })
-export class CitiesComponent {
+export class Cities2Component {
   cities: CityGetAll1Response[] = [];
 
   constructor(
@@ -28,12 +28,12 @@ export class CitiesComponent {
   fetchCities(): void {
     this.cityGetService.handleAsync().subscribe({
       next: (data) => (this.cities = data),
-      error: (err) => console.error('Error fetching cities:', err)
+      error: (err) => console.error('Error fetching cities1:', err)
     });
   }
 
   editCity(id: number): void {
-    this.router.navigate(['/admin/cities/edit', id]);
+    this.router.navigate(['/admin/cities1/edit', id]);
   }
 
   deleteCity(id: number): void {
