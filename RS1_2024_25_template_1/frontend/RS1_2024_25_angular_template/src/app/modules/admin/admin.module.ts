@@ -7,10 +7,12 @@ import {DestinationComponent} from './destination/destination.component';
 import {AdminLayoutComponent} from './admin-layout/admin-layout.component';
 import {ReservationComponent} from './reservation/reservation.component';
 import {AdminErrorPageComponent} from './admin-error-page/admin-error-page.component';
-import {CitiesComponent} from './cities/cities.component';
-import {CitiesEditComponent} from './cities/cities-edit/cities-edit.component';
+import {Cities1Component} from './cities1/cities1.component';
+import {Cities1EditComponent} from './cities1/cities1-edit/cities1-edit.component';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
+import {Cities2EditComponent} from './cities2/cities2-edit/cities2-edit.component';
+import {Cities2Component} from './cities2/cities2.component';
 
 
 @NgModule({
@@ -20,8 +22,10 @@ import {SharedModule} from '../shared/shared.module';
     AdminLayoutComponent,
     ReservationComponent,
     AdminErrorPageComponent,
-    CitiesComponent,
-    CitiesEditComponent,
+    Cities1Component,
+    Cities2Component,
+    Cities1EditComponent,
+    Cities2EditComponent,
   ],
   imports: [
     CommonModule,

@@ -13,11 +13,11 @@ import {
 } from '../../../../endpoints/country-endpoints/country-get-all-endpoint.service';
 
 @Component({
-  selector: 'app-cities-edit',
-  templateUrl: './cities-edit.component.html',
-  styleUrls: ['./cities-edit.component.css']
+  selector: 'app-cities2-edit',
+  templateUrl: './cities1-edit.component.html',
+  styleUrls: ['./cities1-edit.component.css']
 })
-export class CitiesEditComponent implements OnInit {
+export class Cities2EditComponent implements OnInit {
   cityId: number;
   city: CityGetByIdResponse = {
     id: 0,
