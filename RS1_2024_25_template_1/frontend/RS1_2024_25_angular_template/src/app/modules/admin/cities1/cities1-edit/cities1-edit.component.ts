@@ -53,9 +53,15 @@ export class Cities1EditComponent implements OnInit {
 
   loadCountries(): void {
     this.countryGetAllService.handleAsync().subscribe({
-      next: (countries) => {
-        console.log("podaci su preuzeti")
-        this.countries = countries;},
+      next: (countries) =>{
+       console.log("podaci su preuzeti")
+        this.countries = countries;
+        this.countries.push({
+          id:0,
+          name:'--odabirite city--'
+        })
+        },
+       
       error: (error) => console.error('Error loading countries', error)
     });
   }
