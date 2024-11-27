@@ -3,30 +3,25 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {
   CityUpdateOrInsertEndpointService
 } from '../../../../endpoints/city-endpoints/city-update-or-insert-endpoint.service';
-import {
-  CityGetByIdEndpointService,
-  CityGetByIdResponse
-} from '../../../../endpoints/city-endpoints/city-get-by-id-endpoint.service';
+import {CityGetByIdEndpointService} from '../../../../endpoints/city-endpoints/city-get-by-id-endpoint.service';
 import {
   CountryGetAllEndpointService,
   CountryGetAllResponse
 } from '../../../../endpoints/country-endpoints/country-get-all-endpoint.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-cities2-edit',
-  templateUrl: './cities1-edit.component.html',
-  styleUrls: ['./cities1-edit.component.css']
+  templateUrl: './cities2-edit.component.html',
+  styleUrls: ['./cities2-edit.component.css']
 })
 export class Cities2EditComponent implements OnInit {
+  cityForm: FormGroup;
   cityId: number;
-  city: CityGetByIdResponse = {
-    id: 0,
-    name: '',
-    countryId: 0
-  };
   countries: CountryGetAllResponse[] = []; // Niz za pohranu svih zemalja
 
   constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     public router: Router,
     private cityGetByIdService: CityGetByIdEndpointService,
@@ -34,6 +29,11 @@ export class Cities2EditComponent implements OnInit {
     private countryGetAllService: CountryGetAllEndpointService
   ) {
     this.cityId = 0;
+
+    this.cityForm = this.fb.group({
+      name: ['', [Validators.required]],
+      countryId: [null, [Validators.required]],
+    });
   }
 
   ngOnInit(): void {
@@ -46,7 +46,12 @@ export class Cities2EditComponent implements OnInit {
 
   loadCityData(): void {
     this.cityGetByIdService.handleAsync(this.cityId).subscribe({
-      next: (city) => this.city = city,
+      next: (city) => {
+        this.cityForm.patchValue({
+          name: city.name,
+          countryId: city.countryId,
+        });
+      },
       error: (error) => console.error('Error loading city data', error)
     });
   }
@@ -59,12 +64,13 @@ export class Cities2EditComponent implements OnInit {
   }
 
   updateCity(): void {
+    if (this.cityForm.invalid) return;
+
     this.cityUpdateService.handleAsync({
-      countryId: this.city.countryId,
-      name: this.city.name,
-      id: this.cityId
+      id: this.cityId,
+      ...this.cityForm.value,
     }).subscribe({
-      next: () => this.router.navigate(['/admin/cities']),
+      next: () => this.router.navigate(['/admin/cities2']),
       error: (error) => console.error('Error updating city', error)
     });
   }
