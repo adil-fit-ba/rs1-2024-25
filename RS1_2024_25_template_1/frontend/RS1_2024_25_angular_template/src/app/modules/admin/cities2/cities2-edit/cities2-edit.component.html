@@ -3,21 +3,27 @@
 <h2 *ngIf="cityId!=0">Edit City</h2>
 <h2 *ngIf="cityId==0">Add new City</h2>
 
-<form (ngSubmit)="updateCity()">
+<form (ngSubmit)="updateCity()" [formGroup]="cityForm">
   <div>
     <label for="name">City Name:</label>
-    <input [(ngModel)]="city.name" id="name" name="name" required/>
+    <input formControlName="name" id="name" id="name" required/>
+    <div *ngIf="cityForm.get('name')?.invalid && cityForm.get('name')?.touched">
+      City name is required.
+    </div>
   </div>
 
   <div>
     <label for="countryId">Country:</label>
-    <select [(ngModel)]="city.countryId" id="countryId" name="countryId" required>
+    <select formControlName="countryId" id="countryId" required>
       <option *ngFor="let country of countries" [value]="country.id">
         {{ country.name }}
       </option>
     </select>
+    <div *ngIf="cityForm.get('countryId')?.invalid && cityForm.get('countryId')?.touched">
+      Country is required.
+    </div>
   </div>
 
-  <button type="submit">Save Changes</button>
+  <button [disabled]="cityForm.invalid" type="submit">Save Changes</button>
   <button routerLink="/admin/cities" type="button">Cancel</button>
 </form>

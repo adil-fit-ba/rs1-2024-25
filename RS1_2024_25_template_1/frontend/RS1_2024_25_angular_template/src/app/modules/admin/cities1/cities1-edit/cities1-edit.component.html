@@ -6,12 +6,12 @@
 <form (ngSubmit)="updateCity()">
   <div>
     <label for="name">City Name:</label>
-    <input [(ngModel)]="city.name" id="name" name="name" required/>
+    <input [(ngModel)]="city.name" id="name" required/>
   </div>
 
   <div>
     <label for="countryId">Country:</label>
-    <select [(ngModel)]="city.countryId" id="countryId" name="countryId" required>
+    <select [(ngModel)]="city.countryId" id="countryId" required>
       <option *ngFor="let country of countries" [value]="country.id">
         {{ country.name }}
       </option>

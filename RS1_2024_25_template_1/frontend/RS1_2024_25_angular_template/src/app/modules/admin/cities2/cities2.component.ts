@@ -33,7 +33,7 @@ export class Cities2Component {
   }
 
   editCity(id: number): void {
-    this.router.navigate(['/admin/cities1/edit', id]);
+    this.router.navigate(['/admin/cities2/edit', id]);
   }
 
   deleteCity(id: number): void {

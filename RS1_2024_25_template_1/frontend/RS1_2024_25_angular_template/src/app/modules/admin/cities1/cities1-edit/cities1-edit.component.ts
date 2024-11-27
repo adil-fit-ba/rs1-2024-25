@@ -13,7 +13,7 @@ import {
 } from '../../../../endpoints/country-endpoints/country-get-all-endpoint.service';
 
 @Component({
-  selector: 'app-cities2-edit',
+  selector: 'app-cities1-edit',
   templateUrl: './cities1-edit.component.html',
   styleUrls: ['./cities1-edit.component.css']
 })
@@ -64,7 +64,7 @@ export class Cities1EditComponent implements OnInit {
       name: this.city.name,
       id: this.cityId
     }).subscribe({
-      next: () => this.router.navigate(['/admin/cities']),
+      next: () => this.router.navigate(['/admin/cities1']),
       error: (error) => console.error('Error updating city', error)
     });
   }

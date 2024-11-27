@@ -8,6 +8,7 @@ import {AdminErrorPageComponent} from './admin-error-page/admin-error-page.compo
 import {Cities1Component} from './cities1/cities1.component';
 import {Cities1EditComponent} from './cities1/cities1-edit/cities1-edit.component';
 import {Cities2EditComponent} from './cities2/cities2-edit/cities2-edit.component';
+import {Cities2Component} from './cities2/cities2.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
     children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
-      {path: 'cities', component: Cities1Component},
+      {path: 'cities1', component: Cities1Component},
+      {path: 'cities2', component: Cities2Component},
       {path: 'cities1/new', component: Cities1EditComponent},
       {path: 'cities2/new', component: Cities2EditComponent},
       {path: 'cities1/edit/:id', component: Cities1EditComponent},
