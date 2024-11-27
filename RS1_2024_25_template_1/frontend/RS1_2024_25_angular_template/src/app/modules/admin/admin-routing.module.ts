@@ -10,6 +10,7 @@ import {Cities1EditComponent} from './cities1/cities1-edit/cities1-edit.componen
 import {Cities2EditComponent} from './cities2/cities2-edit/cities2-edit.component';
 import {Cities2Component} from './cities2/cities2.component';
 
+//komentar
 const routes: Routes = [
   {
     path: '',
