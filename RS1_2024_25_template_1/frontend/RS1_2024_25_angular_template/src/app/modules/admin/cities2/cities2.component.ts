@@ -12,6 +12,8 @@ import {CityDeleteEndpointService} from '../../../endpoints/city-endpoints/city-
   styleUrls: ['./cities2.component.css']
 })
 export class Cities2Component {
+  //ovdje je koristeno Angular Reactive forms
+
   cities: CityGetAll1Response[] = [];
 
   constructor(

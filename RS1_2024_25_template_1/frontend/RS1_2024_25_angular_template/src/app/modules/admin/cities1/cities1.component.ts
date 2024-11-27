@@ -12,6 +12,7 @@ import {CityDeleteEndpointService} from '../../../endpoints/city-endpoints/city-
   styleUrls: ['./cities1.component.css']
 })
 export class Cities1Component {
+  //ovdje je koristeno NgModel
   cities: CityGetAll1Response[] = [];
 
   constructor(
