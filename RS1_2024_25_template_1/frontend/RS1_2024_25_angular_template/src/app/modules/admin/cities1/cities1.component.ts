@@ -38,7 +38,7 @@ export class Cities1Component {
   }
 
   deleteCity(id: number): void {
-    if (confirm('Are you sure you want to delete this city?')) {
+    if (confirm('Da li ste sigurni da zelite obrisati city?')) {
       this.cityDeleteService.handleAsync(id).subscribe({
         next: () => {
           console.log(`City with ID ${id} deleted successfully`);
