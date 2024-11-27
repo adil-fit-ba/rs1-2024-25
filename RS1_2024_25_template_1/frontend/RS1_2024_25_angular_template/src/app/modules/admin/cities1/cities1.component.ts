@@ -29,7 +29,7 @@ export class Cities1Component {
   fetchCities(): void {
     this.cityGetService.handleAsync().subscribe({
       next: (data) => (this.cities = data),
-      error: (err) => console.error('Error fetching cities1:', err)
+      error: (err) => console.error('greska kod fetching cities1:', err)
     });
   }
 
