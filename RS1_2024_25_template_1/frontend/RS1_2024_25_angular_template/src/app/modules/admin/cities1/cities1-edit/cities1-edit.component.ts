@@ -59,6 +59,22 @@ export class Cities1EditComponent implements OnInit {
   }
 
   updateCity(): void {
+
+    let errors = "";
+    if (this.city.countryId == 0){
+      errors += "countryId is required";
+    }
+
+    if (this.city.name.length == 0){
+      errors += "name is required";
+    }
+
+    if (errors.length > 0)
+    {
+      alert("errros: " + errors);
+      return;
+    }
+
     this.cityUpdateService.handleAsync({
       countryId: this.city.countryId,
       name: this.city.name,
