@@ -1,2 +1,3 @@
 korak 1
 korak 2
+korak 3
