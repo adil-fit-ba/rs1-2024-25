@@ -60,18 +60,18 @@ export class Cities1EditComponent implements OnInit {
 
   updateCity(): void {
 
-    let errors = "";
+    let errors:string[] = [];
     if (this.city.countryId == 0){
-      errors += "countryId is required";
+      errors.push("countryId is required");
     }
 
     if (this.city.name.length == 0){
-      errors += "name is required";
+      errors.push("name is required");
     }
 
     if (errors.length > 0)
     {
-      alert("errros: " + errors);
+      alert("errros: " +  errors.join("\n"));
       return;
     }
 
