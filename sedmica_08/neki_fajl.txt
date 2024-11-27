@@ -1,0 +1,2 @@
+korak 1
+korak 2
