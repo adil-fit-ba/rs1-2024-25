@@ -1,3 +1,11 @@
+#word
+# Privremeni Word fajlovi
+~$*
+*.tmp
+*.asd
+*.wbk
+
+
 # Visual Studio
 .vs/
 *.user
