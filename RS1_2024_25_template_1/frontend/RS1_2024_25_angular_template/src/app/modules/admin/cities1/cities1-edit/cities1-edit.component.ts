@@ -54,12 +54,36 @@ export class Cities1EditComponent implements OnInit {
 
   loadCountries(): void {
     this.countryGetAllService.handleAsync().subscribe({
-      next: (countries) => this.countries = countries,
+      next: (countries) =>{
+       console.log("podaci su preuzeti")
+        this.countries = countries;
+        this.countries.push({
+          id:0,
+          name:'--odabirite city--'
+        })
+        },
+       
       error: (error) => console.error('Error loading countries', error)
     });
   }
 
   updateCity(): void {
+
+    let errors:string[] = [];
+    if (this.city.countryId == 0){
+      errors.push("countryId is required");
+    }
+
+    if (this.city.name.length == 0){
+      errors.push("name is required");
+    }
+
+    if (errors.length > 0)
+    {
+      alert("errros: " +  errors.join("\n"));
+      return;
+    }
+
     this.cityUpdateService.handleAsync({
       countryId: this.city.countryId,
       name: this.city.name,
