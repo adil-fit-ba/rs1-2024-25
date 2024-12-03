@@ -11,6 +11,7 @@ import {
   CountryGetAllEndpointService,
   CountryGetAllResponse
 } from '../../../../endpoints/country-endpoints/country-get-all-endpoint.service';
+import {MySnackbarHelperService} from '../../../shared/snackbars/my-snackbar-helper.service';
 
 @Component({
   selector: 'app-cities1-edit',
@@ -32,7 +33,8 @@ export class Cities1EditComponent implements OnInit {
     public router: Router,
     private cityGetByIdService: CityGetByIdEndpointService,
     private cityUpdateService: CityUpdateOrInsertEndpointService,
-    private countryGetAllService: CountryGetAllEndpointService
+    private countryGetAllService: CountryGetAllEndpointService,
+    private snackbarHelper: MySnackbarHelperService
   ) {
     this.cityId = 0;
   }
@@ -54,33 +56,32 @@ export class Cities1EditComponent implements OnInit {
 
   loadCountries(): void {
     this.countryGetAllService.handleAsync().subscribe({
-      next: (countries) =>{
-       console.log("podaci su preuzeti")
+      next: (countries) => {
+        console.log("podaci su preuzeti")
         this.countries = countries;
         this.countries.push({
-          id:0,
-          name:'--odabirite city--'
+          id: 0,
+          name: '--odabirite city--'
         })
-        },
-       
+      },
+
       error: (error) => console.error('Error loading countries', error)
     });
   }
 
   updateCity(): void {
 
-    let errors:string[] = [];
-    if (this.city.countryId == 0){
+    let errors: string[] = [];
+    if (this.city.countryId == 0) {
       errors.push("countryId is required");
     }
 
-    if (this.city.name.length == 0){
+    if (this.city.name.length == 0) {
       errors.push("name is required");
     }
 
-    if (errors.length > 0)
-    {
-      alert("errros: " +  errors.join("\n"));
+    if (errors.length > 0) {
+      alert("errros: " + errors.join("\n"));
       return;
     }
 
@@ -89,7 +90,10 @@ export class Cities1EditComponent implements OnInit {
       name: this.city.name,
       id: this.cityId
     }).subscribe({
-      next: () => this.router.navigate(['/admin/cities1']),
+      next: () => {
+        this.snackbarHelper.showMessage('Uspješno snimljene izmjene');
+        this.router.navigate(['/admin/cities1']);
+      },
       error: (error) => console.error('Error updating city', error)
     });
   }

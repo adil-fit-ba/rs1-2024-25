@@ -5,5 +5,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button (click)="onCancel()" mat-button>Otkaži</button>
-  <button (click)="onConfirm()" color="warn" mat-button>Obriši</button>
+  <button (click)="onConfirm()" color="warn" mat-button>{{ data.confirmButtonText }}</button>
 </mat-dialog-actions>

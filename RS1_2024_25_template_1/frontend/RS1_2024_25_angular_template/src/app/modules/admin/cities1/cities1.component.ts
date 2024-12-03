@@ -7,6 +7,8 @@ import {
 import {CityDeleteEndpointService} from '../../../endpoints/city-endpoints/city-delete-endpoint.service';
 import {MatDialog} from '@angular/material/dialog';
 import {MyDialogConfirmComponent} from '../../shared/dialogs/my-dialog-confirm/my-dialog-confirm.component';
+import {MySnackbarHelperService} from '../../shared/snackbars/my-snackbar-helper.service';
+import {MyDialogSimpleComponent} from '../../shared/dialogs/my-dialog-simple/my-dialog-simple.component';
 
 @Component({
   selector: 'app-cities1',
@@ -22,7 +24,8 @@ export class Cities1Component {
     private cityGetService: CityGetAll1EndpointService,
     private cityDeleteService: CityDeleteEndpointService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbarHelper: MySnackbarHelperService
   ) {
   }
 
@@ -41,12 +44,42 @@ export class Cities1Component {
     this.router.navigate(['/admin/cities1/edit', id]);
   }
 
+  undoDeleteCity(id: number): void {
+
+    const dialogRef = this.dialog.open(MyDialogConfirmComponent, {
+      width: '350px',
+      data: {
+        title: 'Vraćanje grada',
+        message: `Jeste li sigurni da želite vratiti grad sa ID-jem ${id}?`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dialog.open(MyDialogSimpleComponent, {
+          width: '350px',
+          data: {
+            title: 'Greška',
+            message: 'Ova opcija nije implementirana?'
+          }
+        });
+      }
+    });
+  }
+
   deleteCity(id: number): void {
 
     this.cityDeleteService.handleAsync(id).subscribe({
       next: () => {
         console.log(`City with ID ${id} deleted successfully`);
         this.cities = this.cities.filter(city => city.id !== id); // Uklanjanje iz lokalne liste
+        this.snackbarHelper.showMessageWithAction(
+          'Izmjene snimljene',
+          'Undo',
+          () => {
+            this.undoDeleteCity(id);
+          }
+        );
       },
       error: (err) => console.error('Error deleting city:', err)
     });
@@ -57,7 +90,8 @@ export class Cities1Component {
       width: '350px',
       data: {
         title: 'Potvrda brisanja',
-        message: 'Da li ste sigurni da želite obrisati ovu stavku?'
+        message: 'Da li ste sigurni da želite obrisati ovu stavku?',
+        confirmButtonText: 'Obriši',
       }
     });
 

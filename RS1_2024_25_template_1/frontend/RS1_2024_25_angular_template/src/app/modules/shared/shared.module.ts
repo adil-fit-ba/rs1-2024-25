@@ -8,12 +8,13 @@ import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MyDialogConfirmComponent} from './dialogs/my-dialog-confirm/my-dialog-confirm.component';
 import {MatIcon} from '@angular/material/icon';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
     UnauthorizedComponent,
     MyDialogSimpleComponent,
-    MyDialogConfirmComponent, // Dodajemo UnauthorizedComponent u deklaracije
+    MyDialogConfirmComponent,
   ],
   imports: [
     CommonModule,
@@ -26,7 +27,8 @@ import {MatIcon} from '@angular/material/icon';
     MatDialogClose,
     MatIcon,
     MatDialogContent,
-    MatIconButton
+    MatIconButton,
+    MatSnackBarModule
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent
