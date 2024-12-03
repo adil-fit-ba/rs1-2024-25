@@ -9,7 +9,8 @@ import {CityDeleteEndpointService} from '../../../endpoints/city-endpoints/city-
 @Component({
   selector: 'app-cities2',
   templateUrl: './cities2.component.html',
-  styleUrls: ['./cities2.component.css']
+  styleUrls: ['./cities2.component.css'],
+  standalone: false
 })
 export class Cities2Component {
   //ovdje je koristeno Angular Reactive forms

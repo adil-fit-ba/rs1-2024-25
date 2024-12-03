@@ -13,7 +13,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-cities2-edit',
   templateUrl: './cities2-edit.component.html',
-  styleUrls: ['./cities2-edit.component.css']
+  styleUrls: ['./cities2-edit.component.css'],
+  standalone: false
 })
 export class Cities2EditComponent implements OnInit {
   cityForm: FormGroup;

@@ -15,7 +15,8 @@ import {
 @Component({
   selector: 'app-cities1-edit',
   templateUrl: './cities1-edit.component.html',
-  styleUrls: ['./cities1-edit.component.css']
+  styleUrls: ['./cities1-edit.component.css'],
+  standalone: false
 })
 export class Cities1EditComponent implements OnInit {
   cityId: number;

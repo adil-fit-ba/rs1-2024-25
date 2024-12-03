@@ -7,7 +7,8 @@ import {MyAuthService} from '../../../services/auth-services/my-auth.service';
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.css']
+  styleUrls: ['./logout.component.css'],
+  standalone: false
 })
 export class LogoutComponent implements OnInit {
   private apiUrl = `${MyConfig.api_address}/auth/logout`;

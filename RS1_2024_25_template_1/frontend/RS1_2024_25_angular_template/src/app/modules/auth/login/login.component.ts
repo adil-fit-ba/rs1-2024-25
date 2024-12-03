@@ -5,7 +5,8 @@ import {AuthLoginEndpointService, LoginRequest} from '../../../endpoints/auth-en
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  standalone: false
 })
 export class LoginComponent {
   loginRequest: LoginRequest = {username: 'admin1', password: 'admin123'};

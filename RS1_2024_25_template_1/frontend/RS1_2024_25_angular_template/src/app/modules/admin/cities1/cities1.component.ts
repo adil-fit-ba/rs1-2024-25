@@ -9,7 +9,8 @@ import {CityDeleteEndpointService} from '../../../endpoints/city-endpoints/city-
 @Component({
   selector: 'app-cities1',
   templateUrl: './cities1.component.html',
-  styleUrls: ['./cities1.component.css']
+  styleUrls: ['./cities1.component.css'],
+  standalone: false
 })
 export class Cities1Component {
   //ovdje je koristeno NgModel
