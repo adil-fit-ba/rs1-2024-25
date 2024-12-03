@@ -19,7 +19,7 @@
     <td>{{ city.countryName }}</td>
     <td>
       <button (click)="editCity(city.id)">Edit</button>
-      <button (click)="deleteCity(city.id)">Delete</button>
+      <button (click)="openMyConfirmDialog(city.id)" color="primary" mat-raised-button>Delete</button>
     </td>
   </tr>
   </tbody>

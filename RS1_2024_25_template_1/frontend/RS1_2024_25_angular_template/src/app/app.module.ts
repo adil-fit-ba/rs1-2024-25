@@ -10,6 +10,8 @@ import {SharedModule} from './modules/shared/shared.module';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,10 @@ import {MatButtonModule} from '@angular/material/button';
   imports: [
     MatButtonModule,
     MatToolbarModule,
+    BrowserAnimationsModule, // Potrebno za animacije
+    MatDialogModule,
+    MatButtonModule,
+
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

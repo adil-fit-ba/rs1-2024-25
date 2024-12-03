@@ -5,6 +5,8 @@ import {
   CityGetAll1Response
 } from '../../../endpoints/city-endpoints/city-get-all1-endpoint.service';
 import {CityDeleteEndpointService} from '../../../endpoints/city-endpoints/city-delete-endpoint.service';
+import {MatDialog} from '@angular/material/dialog';
+import {MyDialogConfirmComponent} from '../../shared/dialogs/my-dialog-confirm/my-dialog-confirm.component';
 
 @Component({
   selector: 'app-cities1',
@@ -19,7 +21,8 @@ export class Cities1Component {
   constructor(
     private cityGetService: CityGetAll1EndpointService,
     private cityDeleteService: CityDeleteEndpointService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
   }
 
@@ -39,14 +42,33 @@ export class Cities1Component {
   }
 
   deleteCity(id: number): void {
-    if (confirm('Are you sure you want to delete this city?')) {
-      this.cityDeleteService.handleAsync(id).subscribe({
-        next: () => {
-          console.log(`City with ID ${id} deleted successfully`);
-          this.cities = this.cities.filter(city => city.id !== id); // Uklanjanje iz lokalne liste
-        },
-        error: (err) => console.error('Error deleting city:', err)
-      });
-    }
+
+    this.cityDeleteService.handleAsync(id).subscribe({
+      next: () => {
+        console.log(`City with ID ${id} deleted successfully`);
+        this.cities = this.cities.filter(city => city.id !== id); // Uklanjanje iz lokalne liste
+      },
+      error: (err) => console.error('Error deleting city:', err)
+    });
+  }
+
+  openMyConfirmDialog(id: number) {
+    const dialogRef = this.dialog.open(MyDialogConfirmComponent, {
+      width: '350px',
+      data: {
+        title: 'Potvrda brisanja',
+        message: 'Da li ste sigurni da želite obrisati ovu stavku?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Korisnik je potvrdio brisanje');
+        // Pozovite servis ili izvršite logiku za brisanje
+        this.deleteCity(id);
+      } else {
+        console.log('Korisnik je otkazao brisanje');
+      }
+    });
   }
 }

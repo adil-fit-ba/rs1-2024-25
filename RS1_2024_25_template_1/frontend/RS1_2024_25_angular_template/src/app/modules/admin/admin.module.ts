@@ -13,6 +13,7 @@ import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
 import {Cities2EditComponent} from './cities2/cities2-edit/cities2-edit.component';
 import {Cities2Component} from './cities2/cities2.component';
+import {MatButton} from "@angular/material/button";
 
 
 @NgModule({
@@ -31,7 +32,9 @@ import {Cities2Component} from './cities2/cities2.component';
     CommonModule,
     AdminRoutingModule,
     FormsModule,
-    SharedModule // Omogućava pristup svemu što je eksportovano iz SharedModule
+    SharedModule,
+    MatButton,
+    // Omogućava pristup svemu što je eksportovano iz SharedModule
   ],
   providers: []
 })
