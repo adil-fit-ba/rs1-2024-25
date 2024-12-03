@@ -7,12 +7,17 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MyAuthInterceptor} from './services/auth-services/my-auth-interceptor.service';
 import {MyAuthService} from './services/auth-services/my-auth.service';
 import {SharedModule} from './modules/shared/shared.module';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    MatButtonModule,
+    MatToolbarModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -24,7 +29,8 @@ import {SharedModule} from './modules/shared/shared.module';
       useClass: MyAuthInterceptor,
       multi: true // Ensures multiple interceptors can be used if needed
     },
-    MyAuthService // Ensure MyAuthService is available for the interceptor
+    MyAuthService,
+    provideAnimationsAsync() // Ensure MyAuthService is available for the interceptor
   ],
   bootstrap: [AppComponent]
 })

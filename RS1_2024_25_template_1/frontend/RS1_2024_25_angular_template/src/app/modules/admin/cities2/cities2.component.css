@@ -49,7 +49,7 @@ button {
   margin-right: 10px;
 }
 
-/* Save button style */
+/* Save button styles */
 button[type="submit"] {
   background-color: #007bff;
   color: white;
@@ -59,7 +59,7 @@ button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
-/* Cancel button style */
+/* Cancel button styles */
 button[type="button"] {
   background-color: #6c757d;
   color: white;
