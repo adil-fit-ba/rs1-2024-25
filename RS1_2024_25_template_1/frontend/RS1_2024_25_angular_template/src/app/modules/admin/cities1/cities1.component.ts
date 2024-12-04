@@ -74,7 +74,7 @@ export class Cities1Component implements OnInit {
         console.log(`City with ID ${id} deleted successfully`);
         this.cities = this.cities.filter(city => city.id !== id); // Uklanjanje iz lokalne liste
         this.snackbarHelper.showMessageWithAction(
-          'Izmjene snimljene',
+          'Obrisan city',
           'Undo',
           () => {
             this.undoDeleteCity(id);

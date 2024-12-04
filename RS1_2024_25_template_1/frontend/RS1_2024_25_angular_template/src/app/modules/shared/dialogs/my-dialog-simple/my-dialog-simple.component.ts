@@ -9,7 +9,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
   styleUrl: './my-dialog-simple.component.css'
 })
 export class MyDialogSimpleComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { title: string; message: string }) {
 
   }
 }
