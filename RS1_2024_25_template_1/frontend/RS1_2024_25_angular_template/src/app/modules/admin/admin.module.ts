@@ -14,6 +14,20 @@ import {SharedModule} from '../shared/shared.module';
 import {Cities2EditComponent} from './cities2/cities2-edit/cities2-edit.component';
 import {Cities2Component} from './cities2/cities2.component';
 import {MatButton} from "@angular/material/button";
+import {
+  MatCell,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderRow,
+  MatRow,
+  MatTable,
+  MatTableModule
+} from "@angular/material/table";
+import {MatPaginator} from '@angular/material/paginator';
+import {MatFormField, MatFormFieldModule} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatSortModule} from '@angular/material/sort';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -34,6 +48,19 @@ import {MatButton} from "@angular/material/button";
     FormsModule,
     SharedModule,
     MatButton,
+    MatTable,
+    MatHeaderCell,
+    MatCell,
+    MatHeaderRow,
+    MatRow,
+    MatPaginator,
+    MatFormField,
+    MatInput,
+    MatIconModule,
+    MatColumnDef,
+    MatTableModule,
+    MatSortModule,
+    MatFormFieldModule
     // Omogućava pristup svemu što je eksportovano iz SharedModule
   ],
   providers: []

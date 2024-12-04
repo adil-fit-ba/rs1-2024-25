@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {
   CityGetAll1EndpointService,
@@ -16,7 +16,7 @@ import {MyDialogSimpleComponent} from '../../shared/dialogs/my-dialog-simple/my-
   styleUrls: ['./cities1.component.css'],
   standalone: false
 })
-export class Cities1Component {
+export class Cities1Component implements OnInit {
   //ovdje je koristeno NgModel
   cities: CityGetAll1Response[] = [];
 

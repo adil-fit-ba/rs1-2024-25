@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {
   CityGetAll1EndpointService,
@@ -7,6 +7,9 @@ import {
 import {CityDeleteEndpointService} from '../../../endpoints/city-endpoints/city-delete-endpoint.service';
 import {MyDialogConfirmComponent} from '../../shared/dialogs/my-dialog-confirm/my-dialog-confirm.component';
 import {MatDialog} from '@angular/material/dialog';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-cities2',
@@ -14,10 +17,15 @@ import {MatDialog} from '@angular/material/dialog';
   styleUrls: ['./cities2.component.css'],
   standalone: false
 })
-export class Cities2Component {
+export class Cities2Component implements OnInit {
   //ovdje je koristeno Angular Reactive forms
+  displayedColumns: string[] = ['name', 'countryName', 'actions'];
+  dataSource: MatTableDataSource<CityGetAll1Response> = new MatTableDataSource<CityGetAll1Response>();
 
   cities: CityGetAll1Response[] = [];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private cityGetService: CityGetAll1EndpointService,
@@ -31,9 +39,22 @@ export class Cities2Component {
     this.fetchCities();
   }
 
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+
+    if (this.dataSource) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+  }
+
   fetchCities(): void {
     this.cityGetService.handleAsync().subscribe({
-      next: (data) => (this.cities = data),
+      next: (data) => {
+        this.cities = data;
+        this.dataSource = new MatTableDataSource<CityGetAll1Response>(this.cities);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
       error: (err) => console.error('Error fetching cities1:', err)
     });
   }
