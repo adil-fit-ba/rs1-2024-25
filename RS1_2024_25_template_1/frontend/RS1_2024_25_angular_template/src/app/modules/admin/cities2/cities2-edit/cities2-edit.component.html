@@ -6,7 +6,7 @@
 <form (ngSubmit)="updateCity()" [formGroup]="cityForm">
   <div>
     <label for="name">City Name:</label>
-    <input formControlName="name" id="name" id="name" required/>
+    <input formControlName="name" id="name" required/>
     <div *ngIf="cityForm.get('name')?.invalid && cityForm.get('name')?.touched">
       City name is required.
     </div>

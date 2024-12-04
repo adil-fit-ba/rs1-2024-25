@@ -4,7 +4,6 @@ import {MyConfig} from '../../my-config';
 import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
 
 export interface CityGetByIdResponse {
-  id: number;
   name: string;
   countryId: number;
 }
