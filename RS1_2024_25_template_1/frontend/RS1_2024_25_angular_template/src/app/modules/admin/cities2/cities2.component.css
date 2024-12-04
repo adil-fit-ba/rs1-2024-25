@@ -68,3 +68,20 @@ button[type="button"] {
 button[type="button"]:hover {
   background-color: #5a6268;
 }
+
+.no-data {
+  text-align: center;
+  font-size: 16px;
+  color: gray;
+}
+
+.search-container {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+mat-form-field {
+  width: 100%;
+}
