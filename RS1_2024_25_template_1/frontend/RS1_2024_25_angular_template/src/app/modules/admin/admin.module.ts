@@ -28,6 +28,10 @@ import {MatFormField, MatFormFieldModule} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatSortModule} from '@angular/material/sort';
 import {MatIconModule} from '@angular/material/icon';
+import {MatOption, MatSelect} from "@angular/material/select";
+import {MatCard} from '@angular/material/card';
+import {Cities3Component} from './cities3/cities3.component';
+import {Cities3EditComponent} from './cities3/cities3-edit/cities3-edit.component';
 
 
 @NgModule({
@@ -39,8 +43,10 @@ import {MatIconModule} from '@angular/material/icon';
     AdminErrorPageComponent,
     Cities1Component,
     Cities2Component,
+    Cities3Component,
     Cities1EditComponent,
     Cities2EditComponent,
+    Cities3EditComponent,
   ],
   imports: [
     CommonModule,
@@ -60,7 +66,10 @@ import {MatIconModule} from '@angular/material/icon';
     MatColumnDef,
     MatTableModule,
     MatSortModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSelect,
+    MatOption,
+    MatCard,
     // Omogućava pristup svemu što je eksportovano iz SharedModule
   ],
   providers: []

@@ -9,6 +9,7 @@ import {MyAuthService} from './services/auth-services/my-auth.service';
 import {SharedModule} from './modules/shared/shared.module';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MyErrorHandlingInterceptor} from './services/auth-services/my-error-handling-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
       provide: HTTP_INTERCEPTORS,
       useClass: MyAuthInterceptor,
       multi: true // Ensures multiple interceptors can be used if needed
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MyErrorHandlingInterceptor,
+      multi: true // Dodaje ErrorHandlingInterceptor u lanac
     },
     MyAuthService,
     provideAnimationsAsync() // Ensure MyAuthService is available for the interceptor

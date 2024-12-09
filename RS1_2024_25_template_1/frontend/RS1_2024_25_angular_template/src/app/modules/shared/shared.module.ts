@@ -20,6 +20,11 @@ import {MatProgressBar} from '@angular/material/progress-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MyInputTextComponent} from './my-reactive-forms/my-input-text/my-input-text.component';
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from '@angular/material/input';
+import {MyDropdownComponent} from './my-reactive-forms/my-dropdown/my-dropdown.component';
+import {MatOption, MatSelect} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MyDialogSimpleComponent,
     MyDialogConfirmComponent,
     MyPageProgressbarComponent,
+    MyInputTextComponent,
+    MyDropdownComponent,
   ],
   imports: [
     CommonModule,
@@ -46,14 +53,22 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatDialogModule,
     MatButtonModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatFormField,
+    MatInput,
+    MatError,
+    MatLabel,
+    MatSelect,
+    MatOption
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MyPageProgressbarComponent
+    MyPageProgressbarComponent,
+    MyInputTextComponent,
+    MyDropdownComponent
   ]
 })
 export class SharedModule {

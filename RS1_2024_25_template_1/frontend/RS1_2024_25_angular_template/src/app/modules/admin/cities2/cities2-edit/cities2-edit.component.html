@@ -1,29 +1,35 @@
-<p>cities-edit works!</p>
+<mat-card class="city-form-card">
+  <h2 *ngIf="cityId!=0">Edit City</h2>
+  <h2 *ngIf="cityId==0">Add New City</h2>
 
-<h2 *ngIf="cityId!=0">Edit City</h2>
-<h2 *ngIf="cityId==0">Add new City</h2>
+  <form (ngSubmit)="updateCity()" [formGroup]="cityForm">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>City Name</mat-label>
+      <input formControlName="name" matInput required/>
+      <mat-error *ngIf="cityForm.get('name')?.invalid && cityForm.get('name')?.touched">
+        City name is required.
+      </mat-error>
+    </mat-form-field>
 
-<form (ngSubmit)="updateCity()" [formGroup]="cityForm">
-  <div>
-    <label for="name">City Name:</label>
-    <input formControlName="name" id="name" required/>
-    <div *ngIf="cityForm.get('name')?.invalid && cityForm.get('name')?.touched">
-      City name is required.
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Country</mat-label>
+      <mat-select formControlName="countryId" required>
+        <mat-option *ngFor="let country of countries" [value]="country.id">
+          {{ country.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cityForm.get('countryId')?.invalid && cityForm.get('countryId')?.touched">
+        Country is required.
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-buttons">
+      <button [disabled]="cityForm.invalid" color="primary" mat-raised-button type="submit">
+        Save Changes
+      </button>
+      <button color="warn" mat-raised-button routerLink="/admin/cities" type="button">
+        Cancel
+      </button>
     </div>
-  </div>
-
-  <div>
-    <label for="countryId">Country:</label>
-    <select formControlName="countryId" id="countryId" required>
-      <option *ngFor="let country of countries" [value]="country.id">
-        {{ country.name }}
-      </option>
-    </select>
-    <div *ngIf="cityForm.get('countryId')?.invalid && cityForm.get('countryId')?.touched">
-      Country is required.
-    </div>
-  </div>
-
-  <button [disabled]="cityForm.invalid" type="submit">Save Changes</button>
-  <button routerLink="/admin/cities" type="button">Cancel</button>
-</form>
+  </form>
+</mat-card>
