@@ -7,7 +7,16 @@
       <mat-label>City Name</mat-label>
       <input formControlName="name" matInput required/>
       <mat-error *ngIf="cityForm.get('name')?.invalid && cityForm.get('name')?.touched">
-        City name is required.
+        <!-- Dinamičko prikazivanje grešaka -->
+        <ng-container *ngIf="cityForm.get('name')?.errors as errors">
+          <small *ngIf="errors['required']">City name is required.</small>
+          <small *ngIf="errors['minlength']">
+            Minimum {{ errors['minlength'].requiredLength }} characters required.
+          </small>
+          <small *ngIf="errors['maxlength']">
+            Maximum {{ errors['maxlength'].requiredLength }} characters allowed.
+          </small>
+        </ng-container>
       </mat-error>
     </mat-form-field>
 
@@ -19,7 +28,9 @@
         </mat-option>
       </mat-select>
       <mat-error *ngIf="cityForm.get('countryId')?.invalid && cityForm.get('countryId')?.touched">
-        Country is required.
+        <ng-container *ngIf="cityForm.get('countryId')?.errors as errors">
+          <small *ngIf="errors['required']">Country is required.</small>
+        </ng-container>
       </mat-error>
     </mat-form-field>
 

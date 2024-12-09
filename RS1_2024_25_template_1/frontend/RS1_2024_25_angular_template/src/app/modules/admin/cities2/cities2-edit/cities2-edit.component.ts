@@ -32,7 +32,7 @@ export class Cities2EditComponent implements OnInit {
     this.cityId = 0;
 
     this.cityForm = this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.min(2), Validators.max(10)]],
       countryId: [null, [Validators.required]],
     });
   }

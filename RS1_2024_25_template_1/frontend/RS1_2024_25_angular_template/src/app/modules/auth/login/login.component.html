@@ -1,19 +1,21 @@
 <div class="login-container">
-  <h2>Login</h2>
+  <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
   <form (ngSubmit)="onLogin()">
     <div class="form-group">
-      <label for="username">Username:</label>
-      <input [(ngModel)]="loginRequest.username" id="username" name="username" required type="text">
+      <label for="username">{{ 'LOGIN.USERNAME_LABEL' | translate }}</label>
+      <input [(ngModel)]="loginRequest.username" id="username" name="username" placeholder="{{ 'LOGIN.USERNAME_PLACEHOLDER' | translate }}" required
+             type="text">
     </div>
 
     <div class="form-group">
-      <label for="password">Password:</label>
-      <input [(ngModel)]="loginRequest.password" id="password" name="password" required type="password">
+      <label for="password">{{ 'LOGIN.PASSWORD_LABEL' | translate }}</label>
+      <input [(ngModel)]="loginRequest.password" id="password" name="password" placeholder="{{ 'LOGIN.PASSWORD_PLACEHOLDER' | translate }}" required
+             type="password">
     </div>
 
-    <mat-slide-toggle>Save login</mat-slide-toggle>
+    <mat-slide-toggle>{{ 'LOGIN.SAVE_LOGIN' | translate }}</mat-slide-toggle>
 
-    <button class="login-button" color="primary" type="submit">Login</button>
+    <button class="login-button" color="primary" type="submit">{{ 'LOGIN.BUTTON' | translate }}</button>
 
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
   </form>

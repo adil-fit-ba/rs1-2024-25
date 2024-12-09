@@ -11,6 +11,7 @@ import {LogoutComponent} from './logout/logout.component';
 import {AuthLayoutComponent} from './auth-layout/auth-layout.component';
 import {MatButton} from "@angular/material/button";
 import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {TranslatePipe} from "@ngx-translate/core";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
     AuthRoutingModule,
     FormsModule,
     MatButton,
-    MatSlideToggle
+    MatSlideToggle,
+    TranslatePipe
   ]
 })
 export class AuthModule {
