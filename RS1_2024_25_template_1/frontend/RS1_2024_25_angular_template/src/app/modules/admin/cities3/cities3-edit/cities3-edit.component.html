@@ -4,7 +4,6 @@
 
   <form (ngSubmit)="updateCity()" [formGroup]="cityForm">
     <app-my-input-text
-      [myType]="MyInputTextType.Text"
       myControlName="name"
       myLabel="City Name"
       myPlaceholder="Enter city name"
@@ -13,7 +12,7 @@
     <app-my-dropdown
       [customMessages]="{ required: 'Please select a country.' }"
       [options]="countries"
-      defaultValue="1"
+      defaultValue="6"
       myControlName="countryId"
       myLabel="Country"
     ></app-my-dropdown>

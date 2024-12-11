@@ -1,24 +1,23 @@
 <div class="login-container">
   <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
-  <form (ngSubmit)="onLogin()">
-    <div class="form-group">
-      <label for="email">{{ 'LOGIN.USERNAME_LABEL' | translate }}</label>
-      <input [(ngModel)]="loginRequest.email" id="email" name="email"
-             placeholder="{{ 'LOGIN.USERNAME_PLACEHOLDER' | translate }}" required
-             type="text">
-    </div>
+  <form (ngSubmit)="onLogin()" [formGroup]="form">
+    <app-my-input-text
+      [myLabel]="'LOGIN.USERNAME_LABEL' | translate "
+      [myPlaceholder]="'LOGIN.USERNAME_PLACEHOLDER' | translate"
+      myControlName="email"
+    ></app-my-input-text>
 
-    <div class="form-group">
-      <label for="password">{{ 'LOGIN.PASSWORD_LABEL' | translate }}</label>
-      <input [(ngModel)]="loginRequest.password" id="password" name="password"
-             placeholder="{{ 'LOGIN.PASSWORD_PLACEHOLDER' | translate }}" required
-             type="password">
-    </div>
+
+    <app-my-input-text
+      [myLabel]="'LOGIN.PASSWORD_LABEL' | translate"
+      [myPlaceholder]="'LOGIN.PASSWORD_PLACEHOLDER' | translate"
+      [myType]="MyInputTextType.Password"
+      myControlName="password"
+    ></app-my-input-text>
 
     <mat-slide-toggle>{{ 'LOGIN.SAVE_LOGIN' | translate }}</mat-slide-toggle>
 
     <button class="login-button" color="primary" type="submit">{{ 'LOGIN.BUTTON' | translate }}</button>
 
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
   </form>
 </div>
