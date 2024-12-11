@@ -12,6 +12,7 @@ import {AuthLayoutComponent} from './auth-layout/auth-layout.component';
 import {MatButton} from "@angular/material/button";
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {TranslatePipe} from "@ngx-translate/core";
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {TranslatePipe} from "@ngx-translate/core";
     FormsModule,
     MatButton,
     MatSlideToggle,
-    TranslatePipe
+    TranslatePipe,
+    SharedModule
   ]
 })
 export class AuthModule {

@@ -7,7 +7,7 @@ import {LoginTokenDto} from '../../services/auth-services/dto/login-token-dto';
 import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
 
 export interface LoginRequest {
-  username: string;
+  email: string;
   password: string;
 }
 

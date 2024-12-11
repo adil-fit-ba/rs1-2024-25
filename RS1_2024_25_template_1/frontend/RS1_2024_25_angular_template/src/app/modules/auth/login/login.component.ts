@@ -6,10 +6,10 @@ import {AuthLoginEndpointService, LoginRequest} from '../../../endpoints/auth-en
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  standalone: false
+  standalone: false,
 })
 export class LoginComponent {
-  loginRequest: LoginRequest = {username: 'admin1', password: 'admin123'};
+  loginRequest: LoginRequest = {email: 'admin', password: 'test'};
   errorMessage: string | null = null;
 
   constructor(private authLoginService: AuthLoginEndpointService, private router: Router) {
@@ -19,12 +19,12 @@ export class LoginComponent {
     this.authLoginService.handleAsync(this.loginRequest).subscribe({
       next: () => {
         console.log('Login successful');
-        this.router.navigate(['/admin']); // Redirect to
+        this.router.navigate(['/admin']); // Redirect to admin panel
       },
       error: (error: any) => {
         this.errorMessage = 'Incorrect username or password';
         console.error('Login error:', error);
-      }
+      },
     });
   }
 }

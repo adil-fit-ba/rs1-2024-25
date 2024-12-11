@@ -33,7 +33,7 @@ public class MyAuthorizationAttribute(bool isAdmin, bool isManager) : Attribute,
             return;
         }
 
-        if (isManager && !authInfo.IsManager)
+        if (isManager && !authInfo.IsDean)
         {
             context.Result = new ForbidResult();
             return;

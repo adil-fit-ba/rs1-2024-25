@@ -1,14 +1,12 @@
-﻿using System;
+﻿using RS1_2024_25.API.Helper.BaseClasses;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RS1_2024_25.API.Data.Models.Auth;
+namespace RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth;
 
-public class MyAuthenticationToken
+public class MyAuthenticationToken : TenantSpecificTable
 {
-    [Key]
-    public int ID { get; set; }
-
     public required string Value { get; set; } // Token string
 
     public string IpAddress { get; set; } = string.Empty;// IP address of the client

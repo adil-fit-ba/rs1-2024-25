@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
-using RS1_2024_25.API.Data.Models.Auth;
+using RS1_2024_25.API.Data.Models.SharedTables;
+using RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth;
 using RS1_2024_25.API.Helper;
 
 namespace RS1_2024_25.API.Services
@@ -22,7 +24,8 @@ namespace RS1_2024_25.API.Services
                 IpAddress = httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
                 Value = randomToken,
                 MyAppUser = user,
-                RecordedAt = DateTime.Now
+                RecordedAt = DateTime.Now,
+                TenantId = user.TenantId,
             };
 
             applicationDbContext.MyAuthenticationTokens.Add(authToken);
@@ -56,7 +59,7 @@ namespace RS1_2024_25.API.Services
             }
 
             var myAuthToken = applicationDbContext.MyAuthenticationTokens
-                .Include(x => x.MyAppUser)
+                .Include(x => x.MyAppUser!.Tenant)
                 .SingleOrDefault(x => x.Value == authToken);
 
             return GetAuthInfo(myAuthToken);
@@ -69,7 +72,7 @@ namespace RS1_2024_25.API.Services
                 return new MyAuthInfo
                 {
                     IsAdmin = false,
-                    IsManager = false,
+                    IsDean = false,
                     IsLoggedIn = false,
                 };
             }
@@ -77,12 +80,14 @@ namespace RS1_2024_25.API.Services
             return new MyAuthInfo
             {
                 UserId = myAuthToken.MyAppUserId,
-                Username = myAuthToken.MyAppUser!.Username,
+                Email = myAuthToken.MyAppUser!.Email,
                 FirstName = myAuthToken.MyAppUser.FirstName,
                 LastName = myAuthToken.MyAppUser.LastName,
                 IsAdmin = myAuthToken.MyAppUser.IsAdmin,
-                IsManager = myAuthToken.MyAppUser.IsManager,
-                IsLoggedIn = true
+                IsDean = myAuthToken.MyAppUser.IsDean,
+                IsLoggedIn = true,
+                Tenant = myAuthToken.MyAppUser.Tenant,
+                TenantId = myAuthToken.MyAppUser.TenantId,
             };
         }
     }
@@ -90,12 +95,17 @@ namespace RS1_2024_25.API.Services
     // DTO to hold authentication information
     public class MyAuthInfo
     {
+        public int TenantId { get; set; }
+        [JsonIgnore]
+        public Tenant? Tenant { get; set; }
         public int UserId { get; set; }
-        public string Username { get; set; }
+        public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsAdmin { get; set; }
-        public bool IsManager { get; set; }
+        public bool IsDean { get; set; }
+        public bool IsStudent { get; set; }
+        public bool IsProfessor { get; set; }
         public bool IsLoggedIn { get; set; }
         public string SlikaPath {  get; set; }
     }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RS1_2024_25.API.Data;
-using RS1_2024_25.API.Data.Models;
+using RS1_2024_25.API.Data.Models.SharedTables;
 using RS1_2024_25.API.Helper.Api;
 using RS1_2024_25.API.Services;
 using static RS1_2024_25.API.Endpoints.CityEndpoints.CityUpdateOrInsertEndpoint;
@@ -44,6 +44,7 @@ namespace RS1_2024_25.API.Endpoints.CityEndpoints
 
             // Set common properties for both insert and update operations
             city.Name = request.Name;
+            city.RegionId = request.RegionId;
             city.CountryId = request.CountryId;
 
             // Save changes to the database
@@ -62,6 +63,7 @@ namespace RS1_2024_25.API.Endpoints.CityEndpoints
             public int? ID { get; set; } // Nullable to allow null for insert operations
             public required string Name { get; set; }
             public required int CountryId { get; set; }
+            public int RegionId { get; internal set; }
         }
 
         public class CityUpdateOrInsertResponse

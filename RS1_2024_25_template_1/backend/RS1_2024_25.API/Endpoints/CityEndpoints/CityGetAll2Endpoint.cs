@@ -21,6 +21,7 @@ public class CityGetAll2Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
                         {
                             ID = c.ID,
                             Name = c.Name,
+                            RegionName = c.Region != null ? c.Region.Name : "",
                             CountryName = c.Country != null ? c.Country.Name : ""
                         });
 
@@ -33,6 +34,7 @@ public class CityGetAll2Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     {
         public required int ID { get; set; }
         public required string Name { get; set; }
+        public required string RegionName { get; set; }
         public required string CountryName { get; set; }
     }
 }
