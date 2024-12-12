@@ -22,6 +22,7 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
         {
             // Provjera da li korisnik postoji u bazi
             var loggedInUser = await db.MyAppUsers
+                .IgnoreQueryFilters()
                 .FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
             if (loggedInUser == null || !loggedInUser.VerifyPassword(request.Password))
@@ -29,11 +30,13 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
                 // Sačuvaj promjene samo ako je korisnik postojao i ako su povećani neuspješni pokušaji
                 if (loggedInUser != null)
                 {
+                    db.CurrentTenantId = loggedInUser.TenantId;
                     await db.SaveChangesAsync(cancellationToken);
                 }
                 return Unauthorized(new { Message = "Incorrect username or password" });
             }
 
+            db.CurrentTenantId = loggedInUser.TenantId;
             // Generisanje novog autentifikacionog tokena
             var newAuthToken = await authService.GenerateAuthToken(loggedInUser, cancellationToken);
             var authInfo = authService.GetAuthInfo(newAuthToken);

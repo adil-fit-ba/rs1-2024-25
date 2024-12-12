@@ -59,6 +59,7 @@ namespace RS1_2024_25.API.Services
             }
 
             var myAuthToken = applicationDbContext.MyAuthenticationTokens
+                .IgnoreQueryFilters()
                 .Include(x => x.MyAppUser!.Tenant)
                 .SingleOrDefault(x => x.Value == authToken);
 
