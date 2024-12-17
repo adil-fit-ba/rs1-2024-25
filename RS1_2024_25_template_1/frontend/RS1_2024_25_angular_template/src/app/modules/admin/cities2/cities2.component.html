@@ -21,6 +21,12 @@
     <mat-cell *matCellDef="let city">{{ city.name }}</mat-cell>
   </ng-container>
 
+  <!-- Region Name Column -->
+  <ng-container matColumnDef="regionName">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Region Name</mat-header-cell>
+    <mat-cell *matCellDef="let city">{{ city.regionName }}</mat-cell>
+  </ng-container>
+
   <!-- Country Name Column -->
   <ng-container matColumnDef="countryName">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Country Name</mat-header-cell>

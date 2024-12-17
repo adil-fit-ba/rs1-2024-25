@@ -28,47 +28,237 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
             throw new Exception("Podaci su vec generisani");
         }
 
+        #region COUNTRY_REGION_CITY
         // Kreiranje država
         var countries = new List<Country>
-        {
-            new Country { Name = "Bosnia and Herzegovina" },
-            new Country { Name = "Croatia" },
-            new Country { Name = "Germany" },
-            new Country { Name = "Austria" },
-            new Country { Name = "USA" }
-        };
+{
+    // Bosna i Hercegovina
+    new Country
+    {
+        Name = "Bosnia and Herzegovina",
+        Regions =
+        [
+            new Region
+            {
+                Name = "Hercegovačko-neretvanski kanton (HNK)",
+                Cities =
+                [
+                    new City
+                    {
+                        Name = "Mostar",
+                        Municipalities = [ new Municipality { Name = "Mostar Stari Grad" }, new Municipality { Name = "Mostar Sjever" } ]
+                    },
+                    new City
+                    {
+                        Name = "Čapljina",
+                        Municipalities = [ new Municipality { Name = "Čapljina Centar" } ]
+                    },
+                    new City
+                    {
+                        Name = "Konjic",
+                        Municipalities = [ new Municipality { Name = "Konjic Stari Grad" } ]
+                    }
+                ]
+            },
+            new Region
+            {
+                Name = "Sarajevo Canton",
+                Cities =
+                [
+                    new City
+                    {
+                        Name = "Sarajevo",
+                        Municipalities = [ new Municipality { Name = "Stari Grad" }, new Municipality { Name = "Novi Grad" } ]
+                    },
+                    new City
+                    {
+                        Name = "Ilidža",
+                        Municipalities = [ new Municipality { Name = "Ilidža Centar" } ]
+                    },
+                    new City
+                    {
+                        Name = "Vogošća",
+                        Municipalities = [ new Municipality { Name = "Vogošća Stari Grad" } ]
+                    }
+                ]
+            },
+            new Region
+            {
+                Name = "Republika Srpska",
+                Cities =
+                [
+                    new City
+                    {
+                        Name = "Banja Luka",
+                        Municipalities = [ new Municipality { Name = "Banja Luka Centar" } ]
+                    },
+                    new City
+                    {
+                        Name = "Prijedor",
+                        Municipalities = [ new Municipality { Name = "Prijedor Stari Grad" } ]
+                    },
+                    new City
+                    {
+                        Name = "Doboj",
+                        Municipalities = [ new Municipality { Name = "Doboj Jug" } ]
+                    }
+                ]
+            }
+        ]
+    },
 
-        // Kreiranje regija
-        var regions = new List<Region>
-        {
-            new Region { Name = "Federation of Bosnia and Herzegovina", Country = countries[0] },
-            new Region { Name = "Republika Srpska", Country = countries[0] },
-            new Region { Name = "Dalmatia", Country = countries[1] },
-            new Region { Name = "Bavaria", Country = countries[2] },
-            new Region { Name = "nn", Country = countries[4] }
-        };
+    // Hrvatska
+    new Country
+    {
+        Name = "Croatia",
+        Regions =
+        [
+            new Region
+            {
+                Name = "Istria",
+                Cities =
+                [
+                    new City
+                    {
+                        Name = "Pula",
+                        Municipalities = [ new Municipality { Name = "Pula Centar" } ]
+                    },
+                    new City
+                    {
+                        Name = "Rovinj",
+                        Municipalities = [ new Municipality { Name = "Rovinj Stari Grad" } ]
+                    },
+                    new City
+                    {
+                        Name = "Umag",
+                        Municipalities = [ new Municipality { Name = "Umag Zapad" } ]
+                    }
+                ]
+            },
+            new Region
+            {
+                Name = "Dalmatia",
+                Cities =
+                [
+                    new City
+                    {
+                        Name = "Split",
+                        Municipalities = [ new Municipality { Name = "Split Centar" }, new Municipality { Name = "Split Zapad" } ]
+                    },
+                    new City
+                    {
+                        Name = "Zadar",
+                        Municipalities = [ new Municipality { Name = "Zadar Centar" } ]
+                    },
+                    new City
+                    {
+                        Name = "Dubrovnik",
+                        Municipalities = [ new Municipality { Name = "Dubrovnik Stari Grad" } ]
+                    }
+                ]
+            },
+            new Region
+            {
+                Name = "Zagreb County",
+                Cities =
+                [
+                    new City
+                    {
+                        Name = "Zagreb",
+                        Municipalities = [ new Municipality { Name = "Zagreb Novi Grad" }, new Municipality { Name = "Zagreb Stari Grad" } ]
+                    },
+                    new City
+                    {
+                        Name = "Velika Gorica",
+                        Municipalities = [ new Municipality { Name = "Velika Gorica Centar" } ]
+                    },
+                    new City
+                    {
+                        Name = "Samobor",
+                        Municipalities = [ new Municipality { Name = "Samobor Centar" } ]
+                    }
+                ]
+            }
+        ]
+    },
 
-        // Kreiranje gradova
-        var cities = new List<City>
-        {
-            new City { Name = "Sarajevo", Country = countries[0], Region = regions[0]  },
-            new City { Name = "Mostar", Country = countries[0], Region = regions[0]  },
-            new City { Name = "Zagreb", Country = countries[1], Region = regions[0] },
-            new City { Name = "Berlin", Country = countries[2], Region = regions[0] },
-            new City { Name = "Vienna", Country = countries[3], Region = regions[0] },
-            new City { Name = "New York", Country = countries[4], Region = regions[0] },
-            new City { Name = "Los Angeles", Country = countries[4], Region = regions[0] }
-        };
+    // Njemačka
+    new Country
+    {
+        Name = "Germany",
+        Regions =
+        [
+            new Region
+            {
+                Name = "Bavaria",
+                Cities =
+                [
+                    new City
+                    {
+                        Name = "Munich",
+                        Municipalities = [ new Municipality { Name = "Munich Central" } ]
+                    },
+                    new City
+                    {
+                        Name = "Nuremberg",
+                        Municipalities = [ new Municipality { Name = "Nuremberg Central" } ]
+                    },
+                    new City
+                    {
+                        Name = "Augsburg",
+                        Municipalities = [ new Municipality { Name = "Augsburg Central" } ]
+                    }
+                ]
+            },
+            new Region
+            {
+                Name = "Baden-Württemberg",
+                Cities =
+                [
+                    new City
+                    {
+                        Name = "Stuttgart",
+                        Municipalities = [ new Municipality { Name = "Stuttgart Mitte" } ]
+                    },
+                    new City
+                    {
+                        Name = "Heidelberg",
+                        Municipalities = [ new Municipality { Name = "Heidelberg Altstadt" } ]
+                    },
+                    new City
+                    {
+                        Name = "Karlsruhe",
+                        Municipalities = [ new Municipality { Name = "Karlsruhe Süd" } ]
+                    }
+                ]
+            },
+            new Region
+            {
+                Name = "North Rhine-Westphalia",
+                Cities =
+                [
+                    new City
+                    {
+                        Name = "Cologne",
+                        Municipalities = [ new Municipality { Name = "Cologne Zentrum" } ]
+                    },
+                    new City
+                    {
+                        Name = "Düsseldorf",
+                        Municipalities = [ new Municipality { Name = "Düsseldorf Altstadt" } ]
+                    },
+                    new City
+                    {
+                        Name = "Dortmund",
+                        Municipalities = [ new Municipality { Name = "Dortmund Nord" } ]
+                    }
+                ]
+            }
+        ]
+    }
+};
 
-        // Kreiranje opština
-        var municipalities = new List<Municipality>
-        {
-            new Municipality { Name = "Centar", City = cities[0], Region = regions[0] },
-            new Municipality { Name = "Stari Grad", City = cities[0], Region = regions[0] },
-            new Municipality { Name = "Mostar", City = cities[1], Region = regions[0] },
-            new Municipality { Name = "Donji Grad", City = cities[2], Region = regions[2] },
-            new Municipality { Name = "Charleston", City = cities[6], Region = regions[4] }
-        };
+        #endregion
 
         // Kreiranje tenant-a (univerziteta)
         var tenants = new List<Tenant>
@@ -76,6 +266,14 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
             new Tenant { Name = "University of Sarajevo", DatabaseConnection = "db_conn_sarajevo", ServerAddress = "192.168.1.1" },
             new Tenant { Name = "University of Mostar", DatabaseConnection = "db_conn_mostar", ServerAddress = "192.168.1.2" }
         };
+
+        await db.Countries.AddRangeAsync(countries, cancellationToken);
+        await db.Tenants.AddRangeAsync(tenants, cancellationToken);
+
+        await db.SaveChangesAsync(cancellationToken);
+
+        db.CurrentTenantId = tenants[0].ID;
+
 
         // Kreiranje fakulteta
         var faculties = new List<Faculty>
@@ -88,7 +286,6 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
         {
             x.Tenant = tenants[0];
         }
-
 
         // Kreiranje akademskih godina
         var academicYears = new List<AcademicYear>
@@ -195,16 +392,15 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
             }
         };
 
+        Municipality defaultOpstina = countries[0].Regions[0].Cities[0].Municipalities[0];
+
         foreach (var x in students)
         {
             x.Tenant = tenants[0];
-            x.BirthMunicipality = municipalities[0];
+            x.BirthMunicipality = defaultOpstina;
         }
 
-        // Dodavanje podataka u bazu
-        await db.Countries.AddRangeAsync(countries, cancellationToken);
-        await db.Cities.AddRangeAsync(cities, cancellationToken);
-        await db.Tenants.AddRangeAsync(tenants, cancellationToken);
+        // Dodavanje podataka u bazu    
         await db.Faculties.AddRangeAsync(faculties, cancellationToken);
         await db.AcademicYears.AddRangeAsync(academicYears, cancellationToken);
         await db.MyAppUsers.AddRangeAsync(users, cancellationToken);

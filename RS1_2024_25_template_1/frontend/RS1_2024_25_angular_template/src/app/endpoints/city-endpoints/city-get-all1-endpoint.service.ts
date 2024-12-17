@@ -7,6 +7,7 @@ export interface CityGetAll1Response {
   id: number;
   name: string;
   countryName: string;
+  regionName: string;
 }
 
 @Injectable({

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models.SharedTables;
 using RS1_2024_25.API.Helper.Api;
@@ -34,7 +35,7 @@ namespace RS1_2024_25.API.Endpoints.CityEndpoints
             else
             {
                 // Update operation: retrieve the existing city
-                city = await db.Cities.FindAsync(new object[] { request.ID }, cancellationToken);
+                city = await db.Cities.SingleOrDefaultAsync(x => x.ID == request.ID, cancellationToken);
 
                 if (city == null)
                 {
@@ -42,10 +43,21 @@ namespace RS1_2024_25.API.Endpoints.CityEndpoints
                 }
             }
 
+            Region? region = await db.Regions.FindAsync([request.RegionId], cancellationToken);
+
+            if (region == null)
+            {
+                throw new Exception($"invalid region for region id id {request.RegionId}");
+            }
+
+            if (region.CountryId != request.CountryId)
+            {
+                throw new Exception($"region.CountryId != request.CountryId for city id {request.ID}, request.CountryId {request.CountryId}");
+            }
+
             // Set common properties for both insert and update operations
             city.Name = request.Name;
             city.RegionId = request.RegionId;
-            city.CountryId = request.CountryId;
 
             // Save changes to the database
             await db.SaveChangesAsync(cancellationToken);
@@ -54,7 +66,8 @@ namespace RS1_2024_25.API.Endpoints.CityEndpoints
             {
                 ID = city.ID,
                 Name = city.Name,
-                CountryId = city.CountryId
+                RegionId = city.RegionId,
+                CountryId=city.Region!.CountryId
             };
         }
 
@@ -63,7 +76,7 @@ namespace RS1_2024_25.API.Endpoints.CityEndpoints
             public int? ID { get; set; } // Nullable to allow null for insert operations
             public required string Name { get; set; }
             public required int CountryId { get; set; }
-            public int RegionId { get; internal set; }
+            public required int RegionId { get; set; }
         }
 
         public class CityUpdateOrInsertResponse
@@ -71,6 +84,7 @@ namespace RS1_2024_25.API.Endpoints.CityEndpoints
             public required int ID { get; set; }
             public required string Name { get; set; }
             public required int CountryId { get; set; }
+            public required int RegionId { get; set; }
         }
     }
 }

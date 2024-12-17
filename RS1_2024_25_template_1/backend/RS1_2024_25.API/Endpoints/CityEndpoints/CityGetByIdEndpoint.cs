@@ -21,7 +21,7 @@ public class CityGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
                                 ID = c.ID,
                                 Name = c.Name,
                                 RegionId = c.RegionId,
-                                CountryId = c.CountryId
+                                CountryId = c.Region!.CountryId
                             })
                             .FirstOrDefaultAsync(x => x.ID == id, cancellationToken);
 

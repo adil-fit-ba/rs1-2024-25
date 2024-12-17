@@ -11,6 +11,10 @@ import {
   CountryGetAllEndpointService,
   CountryGetAllResponse
 } from '../../../../endpoints/country-endpoints/country-get-all-endpoint.service';
+import {
+  RegionGetAllEndpointService,
+  RegionGetAllResponse
+} from '../../../../endpoints/region-endpoints/region-get-all-endpoint.service';
 import {MySnackbarHelperService} from '../../../shared/snackbars/my-snackbar-helper.service';
 
 @Component({
@@ -23,9 +27,12 @@ export class Cities1EditComponent implements OnInit {
   cityId: number;
   city: CityGetByIdResponse = {
     name: '',
-    countryId: 0
+    countryId: 0,
+    regionId: 0
   };
-  countries: CountryGetAllResponse[] = []; // Niz za pohranu svih zemalja
+  countries: CountryGetAllResponse[] = [];
+  regions: RegionGetAllResponse[] = [];
+  regionCache: Map<number, RegionGetAllResponse[]> = new Map(); // Cache za regije po countryId
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +40,7 @@ export class Cities1EditComponent implements OnInit {
     private cityGetByIdService: CityGetByIdEndpointService,
     private cityUpdateService: CityUpdateOrInsertEndpointService,
     private countryGetAllService: CountryGetAllEndpointService,
+    private regionGetAllService: RegionGetAllEndpointService,
     private snackbarHelper: MySnackbarHelperService
   ) {
     this.cityId = 0;
@@ -43,12 +51,17 @@ export class Cities1EditComponent implements OnInit {
     if (this.cityId) {
       this.loadCityData();
     }
-    this.loadCountries(); // Učitavanje svih zemalja za combobox
+    this.loadCountries();
   }
 
   loadCityData(): void {
     this.cityGetByIdService.handleAsync(this.cityId).subscribe({
-      next: (city) => this.city = city,
+      next: (city) => {
+        this.city = city;
+        if (this.city.countryId) {
+          this.loadRegionsForCountry(this.city.countryId);
+        }
+      },
       error: (error) => console.error('Error loading city data', error)
     });
   }
@@ -56,31 +69,41 @@ export class Cities1EditComponent implements OnInit {
   loadCountries(): void {
     this.countryGetAllService.handleAsync().subscribe({
       next: (countries) => {
-        console.log("podaci su preuzeti")
         this.countries = countries;
-        this.countries.push({
-          id: 0,
-          name: '--odabirite city--'
-        })
+        this.countries.unshift({id: 0, name: '-- Select Country --'});
       },
-
       error: (error) => console.error('Error loading countries', error)
     });
   }
 
-  updateCity(): void {
+  loadRegionsForCountry(countryId: number): void {
+    if (this.regionCache.has(countryId)) {
+      this.regions = this.regionCache.get(countryId)!;
+    } else {
+      this.regionGetAllService.handleAsync({countryId}).subscribe({
+        next: (regions) => {
+          this.regions = regions;
+          this.regionCache.set(countryId, regions);
+        },
+        error: (error) => console.error('Error loading regions', error)
+      });
+    }
+  }
 
+  updateCity(): void {
     let errors: string[] = [];
     if (this.city.countryId == 0) {
-      errors.push("countryId is required");
+      errors.push("Country is required.");
     }
-
-    if (this.city.name.length == 0) {
-      errors.push("name is required");
+    if (this.city.regionId == 0) {
+      errors.push("Region is required.");
+    }
+    if (this.city.name.trim().length == 0) {
+      errors.push("City name is required.");
     }
 
     if (errors.length > 0) {
-      alert("errros: " + errors.join("\n"));
+      alert("Errors:\n" + errors.join("\n"));
       return;
     }
 
@@ -89,7 +112,7 @@ export class Cities1EditComponent implements OnInit {
       ...this.city
     }).subscribe({
       next: () => {
-        this.snackbarHelper.showMessage('Uspješno snimljene izmjene');
+        this.snackbarHelper.showMessage('Successfully saved changes');
         this.router.navigate(['/admin/cities1']);
       },
       error: (error) => console.error('Error updating city', error)

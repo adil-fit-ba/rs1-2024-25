@@ -12,6 +12,7 @@ export interface CityUpdateOrInsertRequest {
 export interface CityUpdateOrInsertResponse {
   id: number;
   name: string;
+  regionId: number;
   countryId: number;
 }
 

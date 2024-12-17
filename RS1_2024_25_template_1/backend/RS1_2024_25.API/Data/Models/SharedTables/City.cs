@@ -9,11 +9,10 @@ public class City : SharedTableBase
 {
     public string Name { get; set; }
 
-    [ForeignKey(nameof(Country))]
-    public int CountryId { get; set; }
-    public Country? Country { get; set; }
-
     public int RegionId { get; set; } // FK na regiju
     [ForeignKey(nameof(RegionId))]
     public Region? Region { get; set; } // Navigaciona veza na regiju
+
+    [InverseProperty(nameof(Municipality.City))]
+    public List<Municipality> Municipalities { get; set; } = new();
 }

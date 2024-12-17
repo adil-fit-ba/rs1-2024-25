@@ -34,6 +34,19 @@
       </mat-error>
     </mat-form-field>
 
+    <!-- Region Dropdown -->
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Region</mat-label>
+      <mat-select formControlName="regionId" required>
+        <mat-option *ngFor="let region of regions" [value]="region.id">
+          {{ region.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cityForm.get('regionId')?.touched && cityForm.get('regionId')?.errors">
+        <span *ngIf="cityForm.get('regionId')?.errors?.['required']">Region is required.</span>
+      </mat-error>
+    </mat-form-field>
+
     <div class="form-buttons">
       <button [disabled]="cityForm.invalid" color="primary" mat-raised-button type="submit">
         Save Changes

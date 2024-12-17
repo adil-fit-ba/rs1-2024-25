@@ -24,6 +24,12 @@ public class CityDeleteEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
         if (city == null)
             throw new KeyNotFoundException("City not found");
 
+        int count = await db.Municipalities.CountAsync(x => x.CityId == id, cancellationToken);
+        if (count > 0)
+        {
+            throw new Exception($"City id {id} has {count} Municipalities");
+        }
+
         db.Cities.Remove(city);
         await db.SaveChangesAsync(cancellationToken);
     }

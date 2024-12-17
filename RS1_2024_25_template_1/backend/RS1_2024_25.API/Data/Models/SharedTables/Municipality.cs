@@ -17,9 +17,6 @@ namespace RS1_2024_25.API.Data.Models.SharedTables
         [ForeignKey(nameof(CityId))]
         public City? City { get; set; } // Navigaciona veza na grad
 
-        public int RegionId { get; set; } // FK na regiju
-        [ForeignKey(nameof(RegionId))]
-        public Region? Region { get; set; } // Navigaciona veza na regiju
     }
 
 }

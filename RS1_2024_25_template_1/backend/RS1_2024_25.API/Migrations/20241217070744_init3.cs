@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RS1_2024_25.API.Migrations
 {
     /// <inheritdoc />
-    public partial class init10 : Migration
+    public partial class init3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,27 +59,6 @@ namespace RS1_2024_25.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tenants", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cities",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountryId = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cities", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Cities_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
-                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -153,27 +132,21 @@ namespace RS1_2024_25.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Municipalities",
+                name: "Cities",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: false),
                     RegionId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Municipalities", x => x.ID);
+                    table.PrimaryKey("PK_Cities", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Municipalities_Cities_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Cities",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Municipalities_Regions_RegionId",
+                        name: "FK_Cities_Regions_RegionId",
                         column: x => x.RegionId,
                         principalTable: "Regions",
                         principalColumn: "ID");
@@ -267,6 +240,27 @@ namespace RS1_2024_25.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Municipalities",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Municipalities", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Municipalities_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
                 {
@@ -325,9 +319,9 @@ namespace RS1_2024_25.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_CountryId",
+                name: "IX_Cities_RegionId",
                 table: "Cities",
-                column: "CountryId");
+                column: "RegionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_FacultyId",
@@ -348,11 +342,6 @@ namespace RS1_2024_25.API.Migrations
                 name: "IX_Municipalities_CityId",
                 table: "Municipalities",
                 column: "CityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Municipalities_RegionId",
-                table: "Municipalities",
-                column: "RegionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MyAppUsers_TenantId",
@@ -446,10 +435,10 @@ namespace RS1_2024_25.API.Migrations
                 name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "Regions");
+                name: "Tenants");
 
             migrationBuilder.DropTable(
-                name: "Tenants");
+                name: "Regions");
 
             migrationBuilder.DropTable(
                 name: "Countries");

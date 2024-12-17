@@ -21,8 +21,8 @@ public class CityGetAll2Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
                         {
                             ID = c.ID,
                             Name = c.Name,
-                            RegionName = c.Region != null ? c.Region.Name : "",
-                            CountryName = c.Country != null ? c.Country.Name : ""
+                            RegionName = c.Region!.Name,
+                            CountryName = c.Region!.Country!.Name
                         });
 
         var result = await MyPagedList<CityGetAll1Response>.CreateAsync(query, request, cancellationToken);

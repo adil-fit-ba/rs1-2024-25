@@ -29,7 +29,7 @@ public class CityGetAll3Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
         // Primjena filtera na osnovu naziva zemlje
         if (!string.IsNullOrWhiteSpace(request.FilterCountryName))
         {
-            query = query.Where(c => c.Country != null && c.Country.Name.Contains(request.FilterCountryName));
+            query = query.Where(c => c.Region!.Country!.Name.Contains(request.FilterCountryName));
         }
 
         // Projektovanje u rezultatni tip
@@ -37,8 +37,8 @@ public class CityGetAll3Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
         {
             ID = c.ID,
             Name = c.Name,
-            RegionName = c.Region != null ? c.Region.Name : "",
-            CountryName = c.Country != null ? c.Country.Name : ""
+            RegionName = c.Region!.Name,
+            CountryName = c.Region!.Country!.Name
         });
 
         // Kreiranje paginiranog odgovora sa filterom

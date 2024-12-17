@@ -1,6 +1,6 @@
 import {HttpParams} from '@angular/common/http';
 
-export function buildHttpParams(requestObject: any): HttpParams {
+export function buildHttpParams<T extends Record<string, any>>(requestObject: T): HttpParams {
   let params = new HttpParams();
 
   Object.entries(requestObject).forEach(([key, value]) => {

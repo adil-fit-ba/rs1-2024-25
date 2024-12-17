@@ -12,8 +12,8 @@ using RS1_2024_25.API.Data;
 namespace RS1_2024_25.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241210234958_init10a")]
-    partial class init10a
+    [Migration("20241217070744_init3")]
+    partial class init3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,9 +62,6 @@ namespace RS1_2024_25.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -79,8 +76,6 @@ namespace RS1_2024_25.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("RegionId");
 
@@ -132,17 +127,12 @@ namespace RS1_2024_25.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RegionId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 
                     b.HasIndex("CityId");
-
-                    b.HasIndex("RegionId");
 
                     b.ToTable("Municipalities");
                 });
@@ -485,19 +475,11 @@ namespace RS1_2024_25.API.Migrations
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.City", b =>
                 {
-                    b.HasOne("RS1_2024_25.API.Data.Models.SharedTables.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("RS1_2024_25.API.Data.Models.SharedTables.Region", "Region")
-                        .WithMany()
+                        .WithMany("Cities")
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("Country");
 
                     b.Navigation("Region");
                 });
@@ -505,26 +487,18 @@ namespace RS1_2024_25.API.Migrations
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.Municipality", b =>
                 {
                     b.HasOne("RS1_2024_25.API.Data.Models.SharedTables.City", "City")
-                        .WithMany()
+                        .WithMany("Municipalities")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("RS1_2024_25.API.Data.Models.SharedTables.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("City");
-
-                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.Region", b =>
                 {
                     b.HasOne("RS1_2024_25.API.Data.Models.SharedTables.Country", "Country")
-                        .WithMany()
+                        .WithMany("Regions")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -656,6 +630,21 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("Tenant");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.City", b =>
+                {
+                    b.Navigation("Municipalities");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.Country", b =>
+                {
+                    b.Navigation("Regions");
+                });
+
+            modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.Region", b =>
+                {
+                    b.Navigation("Cities");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul2_Basic.Faculty", b =>

@@ -19,7 +19,7 @@ import {MatSort} from '@angular/material/sort';
 })
 export class Cities2Component implements OnInit {
   //ovdje je koristeno Angular Reactive forms
-  displayedColumns: string[] = ['name', 'countryName', 'actions'];
+  displayedColumns: string[] = ['name', 'regionName', 'countryName', 'actions'];
   dataSource: MatTableDataSource<CityGetAll1Response> = new MatTableDataSource<CityGetAll1Response>();
 
   cities: CityGetAll1Response[] = [];

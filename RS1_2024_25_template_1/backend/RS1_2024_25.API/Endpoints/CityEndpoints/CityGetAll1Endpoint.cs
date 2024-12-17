@@ -20,8 +20,8 @@ public class CityGetAll1Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
                         {
                             ID = c.ID,
                             Name = c.Name,
-                            RegionName = c.Region != null ? c.Region.Name : "",
-                            CountryName = c.Country != null ? c.Country.Name : ""
+                            RegionName = c.Region!.Name,
+                            CountryName = c.Region!.Country!.Name
                         })
                         .ToArrayAsync(cancellationToken);
 
