@@ -22,7 +22,7 @@ namespace RS1_2024_25.API.SignalRHubs
             }
 
             // Validacija tokena i dohvatanje korisničkih informacija
-            var authInfo = myAuthService.GetAuthInfoFromTokenString(tokenString);
+            MyAuthInfo authInfo = myAuthService.GetAuthInfoFromTokenString(tokenString);
 
             if (!authInfo.IsLoggedIn)
             {

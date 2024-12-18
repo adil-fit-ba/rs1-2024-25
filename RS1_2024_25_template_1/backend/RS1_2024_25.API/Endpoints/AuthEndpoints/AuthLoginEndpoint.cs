@@ -23,7 +23,6 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
         {
             // Provjera da li korisnik postoji u bazi
             var loggedInUser = await db.MyAppUsersAll
-                .IgnoreQueryFilters()
                 .FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
             if (loggedInUser == null || !loggedInUser.VerifyPassword(request.Password))
