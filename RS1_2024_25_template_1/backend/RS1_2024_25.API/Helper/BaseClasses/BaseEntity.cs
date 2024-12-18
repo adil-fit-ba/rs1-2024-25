@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace RS1_2024_25.API.Helper.BaseClasses
 {
 
-    public abstract class BaseEntity
+    public abstract class BaseEntity : IMyBaseEntity
     {
         [Key]
         public int ID { get; set; }
