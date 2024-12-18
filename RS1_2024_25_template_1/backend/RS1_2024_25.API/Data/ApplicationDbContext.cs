@@ -1,46 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using RS1_2024_25.API.Data.Models.SharedTables;
 using RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth;
 using RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul2_Basic;
+using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.BaseClasses;
 using RS1_2024_25.API.Services;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
 
 namespace RS1_2024_25.API.Data
 {
-    public class ApplicationDbContext(
-        DbContextOptions options,
-        IServiceProvider serviceProvider
-        ) : DbContext(options)
+    public class ApplicationDbContext(DbContextOptions options, IServiceProvider serviceProvider) : DbContext(options)
     {
-        private int? _CurrentTenantId = null;
-
-        public bool HasCurrentTenantId => _CurrentTenantId != null;
-
-        public int CurrentTenantId
-        {
-            get
-            {
-                if (_CurrentTenantId == null )
-                {
-                    var authService = serviceProvider.GetRequiredService<MyAuthService>();
-                    MyAuthInfo myAuthInfo = authService.GetAuthInfo();
-                    if (!myAuthInfo.IsLoggedIn)
-                    {
-                        throw new UnauthorizedAccessException();
-                        
-                    }
-                    _CurrentTenantId = myAuthInfo.TenantId;
-                }
-                return _CurrentTenantId.Value;
-            }
-            set
-            {
-                _CurrentTenantId = value;
-            }
-        }
-
-
+       
         public DbSet<AcademicYear> AcademicYears { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Country> Countries { get; set; }
@@ -48,13 +21,54 @@ namespace RS1_2024_25.API.Data
         public DbSet<Region> Regions { get; set; }
         public DbSet<Tenant> Tenants { get; set; }
 
-        public DbSet<MyAppUser> MyAppUsers { get; set; }
-        public DbSet<MyAuthenticationToken> MyAuthenticationTokens { get; set; }
+        public DbSet<MyAppUser> MyAppUsersAll { get; set; }
+        public DbSet<MyAuthenticationToken> MyAuthenticationTokensAll { get; set; }
+        public DbSet<Department> DepartmentsAll { get; set; }
+        public DbSet<Faculty> FacultiesAll { get; set; }
+        public DbSet<Professor> ProfessorsAll { get; set; }
+        public DbSet<Student> StudentsAll { get; set; }
 
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<Faculty> Faculties { get; set; }
-        public DbSet<Professor> Professors { get; set; }
-        public DbSet<Student> Students { get; set; }
+        // IQueryable umjesto DbSet
+        public IQueryable<MyAppUser> MyAppUsers => Set<MyAppUser>().Where(e => e.TenantId == CurrentTenantIdThrowIfFail);
+        public IQueryable<MyAuthenticationToken> MyAuthenticationTokens => Set<MyAuthenticationToken>();
+        public IQueryable<Department> Departments => Set<Department>().Where(e => e.TenantId == CurrentTenantIdThrowIfFail);
+        public IQueryable<Faculty> Faculties => Set<Faculty>().Where(e => e.TenantId == CurrentTenantIdThrowIfFail);
+        public IQueryable<Professor> Professors => Set<Professor>().Where(e => e.TenantId == CurrentTenantIdThrowIfFail);
+        public IQueryable<Student> Students => Set<Student>().Where(e => e.TenantId == CurrentTenantIdThrowIfFail);
+
+        #region METHODS
+        public int? _CurrentTenantId = null;
+
+        public int CurrentTenantIdThrowIfFail
+        {
+            get
+            {
+                var result = CurrentTenantId;
+                if (result == null || result == 0)
+                {
+                    throw new UnauthorizedAccessException();
+                }
+
+                return result.Value;
+            }
+        }
+        public int? CurrentTenantId
+        {
+            get
+            {
+                if (_CurrentTenantId == null)
+                {
+                    var authService = serviceProvider.GetRequiredService<MyAuthService>();
+                    MyAuthInfo myAuthInfo = authService.GetAuthInfoFromRequest();
+                    _CurrentTenantId = myAuthInfo.TenantId;
+                }
+                return _CurrentTenantId;
+            }
+            set
+            {
+                _CurrentTenantId = value;
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,19 +82,26 @@ namespace RS1_2024_25.API.Data
             // opcija kod nasljeđivanja
             // modelBuilder.Entity<NekaBaznaKlasa>().UseTpcMappingStrategy();
 
-            // Globalni filter za TenantSpecificTable
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes()
-                .Where(t => typeof(TenantSpecificTable).IsAssignableFrom(t.ClrType)))
+            // Iteracija kroz sve entitete u modelu
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                var parameter = Expression.Parameter(entityType.ClrType, "e");
-                var tenantProperty = Expression.Property(parameter, "TenantId");
-                var currentTenantId = Expression.Constant(HasCurrentTenantId ? CurrentTenantId : 0);
-                var equality = Expression.Equal(tenantProperty, currentTenantId);
+                var clrType = entityType.ClrType;
 
-                var lambda = Expression.Lambda(equality, parameter);
+                // Provjera da li postoji [Table("...")] atribut
+                var tableAttribute = clrType.GetCustomAttributes(typeof(TableAttribute), inherit: false)
+                                            .FirstOrDefault() as TableAttribute;
 
-                // Primjena filtera na entitet
-                modelBuilder.Entity(entityType.ClrType).HasQueryFilter(lambda);
+                if (tableAttribute == null)
+                {
+                    // Ako nema TableAttribute, automatski pluralizuj naziv tabele
+                    var tableName = clrType.Name.Pluralize();
+                    modelBuilder.Entity(clrType).ToTable(tableName);
+                }
+                else
+                {
+                    // Ako postoji TableAttribute, koristi navedeni naziv tabele
+                    modelBuilder.Entity(clrType).ToTable(tableAttribute.Name);
+                }
             }
         }
      
@@ -104,8 +125,9 @@ namespace RS1_2024_25.API.Data
             {
                 // Postavljanje TenantId za nove entitete
                 var entity = (TenantSpecificTable)entry.Entity;
-                entity.TenantId = CurrentTenantId;
+                entity.TenantId = CurrentTenantIdThrowIfFail;
             }
         }
+        #endregion
     }
 }

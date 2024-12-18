@@ -23,7 +23,7 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
     [HttpPost]
     public override async Task<string> HandleAsync(CancellationToken cancellationToken = default)
     {
-        if (db.MyAppUsers.Any())
+        if (db.MyAppUsersAll.Any())
         {
             throw new Exception("Podaci su vec generisani");
         }
@@ -401,11 +401,11 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
         }
 
         // Dodavanje podataka u bazu    
-        await db.Faculties.AddRangeAsync(faculties, cancellationToken);
-        await db.AcademicYears.AddRangeAsync(academicYears, cancellationToken);
-        await db.MyAppUsers.AddRangeAsync(users, cancellationToken);
-        await db.Professors.AddRangeAsync(professors, cancellationToken);
-        await db.Students.AddRangeAsync(students, cancellationToken);
+        await db.AddRangeAsync(faculties, cancellationToken);
+        await db.AddRangeAsync(academicYears, cancellationToken);
+        await db.AddRangeAsync(users, cancellationToken);
+        await db.AddRangeAsync(professors, cancellationToken);
+        await db.AddRangeAsync(students, cancellationToken);
         await db.SaveChangesAsync(cancellationToken);
 
         return "Data generation completed successfully.";

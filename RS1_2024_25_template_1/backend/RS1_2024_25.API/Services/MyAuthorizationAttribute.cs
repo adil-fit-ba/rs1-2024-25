@@ -19,7 +19,7 @@ public class MyAuthorizationAttribute(bool isAdmin, bool isManager) : Attribute,
         }
 
         // Pozovi GetAuthInfo za dobijanje korisničkih informacija na osnovu tokena
-        var authInfo = authService.GetAuthInfo();
+        var authInfo = authService.GetAuthInfoFromRequest();
         if (authInfo == null)
         {
             context.Result = new UnauthorizedResult();

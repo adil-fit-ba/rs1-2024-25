@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models;
+using RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth;
 using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.Api;
 using RS1_2024_25.API.Services;
@@ -21,7 +22,7 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
         public override async Task<ActionResult<LoginResponse>> HandleAsync(LoginRequest request, CancellationToken cancellationToken = default)
         {
             // Provjera da li korisnik postoji u bazi
-            var loggedInUser = await db.MyAppUsers
+            var loggedInUser = await db.MyAppUsersAll
                 .IgnoreQueryFilters()
                 .FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
@@ -38,8 +39,8 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
 
             db.CurrentTenantId = loggedInUser.TenantId; //rucno postavljanje CurrentTenantId u dbContext zbog db inserta AuthToken
             // Generisanje novog autentifikacionog tokena
-            var newAuthToken = await authService.GenerateAuthToken(loggedInUser, cancellationToken);
-            var authInfo = authService.GetAuthInfo(newAuthToken);
+            MyAuthenticationToken newAuthToken = await authService.GenerateSaveAuthToken(loggedInUser, cancellationToken);
+            MyAuthInfo authInfo = authService.GetAuthInfoFromTokenModel(newAuthToken);
 
             return new LoginResponse
             {

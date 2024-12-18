@@ -25,6 +25,7 @@ import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from '@angular/material/input';
 import {MyDropdownComponent} from './my-reactive-forms/my-dropdown/my-dropdown.component';
 import {MatOption, MatSelect} from '@angular/material/select';
+import {MyChatComponent} from './mychat/mychat.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {MatOption, MatSelect} from '@angular/material/select';
     MyPageProgressbarComponent,
     MyInputTextComponent,
     MyDropdownComponent,
+    MyChatComponent,
   ],
   imports: [
     CommonModule,

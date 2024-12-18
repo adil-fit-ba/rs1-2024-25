@@ -11,6 +11,7 @@ import {Cities2EditComponent} from './cities2/cities2-edit/cities2-edit.componen
 import {Cities2Component} from './cities2/cities2.component';
 import {Cities3Component} from './cities3/cities3.component';
 import {Cities3EditComponent} from './cities3/cities3-edit/cities3-edit.component';
+import {MyChatComponent} from '../shared/mychat/mychat.component';
 
 //komentar
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
       {path: 'cities3/edit/:id', component: Cities3EditComponent},
       {path: 'destination', component: DestinationComponent},
       {path: 'order', component: ReservationComponent},
+      {path: 'chat', component: MyChatComponent},
       {path: '**', component: AdminErrorPageComponent} // Default ruta
     ]
   },

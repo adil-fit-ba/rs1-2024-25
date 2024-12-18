@@ -17,7 +17,7 @@ namespace RS1_2024_25.API.Endpoints.AuthEndpoints
         public override async Task<ActionResult<AuthGetResponse>> HandleAsync(CancellationToken cancellationToken = default)
         {
             // Retrieve user info based on the token
-            var authInfo = authService.GetAuthInfo();
+            var authInfo = authService.GetAuthInfoFromRequest();
 
             if (!authInfo.IsLoggedIn)
             {

@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.Auth;
 using RS1_2024_25.API.Services;
+using RS1_2024_25.API.SignalRHubs;
 
 
 var config = new ConfigurationBuilder()
@@ -16,6 +18,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(config.GetConnectionString("db1")));
 
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -25,6 +29,7 @@ builder.Services.AddHttpContextAccessor();
 //dodajte vaše servise
 builder.Services.AddTransient<MyAuthService>();
 builder.Services.AddTransient<MyTokenGenerator>();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -44,5 +49,6 @@ app.UseCors(
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<MySignalrHub>("/mysginalr-hub-path");
 
 app.Run();

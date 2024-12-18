@@ -17,7 +17,7 @@ namespace RS1_2024_25.API.Endpoints.CityEndpoints
         public override async Task<ActionResult<CityUpdateOrInsertResponse>> HandleAsync([FromBody] CityUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
         {
 
-            MyAuthInfo myAuthInfo = myAuthService.GetAuthInfo();
+            MyAuthInfo myAuthInfo = myAuthService.GetAuthInfoFromRequest();
             if (!myAuthInfo.IsLoggedIn)
             {
                 return Unauthorized();

@@ -48,7 +48,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AcademicYears");
+                    b.ToTable("AcademicYears", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.City", b =>
@@ -76,7 +76,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.Country", b =>
@@ -103,7 +103,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.Municipality", b =>
@@ -131,7 +131,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Municipalities");
+                    b.ToTable("Municipalities", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.Region", b =>
@@ -159,7 +159,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Regions");
+                    b.ToTable("Regions", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.Tenant", b =>
@@ -190,7 +190,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Tenants");
+                    b.ToTable("Tenants", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth.MyAppUser", b =>
@@ -242,7 +242,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("MyAppUsers");
+                    b.ToTable("MyAppUsers", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth.MyAuthenticationToken", b =>
@@ -282,7 +282,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("MyAuthenticationTokens");
+                    b.ToTable("MyAuthenticationTokens", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul2_Basic.Department", b =>
@@ -316,7 +316,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul2_Basic.Faculty", b =>
@@ -345,7 +345,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Faculties");
+                    b.ToTable("Faculties", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul2_Basic.Professor", b =>
@@ -393,7 +393,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Professors");
+                    b.ToTable("Professors", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul2_Basic.Student", b =>
@@ -467,7 +467,7 @@ namespace RS1_2024_25.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.City", b =>
