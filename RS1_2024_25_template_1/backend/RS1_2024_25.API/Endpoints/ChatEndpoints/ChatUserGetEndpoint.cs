@@ -15,11 +15,6 @@ public class ChatUserGetEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     [HttpGet]
     public override async Task<ChatUserGetResponse[]> HandleAsync([FromQuery] ChatUserGetRequest request, CancellationToken cancellationToken = default)
     {
-        var mydb = db;
-        var tid = mydb.CurrentTenantId;
-
-        var users = db.MyAppUsers.ToArray();
-
         // Filtriranje osnovno na tip korisnika
         IQueryable<UserQueryResult> query;
 
