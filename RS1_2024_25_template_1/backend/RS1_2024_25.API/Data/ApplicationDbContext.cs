@@ -83,11 +83,16 @@ namespace RS1_2024_25.API.Data
             // modelBuilder.Entity<NekaBaznaKlasa>().UseTpcMappingStrategy();
 
             // Iteracija kroz sve entitete u modelu
+            // U EF-u defaultno naziv tabele je jednak nazivu dbseta.
+            // S obzirom što smo izmjenili nazive dbsetova zbog tenanata i zbog dodatnih queryable
+            // onda u narednoj petlji postavljamo da nazivi tabela budu nazivi atributa "table"
+            // Ako nema atributa "table" onda se koristi naziv klase.
+
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 var clrType = entityType.ClrType;
 
-                // Provjera da li postoji [Table("...")] atribut
+                // Provjera da li postoji [Table("TblNekoIme")] atribut
                 var tableAttribute = clrType.GetCustomAttributes(typeof(TableAttribute), inherit: false)
                                             .FirstOrDefault() as TableAttribute;
 

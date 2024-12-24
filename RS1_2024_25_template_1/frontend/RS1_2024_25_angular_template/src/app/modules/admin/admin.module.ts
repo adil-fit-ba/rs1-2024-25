@@ -32,6 +32,7 @@ import {MatOption, MatSelect} from "@angular/material/select";
 import {MatCard} from '@angular/material/card';
 import {Cities3Component} from './cities3/cities3.component';
 import {Cities3EditComponent} from './cities3/cities3-edit/cities3-edit.component';
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import {Cities3EditComponent} from './cities3/cities3-edit/cities3-edit.componen
     MatSelect,
     MatOption,
     MatCard,
+    MatProgressSpinner,
     // Omogućava pristup svemu što je eksportovano iz SharedModule
   ],
   providers: []

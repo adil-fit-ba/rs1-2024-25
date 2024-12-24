@@ -21,15 +21,12 @@ public class CityGetAll3Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
             .AsQueryable();
 
         // Primjena filtera na osnovu naziva grada
-        if (!string.IsNullOrWhiteSpace(request.FilterCityName))
+        if (!string.IsNullOrWhiteSpace(request.Q))
         {
-            query = query.Where(c => c.Name.Contains(request.FilterCityName));
-        }
-
-        // Primjena filtera na osnovu naziva zemlje
-        if (!string.IsNullOrWhiteSpace(request.FilterCountryName))
-        {
-            query = query.Where(c => c.Region!.Country!.Name.Contains(request.FilterCountryName));
+            query = query.Where(c => c.Name.Contains(request.Q) ||
+                c.Region!.Name.Contains(request.Q) ||
+                c.Region!.Country!.Name.Contains(request.Q)
+            );
         }
 
         // Projektovanje u rezultatni tip
@@ -49,8 +46,7 @@ public class CityGetAll3Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     }
     public class CityGetAll3Request : MyPagedRequest //naslijeđujemo
     {
-        public string FilterCityName { get; set; } = string.Empty;
-        public string FilterCountryName { get; set; } = string.Empty;
+        public string? Q { get; set; } = string.Empty;
     }
 
     public class CityGetAll3Response

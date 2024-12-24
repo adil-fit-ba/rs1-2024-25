@@ -1,5 +1,6 @@
 ﻿namespace RS1_2024_25.API.Endpoints.DataSeedEndpoints;
 
+using Bogus;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
@@ -27,6 +28,9 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
         {
             throw new Exception("Podaci su vec generisani");
         }
+
+        // Kreiraj faker za imena
+        var faker = new Faker("en");
 
         #region COUNTRY_REGION_CITY
         // Kreiranje država
@@ -263,8 +267,8 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
         // Kreiranje tenant-a (univerziteta)
         var tenants = new List<Tenant>
         {
-            new Tenant { Name = "University of Sarajevo", DatabaseConnection = "db_conn_sarajevo", ServerAddress = "192.168.1.1" },
-            new Tenant { Name = "University of Mostar", DatabaseConnection = "db_conn_mostar", ServerAddress = "192.168.1.2" }
+            new Tenant { Name = "University Džemal Bijedić, Mostar", DatabaseConnection = "db_conn_mostar", ServerAddress = "192.168.1.10" },
+            new Tenant { Name = "University of Sarajevo", DatabaseConnection = "db_conn_sarajevo", ServerAddress = "192.168.1.11" },
         };
 
         await db.Countries.AddRangeAsync(countries, cancellationToken);
@@ -363,34 +367,35 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
             x.Tenant = tenants[0];
         }
 
+        List<Student> students = new List<Student>();
         // Kreiranje studenata
-        var students = new List<Student>
+        for (int i = 0; i < 100; i++)
         {
-            new Student
+            // Generiši nasumično ime i prezime
+            string firstName = faker.Name.FirstName();
+            string lastName = faker.Name.LastName();
+
+            var s = new Student
             {
-                User = users[2], // Povezano s user1
-                ParentName = "Parent One",
+                User = new MyAppUser
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = (firstName + "." + lastName).ToLower() + "@edu.fit.ba",
+                    Tenant = tenants[0]
+                },
+                ParentName = faker.Name.FirstName(),
                 BirthDate = new DateOnly(2000, 5, 15),
                 Gender = Gender.Male,
                 Citizenship = countries[0],
                 BirthPlace = "Sarajevo",
-                StudentNumber = "20240001",
-                ContactMobilePhone = "+38761123456",
-                ContactPrivateEmail = "student1@example.com"
-            },
-            new Student
-            {
-                User = users[3], // Povezano s user2
-                ParentName = "Parent Two",
-                BirthDate = new DateOnly(1999, 8, 10),
-                Gender = Gender.Female,
-                Citizenship = countries[0],
-                BirthPlace = "Mostar",
-                StudentNumber = "20240002",
-                ContactMobilePhone = "+38761234567",
-                ContactPrivateEmail = "student2@example.com"
-            }
-        };
+                StudentNumber = "IB200"+ i.ToString("D3"),
+                ContactMobilePhone = faker.Phone.PhoneNumber(),
+                ContactPrivateEmail = faker.Internet.Email(firstName, lastName)
+            };
+            s.User.SetPassword("test");
+            students.Add(s);
+        }
 
         Municipality defaultOpstina = countries[0].Regions[0].Cities[0].Municipalities[0];
 

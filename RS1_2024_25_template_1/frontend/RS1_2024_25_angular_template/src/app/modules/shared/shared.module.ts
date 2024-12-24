@@ -26,6 +26,7 @@ import {MatInput} from '@angular/material/input';
 import {MyDropdownComponent} from './my-reactive-forms/my-dropdown/my-dropdown.component';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MyChatComponent} from './mychat/mychat.component';
+import {MatSpinner} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import {MyChatComponent} from './mychat/mychat.component';
     MatError,
     MatLabel,
     MatSelect,
-    MatOption
+    MatOption,
+    MatSpinner
   ],
   exports: [
     UnauthorizedComponent, // Omogućavamo ponovno korištenje UnauthorizedComponent
