@@ -10,7 +10,7 @@ export class MyCacheService {
   constructor() {
   }
 
-  set(key: string, value: any, ttl: number = 300000): void { // TTL u milisekundama (default 5 minuta)
+  set(key: string, value: any, ttl: number = 30 * 1000): void { // TTL u milisekundama (default 30 sek)
     this.cache.set(key, value);
     this.expirationTimes.set(key, Date.now() + ttl);
   }
