@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from '../message.service';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter} from 'rxjs';
 
 @Component({
   selector: 'app-receiver1',
@@ -17,7 +18,13 @@ export class Receiver1Component implements OnInit {
 
   ngOnInit(): void {
     this.messageService.message$
-      .pipe(map(v => v.toUpperCase()))
+      .pipe(
+        map(v => v.toUpperCase()),
+        tap(v => console.log("Receiver1Component: " + v)),
+        filter(x => x.length >= 3),
+        debounceTime(500),
+        distinctUntilChanged()
+      )
       .subscribe((msg) => {
         this.messages.push(msg);
       });

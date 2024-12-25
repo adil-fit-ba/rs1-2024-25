@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from '../message.service';
-import {tap} from 'rxjs/operators';
+import {take, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-receiver2',
@@ -17,7 +17,8 @@ export class Receiver2Component implements OnInit {
   ngOnInit(): void {
     this.messageService.message$
       .pipe(
-        tap(v => console.log(v))
+        tap(v => console.log(v)),
+        take(5)
       )
       .subscribe((msg) => {
         this.messages.push(msg);

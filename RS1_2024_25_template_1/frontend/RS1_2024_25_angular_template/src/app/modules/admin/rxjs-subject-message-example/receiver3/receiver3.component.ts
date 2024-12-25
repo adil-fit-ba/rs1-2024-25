@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from '../message.service';
-import {map, mergeMap, take, tap} from 'rxjs/operators';
+import {map, mergeMap, tap} from 'rxjs/operators';
 import {StudentGetAllEndpointService} from '../../../../endpoints/student-endpoints/student-get-all-endpoint.service';
 
 @Component({
@@ -22,8 +22,7 @@ export class Receiver3Component implements OnInit {
         tap(v => console.log(v)),
         mergeMap(message => this.apiClient.handleAsync({q: message, pageNumber: 1, pageSize: 100})),
         map(respone => respone.dataItems),
-        take(3),
-        map(studentsArray => studentsArray.map(s => s.firstName)),
+        map(studentsArray => studentsArray.map(s => s.firstName + " " + s.lastName)),
       )
       .subscribe((firstNamesArray) => {
         this.dataArray = firstNamesArray;

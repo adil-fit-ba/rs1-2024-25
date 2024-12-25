@@ -20,7 +20,5 @@ export class SenderComponent {
     this.messageService.sendMessage(this.message); // Emituje poruku tokom unosa
   }
 
-  sendMessage(): void {
-    this.messageService.sendMessage(this.message); // Emituje trenutnu poruku
-  }
+
 }

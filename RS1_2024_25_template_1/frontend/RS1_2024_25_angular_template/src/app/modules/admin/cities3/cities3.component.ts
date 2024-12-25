@@ -69,7 +69,7 @@ export class Cities3Component implements OnInit, AfterViewInit {
         pageNumber: page,
         pageSize: pageSize
       },
-      true,
+      // true,
     ).subscribe({
       next: (data) => {
         this.dataSource = new MatTableDataSource<CityGetAll3Response>(data.dataItems);
