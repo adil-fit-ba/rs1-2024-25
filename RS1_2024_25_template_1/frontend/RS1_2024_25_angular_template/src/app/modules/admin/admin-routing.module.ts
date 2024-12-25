@@ -12,6 +12,9 @@ import {Cities2Component} from './cities2/cities2.component';
 import {Cities3Component} from './cities3/cities3.component';
 import {Cities3EditComponent} from './cities3/cities3-edit/cities3-edit.component';
 import {MyChatComponent} from '../shared/mychat/mychat.component';
+import {
+  RxjsSubjectMessageExampleComponent
+} from './rxjs-subject-message-example/rxjs-subject-message-example.component';
 
 //komentar
 const routes: Routes = [
@@ -33,6 +36,7 @@ const routes: Routes = [
       {path: 'destination', component: DestinationComponent},
       {path: 'order', component: ReservationComponent},
       {path: 'chat', component: MyChatComponent},
+      {path: 'rxjs-subject-message-example', component: RxjsSubjectMessageExampleComponent},
       {path: '**', component: AdminErrorPageComponent} // Default ruta
     ]
   },

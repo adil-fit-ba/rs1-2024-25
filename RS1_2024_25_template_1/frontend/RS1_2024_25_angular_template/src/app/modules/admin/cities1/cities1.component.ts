@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MyDialogConfirmComponent} from '../../shared/dialogs/my-dialog-confirm/my-dialog-confirm.component';
 import {MySnackbarHelperService} from '../../shared/snackbars/my-snackbar-helper.service';
 import {MyDialogSimpleComponent} from '../../shared/dialogs/my-dialog-simple/my-dialog-simple.component';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-cities1',
@@ -34,10 +35,12 @@ export class Cities1Component implements OnInit {
   }
 
   fetchCities(): void {
-    this.cityGetService.handleAsync().subscribe({
-      next: (data) => (this.cities = data),
-      error: (err) => console.error('Error fetching cities1:', err)
-    });
+    this.cityGetService.handleAsync()
+      .pipe(tap(x => console.log("fetched: " + x.length)))
+      .subscribe({
+        next: (data) => (this.cities = data),
+        error: (err) => console.error('Error fetching cities1:', err)
+      });
   }
 
   editCity(id: number): void {
