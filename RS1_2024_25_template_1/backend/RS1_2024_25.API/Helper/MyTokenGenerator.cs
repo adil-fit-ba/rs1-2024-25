@@ -4,9 +4,9 @@ using System.Text;
 namespace RS1_2024_25.API.Helper;
 
 //https://gist.github.com/wadeschulz/20822570b27159813db8
-public class MyTokenGenerator
+public  class MyTokenGenerator
 {
-    public string Generate(int size)
+    public static string Generate(int size)
     {
         // Characters except I, l, O, 1, and 0 to decrease confusion when hand typing tokens
         var charSet = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -26,7 +26,7 @@ public class MyTokenGenerator
         return result.ToString();
     }
 
-    public string GenerateName(int size)
+    public static string GenerateName(int size)
     {
         // Characters except I, l, O, 1, and 0 to decrease confusion when hand typing tokens
         var charSet = "ABCDEFGHJKLMNPQRSTUVWXYZ".ToLower();

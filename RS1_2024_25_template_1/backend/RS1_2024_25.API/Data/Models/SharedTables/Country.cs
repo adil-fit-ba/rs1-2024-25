@@ -6,16 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RS1_2024_25.API.Data.Models.SharedTables
+namespace RS1_2024_25.API.Data.Models.SharedTables;
+
+// drzava - Države
+public class Country : SharedTableBase
 {
-    // drzava - Države
-    public class Country : SharedTableBase
-    {
-        public string Name { get; set; } = string.Empty; // Naziv države
-        public string IsoCode { get; set; } = string.Empty; // ISO kod države
+    public string Name { get; set; } = string.Empty; // Naziv države
+    public string IsoCode { get; set; } = string.Empty; // ISO kod države
 
-        [InverseProperty(nameof(Region.Country))] // Veza ka Region.Country
-        public List<Region> Regions { get; set; } = new();
-    }
-
+    [InverseProperty(nameof(Region.Country))] // Veza ka Region.Country
+    public List<Region> Regions { get; set; } = new();
 }

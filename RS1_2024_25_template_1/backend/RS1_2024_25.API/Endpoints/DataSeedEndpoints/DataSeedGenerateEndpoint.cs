@@ -26,7 +26,7 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
     {
         if (db.MyAppUsersAll.Any())
         {
-            throw new Exception("Podaci su vec generisani");
+            return "Podaci su vec generisani";
         }
 
         // Kreiraj faker za imena
