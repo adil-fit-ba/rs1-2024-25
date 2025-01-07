@@ -21,29 +21,21 @@ public static class TestApplicationDbContext
         await seeder.HandleAsync();
 
         // Dodavanje testnog tokena
-        await SeedAuthTokenAsync(dbContext, TestHttpContextAccessorHelper.tokenValue);
-
-        return dbContext;
-    }
-
-    private static async Task SeedAuthTokenAsync(ApplicationDbContext dbContext, string tokenValue)
-    {
-        // Osiguraj da se prethodne promjene završe prije nego što počne nova operacija
-        await dbContext.SaveChangesAsync();
-
-
         var user = await dbContext.MyAppUsersAll.FirstAsync();
 
         var token = new MyAuthenticationToken
         {
             MyAppUser = user,
-            Value = tokenValue,
+            Value = TestHttpContextAccessorHelper.tokenValue,
             RecordedAt = DateTime.Now,
             TenantId = user.TenantId
         };
 
         await dbContext.MyAuthenticationTokensAll.AddAsync(token);
         await dbContext.SaveChangesAsync();
+
+        return dbContext;
     }
+
 
 }

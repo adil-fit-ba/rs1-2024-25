@@ -3,7 +3,7 @@ using Moq;
 
 public static class TestHttpContextAccessorHelper
 {
-    public static string tokenValue = "";
+    public static string tokenValue = "moj-token-123";
 
     public static IHttpContextAccessor CreateWithAuthToken()
     {
