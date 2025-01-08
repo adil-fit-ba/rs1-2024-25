@@ -9,7 +9,7 @@ using static RS1_2024_25.API.Endpoints.AuthEndpoints.AuthGetEndpoint;
 namespace RS1_2024_25.API.Endpoints.AuthEndpoints;
 
 [Route("auth")]
-public class AuthGetEndpoint(MyAuthService authService) : MyEndpointBaseAsync
+public class AuthGetEndpoint(IMyAuthService authService) : MyEndpointBaseAsync
     .WithoutRequest
     .WithActionResult<AuthGetResponse>
 {

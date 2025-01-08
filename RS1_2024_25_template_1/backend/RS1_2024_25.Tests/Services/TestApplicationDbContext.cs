@@ -9,10 +9,10 @@ public static class TestApplicationDbContext
     public static async Task<ApplicationDbContext> CreateAsync()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase("TestDb")
+            .UseInMemoryDatabase(Guid.NewGuid().ToString()) // Svaki test ima unikatni naziv baze
             .Options;
 
-        var httpContextAccessor = TestHttpContextAccessorHelper.CreateWithAuthToken();
+        var httpContextAccessor = TestHttpContextAccessorHelper.CreateWithValidAuthToken();
 
         var dbContext = new ApplicationDbContext(options, httpContextAccessor);
 
@@ -26,7 +26,7 @@ public static class TestApplicationDbContext
         var token = new MyAuthenticationToken
         {
             MyAppUser = user,
-            Value = TestHttpContextAccessorHelper.tokenValue,
+            Value = TestHttpContextAccessorHelper.ValidTokenValue,
             RecordedAt = DateTime.Now,
             TenantId = user.TenantId
         };

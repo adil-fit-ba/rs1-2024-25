@@ -9,10 +9,10 @@ namespace RS1_2024_25.API.Endpoints.CityEndpoints;
 [Route("cities")]
 public class CityGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithRequest<int>
-    .WithResult<CityGetByIdResponse>
+    .WithActionResult<CityGetByIdResponse>
 {
     [HttpGet("{id}")]
-    public override async Task<CityGetByIdResponse> HandleAsync(int id, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<CityGetByIdResponse>> HandleAsync(int id, CancellationToken cancellationToken = default)
     {
         var city = await db.Cities
                             .Where(c => c.ID == id)
@@ -26,9 +26,9 @@ public class CityGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
                             .FirstOrDefaultAsync(x => x.ID == id, cancellationToken);
 
         if (city == null)
-            throw new KeyNotFoundException("City not found");
+            return NotFound("City not found");
 
-        return city;
+        return Ok(city);
     }
 
     public class CityGetByIdResponse

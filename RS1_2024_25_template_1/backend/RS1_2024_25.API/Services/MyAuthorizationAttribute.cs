@@ -11,7 +11,7 @@ public class MyAuthorizationAttribute(bool isAdmin, bool isManager) : Attribute,
     public void OnAuthorization(AuthorizationFilterContext context)
     {
         // Dobavi MyAuthService iz servisa
-        var authService = context.HttpContext.RequestServices.GetService<MyAuthService>();
+        var authService = context.HttpContext.RequestServices.GetService<IMyAuthService>();
         if (authService == null)
         {
             context.Result = new UnauthorizedResult();

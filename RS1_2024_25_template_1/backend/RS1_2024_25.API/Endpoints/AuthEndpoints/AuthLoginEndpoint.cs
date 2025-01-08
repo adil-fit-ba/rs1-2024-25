@@ -14,7 +14,7 @@ using static RS1_2024_25.API.Endpoints.AuthEndpoints.AuthLoginEndpoint;
 namespace RS1_2024_25.API.Endpoints.AuthEndpoints;
 
 [Route("auth")]
-public class AuthLoginEndpoint(ApplicationDbContext db, MyAuthService authService) : MyEndpointBaseAsync
+public class AuthLoginEndpoint(ApplicationDbContext db, IMyAuthService authService) : MyEndpointBaseAsync
     .WithRequest<LoginRequest>
     .WithActionResult<LoginResponse>
 {
@@ -41,11 +41,11 @@ public class AuthLoginEndpoint(ApplicationDbContext db, MyAuthService authServic
         MyAuthenticationToken newAuthToken = await authService.GenerateSaveAuthToken(loggedInUser, cancellationToken);
         MyAuthInfo authInfo = authService.GetAuthInfoFromTokenModel(newAuthToken);
 
-        return new LoginResponse
+        return Ok(new LoginResponse
         {
             Token = newAuthToken.Value,
             MyAuthInfo = authInfo
-        };
+        });
 
     }
 

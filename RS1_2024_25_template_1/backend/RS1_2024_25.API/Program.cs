@@ -29,8 +29,7 @@ builder.Services.AddSwaggerGen(x => x.OperationFilter<MyAuthorizationSwaggerHead
 builder.Services.AddHttpContextAccessor();
 
 //dodajte vaše servise
-builder.Services.AddTransient<MyAuthService>();
-builder.Services.AddTransient<MyTokenGenerator>();
+builder.Services.AddTransient<IMyAuthService, MyAuthService>();
 builder.Services.AddSignalR();
 
 builder.Services.AddFluentValidationAutoValidation();

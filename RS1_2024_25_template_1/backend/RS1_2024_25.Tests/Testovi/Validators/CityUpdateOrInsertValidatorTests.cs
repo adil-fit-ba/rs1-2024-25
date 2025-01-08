@@ -1,7 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Endpoints.CityEndpoints;
-using Xunit;
 
 public class CityUpdateOrInsertValidatorTests
 {

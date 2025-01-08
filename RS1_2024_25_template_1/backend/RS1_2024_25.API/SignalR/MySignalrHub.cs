@@ -3,7 +3,7 @@ using RS1_2024_25.API.Services;
 
 namespace RS1_2024_25.API.SignalRHubs;
 
-public class MySignalrHub(MyAuthService myAuthService) : Hub
+public class MySignalrHub(IMyAuthService myAuthService) : Hub
 {
     private string? GetMyAuthToken()
     {

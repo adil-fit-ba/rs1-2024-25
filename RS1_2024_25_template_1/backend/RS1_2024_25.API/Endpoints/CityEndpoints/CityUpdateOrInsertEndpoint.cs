@@ -10,7 +10,7 @@ using static RS1_2024_25.API.Endpoints.CityEndpoints.CityUpdateOrInsertEndpoint;
 namespace RS1_2024_25.API.Endpoints.CityEndpoints;
 
 [Route("cities")]
-public class CityUpdateOrInsertEndpoint(ApplicationDbContext db, MyAuthService myAuthService) : MyEndpointBaseAsync
+public class CityUpdateOrInsertEndpoint(ApplicationDbContext db, IMyAuthService myAuthService) : MyEndpointBaseAsync
     .WithRequest<CityUpdateOrInsertRequest>
     .WithActionResult<CityUpdateOrInsertResponse>
 {
@@ -44,18 +44,6 @@ public class CityUpdateOrInsertEndpoint(ApplicationDbContext db, MyAuthService m
             }
         }
 
-        Region? region = await db.Regions.FindAsync([request.RegionId], cancellationToken);
-
-        if (region == null)
-        {
-            throw new Exception($"invalid region for region id id {request.RegionId}");
-        }
-
-        if (region.CountryId != request.CountryId)
-        {
-            throw new Exception($"region.CountryId != request.CountryId for city id {request.ID}, request.CountryId {request.CountryId}");
-        }
-
         // Set common properties for both insert and update operations
         city.Name = request.Name;
         city.RegionId = request.RegionId;
@@ -63,13 +51,13 @@ public class CityUpdateOrInsertEndpoint(ApplicationDbContext db, MyAuthService m
         // Save changes to the database
         await db.SaveChangesAsync(cancellationToken);
 
-        return new CityUpdateOrInsertResponse
+        return Ok(new CityUpdateOrInsertResponse
         {
             ID = city.ID,
             Name = city.Name,
             RegionId = city.RegionId,
             CountryId=city.Region!.CountryId
-        };
+        });
     }
 
     public class CityUpdateOrInsertRequest
