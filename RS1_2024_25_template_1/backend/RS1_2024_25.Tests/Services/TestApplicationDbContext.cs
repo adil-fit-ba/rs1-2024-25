@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Data.Models.SharedTables;
 using RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth;
@@ -12,7 +13,7 @@ public static class TestApplicationDbContext
             .UseInMemoryDatabase(Guid.NewGuid().ToString()) // Svaki test ima unikatni naziv baze
             .Options;
 
-        var httpContextAccessor = TestHttpContextAccessorHelper.CreateWithValidAuthToken();
+        IHttpContextAccessor httpContextAccessor = TestHttpContextAccessorHelper.CreateWithValidAuthToken();
 
         var dbContext = new ApplicationDbContext(options, httpContextAccessor);
 

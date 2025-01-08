@@ -28,11 +28,11 @@ public class AuthLoginEndpointTests
         };
 
         // Act
-        var result = await _authLoginEndpoint.HandleAsync(request);
+        ActionResult<AuthLoginEndpoint.LoginResponse> result = await _authLoginEndpoint.HandleAsync(request);
 
         // Assert
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var response = Assert.IsType<AuthLoginEndpoint.LoginResponse>(okResult.Value);
+        OkObjectResult okResult = Assert.IsType<OkObjectResult>(result.Result);
+        AuthLoginEndpoint.LoginResponse response = Assert.IsType<AuthLoginEndpoint.LoginResponse>(okResult.Value);
 
         Assert.NotNull(response.Token);
         Assert.NotNull(response.MyAuthInfo);

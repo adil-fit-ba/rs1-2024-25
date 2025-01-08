@@ -26,7 +26,10 @@ public class CityGetByIdEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
                             .FirstOrDefaultAsync(x => x.ID == id, cancellationToken);
 
         if (city == null)
-            return NotFound("City not found");
+        {
+            throw new ArgumentException("City not found");
+        }
+
 
         return Ok(city);
     }

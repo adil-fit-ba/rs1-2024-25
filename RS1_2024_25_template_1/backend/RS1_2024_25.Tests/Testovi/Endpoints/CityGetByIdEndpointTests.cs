@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Endpoints.CityEndpoints;
 using Xunit;
@@ -47,6 +48,8 @@ public class CityGetByIdEndpointTests
 
         // Assert
         Assert.IsType<NotFoundObjectResult>(result.Result);
+
+        await Assert.ThrowsAsync<ArgumentException>(() => _endpoint.HandleAsync(invalidCityId));
     }
 
     [Fact]
