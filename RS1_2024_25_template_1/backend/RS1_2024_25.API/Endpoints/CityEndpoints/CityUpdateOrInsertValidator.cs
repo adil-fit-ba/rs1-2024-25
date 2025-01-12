@@ -22,16 +22,16 @@ public class CityUpdateOrInsertValidator : AbstractValidator<CityUpdateOrInsertE
             .GreaterThan(0).WithMessage("ID regije mora biti veći od 0.");
 
         // Dodatna poslovna pravila za validaciju povezanih entiteta
+        // Ako je ukljucena autovalidacija u "program.cs"
+        // builder.Services.AddFluentValidationAutoValidation();
+        // onda validacija ne može biti async.
+        // Ovo je bug na online nastavi.
         RuleFor(x => x)
-            .MustAsync(async (request, cancellation) =>
-            {
-                var region = await dbContext.Regions.FindAsync(request.RegionId);
-
-                if (region == null)
-                    return false;
-
-                return region.CountryId == request.CountryId;
-            })
+                 .Must(request =>
+                 {
+                     var region = dbContext.Regions.FirstOrDefault(r => r.ID == request.RegionId);
+                     return region != null && region.CountryId == request.CountryId;
+                 })
             .WithMessage("Regija nije validna za datu državu.");
     }
 }
