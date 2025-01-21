@@ -5,13 +5,13 @@ import {
 } from '../../../../endpoints/city-endpoints/city-update-or-insert-endpoint.service';
 import {CityGetByIdEndpointService} from '../../../../endpoints/city-endpoints/city-get-by-id-endpoint.service';
 import {
-  CountryGetAllEndpointService,
-  CountryGetAllResponse
-} from '../../../../endpoints/country-endpoints/country-get-all-endpoint.service';
+  CountryLookupEndpointService,
+  CountryLookupResponse
+} from '../../../../endpoints/lookup-endpoints/country-lookup-endpoint.service';
 import {
-  RegionGetAllEndpointService,
-  RegionGetAllResponse
-} from '../../../../endpoints/region-endpoints/region-get-all-endpoint.service';
+  RegionLookupEndpointService,
+  RegionLookupResponse
+} from '../../../../endpoints/lookup-endpoints/region-lookup-endpoint.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -23,9 +23,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class Cities3EditComponent implements OnInit {
   cityForm: FormGroup;
   cityId: number;
-  countries: CountryGetAllResponse[] = [];
-  regions: RegionGetAllResponse[] = [];
-  regionCache: Map<number, RegionGetAllResponse[]> = new Map(); // Cache for regions by countryId
+  countries: CountryLookupResponse[] = [];
+  regions: RegionLookupResponse[] = [];
+  regionCache: Map<number, RegionLookupResponse[]> = new Map(); // Cache for regions by countryId
 
   constructor(
     private fb: FormBuilder,
@@ -33,8 +33,8 @@ export class Cities3EditComponent implements OnInit {
     public router: Router,
     private cityGetByIdService: CityGetByIdEndpointService,
     private cityUpdateService: CityUpdateOrInsertEndpointService,
-    private countryGetAllService: CountryGetAllEndpointService,
-    private regionGetAllService: RegionGetAllEndpointService
+    private countryGetAllService: CountryLookupEndpointService,
+    private regionGetAllService: RegionLookupEndpointService
   ) {
     this.cityId = 0;
 

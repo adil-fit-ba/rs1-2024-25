@@ -20,7 +20,7 @@ public class CityUpdateOrInsertEndpointTests
         _authService = new MyAuthService(_dbContext, TestHttpContextAccessorHelper.CreateWithValidAuthToken());
 
         // Inicijalizacija endpoint-a
-        _endpoint = new CityUpdateOrInsertEndpoint(_dbContext, _authService);
+        _endpoint = new CityUpdateOrInsertEndpoint(_dbContext);
     }
 
     [Fact]
@@ -40,11 +40,8 @@ public class CityUpdateOrInsertEndpointTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var response = Assert.IsType<CityUpdateOrInsertEndpoint.CityUpdateOrInsertResponse>(okResult.Value);
+        var response = Assert.IsType<int>(okResult.Value);
 
-        Assert.Equal(request.Name, response.Name);
-        Assert.Equal(request.RegionId, response.RegionId);
-        Assert.Equal(request.CountryId, response.CountryId);
     }
 
     [Fact]
@@ -65,10 +62,9 @@ public class CityUpdateOrInsertEndpointTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var response = Assert.IsType<CityUpdateOrInsertEndpoint.CityUpdateOrInsertResponse>(okResult.Value);
+        var response = Assert.IsType<int>(okResult.Value);
 
-        Assert.Equal(request.ID, response.ID);
-        Assert.Equal(request.Name, response.Name);
+        Assert.Equal(request.ID, response);
     }
 
     [Fact]
@@ -95,7 +91,8 @@ public class CityUpdateOrInsertEndpointTests
     {
         // Arrange
         var invalidAuthService = new MyAuthService(_dbContext, TestHttpContextAccessorHelper.CreateWithInvalidAuthToken());
-        var endpointWithInvalidAuth = new CityUpdateOrInsertEndpoint(_dbContext, invalidAuthService);
+        //todo
+        var endpointWithInvalidAuth = new CityUpdateOrInsertEndpoint(_dbContext);
 
         var request = new CityUpdateOrInsertEndpoint.CityUpdateOrInsertRequest
         {

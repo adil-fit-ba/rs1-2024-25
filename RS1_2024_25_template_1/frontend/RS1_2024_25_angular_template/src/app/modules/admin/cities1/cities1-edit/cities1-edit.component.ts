@@ -8,13 +8,13 @@ import {
   CityGetByIdResponse
 } from '../../../../endpoints/city-endpoints/city-get-by-id-endpoint.service';
 import {
-  CountryGetAllEndpointService,
-  CountryGetAllResponse
-} from '../../../../endpoints/country-endpoints/country-get-all-endpoint.service';
+  CountryLookupEndpointService,
+  CountryLookupResponse
+} from '../../../../endpoints/lookup-endpoints/country-lookup-endpoint.service';
 import {
-  RegionGetAllEndpointService,
-  RegionGetAllResponse
-} from '../../../../endpoints/region-endpoints/region-get-all-endpoint.service';
+  RegionLookupEndpointService,
+  RegionLookupResponse
+} from '../../../../endpoints/lookup-endpoints/region-lookup-endpoint.service';
 import {MySnackbarHelperService} from '../../../shared/snackbars/my-snackbar-helper.service';
 
 @Component({
@@ -30,17 +30,17 @@ export class Cities1EditComponent implements OnInit {
     countryId: 0,
     regionId: 0
   };
-  countries: CountryGetAllResponse[] = [];
-  regions: RegionGetAllResponse[] = [];
-  regionCache: Map<number, RegionGetAllResponse[]> = new Map(); // Cache za regije po countryId
+  countries: CountryLookupResponse[] = [];
+  regions: RegionLookupResponse[] = [];
+  regionCache: Map<number, RegionLookupResponse[]> = new Map(); // Cache za regije po countryId
 
   constructor(
     private route: ActivatedRoute,
     public router: Router,
     private cityGetByIdService: CityGetByIdEndpointService,
     private cityUpdateService: CityUpdateOrInsertEndpointService,
-    private countryGetAllService: CountryGetAllEndpointService,
-    private regionGetAllService: RegionGetAllEndpointService,
+    private countryGetAllService: CountryLookupEndpointService,
+    private regionGetAllService: RegionLookupEndpointService,
     private snackbarHelper: MySnackbarHelperService
   ) {
     this.cityId = 0;

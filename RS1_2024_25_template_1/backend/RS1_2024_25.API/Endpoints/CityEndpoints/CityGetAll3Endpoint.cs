@@ -23,9 +23,9 @@ public class CityGetAll3Endpoint(ApplicationDbContext db) : MyEndpointBaseAsync
         // Primjena filtera na osnovu naziva grada
         if (!string.IsNullOrWhiteSpace(request.Q))
         {
-            query = query.Where(c => c.Name.Contains(request.Q) ||
-                c.Region!.Name.Contains(request.Q) ||
-                c.Region!.Country!.Name.Contains(request.Q)
+            query = query.Where(c => c.Name.ToLower().Contains(request.Q) ||
+                c.Region!.Name.ToLower().Contains(request.Q) ||
+                c.Region!.Country!.Name.ToLower().Contains(request.Q)
             );
         }
 

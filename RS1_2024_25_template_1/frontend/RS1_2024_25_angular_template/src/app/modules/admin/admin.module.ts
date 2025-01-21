@@ -40,6 +40,10 @@ import {SenderComponent} from './rxjs-subject-message-example/sender/sender.comp
 import {Receiver2Component} from './rxjs-subject-message-example/receiver2/receiver2.component';
 import { Receiver1Component } from './rxjs-subject-message-example/receiver1/receiver1.component';
 import { Receiver3Component } from './rxjs-subject-message-example/receiver3/receiver3.component';
+import { StudentsComponent } from './students/students.component';
+import { StudentEditComponent } from './students/student-edit/student-edit.component';
+import { StudentSemestersComponent } from './students/student-semesters/student-semesters.component';
+import { StudentSemestersNewComponent } from './students/student-semesters/student-semesters-new/student-semesters-new.component';
 
 
 @NgModule({
@@ -61,6 +65,10 @@ import { Receiver3Component } from './rxjs-subject-message-example/receiver3/rec
     SenderComponent,
     Receiver1Component,
     Receiver3Component,
+    StudentsComponent,
+    StudentEditComponent,
+    StudentSemestersComponent,
+    StudentSemestersNewComponent,
   ],
   imports: [
     CommonModule,

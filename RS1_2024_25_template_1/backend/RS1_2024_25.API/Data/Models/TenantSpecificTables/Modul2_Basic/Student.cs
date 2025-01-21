@@ -22,12 +22,11 @@ public class Student : TenantSpecificTable
     public Gender Gender { get; set; }
     public int? CitizenshipId { get; set; }
     [ForeignKey(nameof(CitizenshipId))]
-    public Country? Citizenship { get; set; }
-    public string? BirthPlace { get; set; }
-    public int? BirthMunicipalityId { get; set; }
+    public Country? Citizenship { get; set; }//državljanstvo
+    public string? BirthPlace { get; set; } //mjesto rodjenja
+    public int? BirthMunicipalityId { get; set; } //opština rodjenja
     [ForeignKey(nameof(BirthMunicipalityId))]
-    public Municipality? BirthMunicipality { get; set; }
-    public Country? BirthCountry { get; set; }
+    public Municipality? BirthMunicipality { get; set; } //opština rodjenja
     #endregion
 
     #region CIPS_INFO
@@ -40,4 +39,5 @@ public class Student : TenantSpecificTable
     public string StudentNumber { get; set; } = string.Empty;
     public string? ContactMobilePhone { get; set; }
     public string? ContactPrivateEmail { get; set; }
+    public bool IsDeleted { get; internal set; }
 }
