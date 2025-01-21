@@ -3,12 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.Api;
+using RS1_2024_25.API.Services;
 using static RS1_2024_25.API.Endpoints.StudentEndpoints.StudentGetAllEndpoint;
 
 namespace RS1_2024_25.API.Endpoints.StudentEndpoints;
 
 // Endpoint za vraćanje liste studenata s filtriranjem i paginacijom
 [Route("students")]
+[MyAuthorization(isAdmin: true, isManager: false)]
 public class StudentGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithRequest<StudentGetAllRequest>
     .WithResult<MyPagedList<StudentGetAllResponse>>
@@ -18,6 +20,7 @@ public class StudentGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
     {
         // Osnovni upit za studente
         var query = db.Students
+                   .Where(s => !s.IsDeleted)
                    .AsQueryable();
 
         // Primjena filtera po imenu, prezimenu, student broju ili državi

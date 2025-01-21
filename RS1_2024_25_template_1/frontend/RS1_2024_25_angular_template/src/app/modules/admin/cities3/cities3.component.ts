@@ -23,9 +23,12 @@ export class Cities3Component implements OnInit, AfterViewInit {
   //ovdje je koristeno Angular Reactive forms
   displayedColumns: string[] = ['name', 'regionName', 'countryName', 'actions'];
   dataSource: MatTableDataSource<CityGetAll3Response> = new MatTableDataSource<CityGetAll3Response>();
-  cities: CityGetAll1Response[] = [];
+
+  cities: CityGetAll3Response[] = [];
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
   private searchSubject: Subject<string> = new Subject();
 
   constructor(
@@ -69,7 +72,7 @@ export class Cities3Component implements OnInit, AfterViewInit {
         pageNumber: page,
         pageSize: pageSize
       },
-      true,
+      false,
     ).subscribe({
       next: (data) => {
         this.dataSource = new MatTableDataSource<CityGetAll3Response>(data.dataItems);

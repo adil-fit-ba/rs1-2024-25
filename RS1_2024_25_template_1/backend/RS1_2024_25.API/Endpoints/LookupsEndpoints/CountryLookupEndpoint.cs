@@ -2,21 +2,21 @@
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper.Api;
-using static RS1_2024_25.API.Endpoints.CountryEndpoints.CountryGetAllEndpoint;
+using static RS1_2024_25.API.Endpoints.LookupsEndpoints.CountryLookupEndpoint;
 
-namespace RS1_2024_25.API.Endpoints.CountryEndpoints;
+namespace RS1_2024_25.API.Endpoints.LookupsEndpoints;
 
 // Endpoint bez paging-a i bez filtera
 [Route("countries")]
-public class CountryGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
+public class CountryLookupEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithoutRequest
-    .WithResult<CountryGetAllResponse[]>
+    .WithResult<CountryLookupResponse[]>
 {
-    [HttpGet("all")]
-    public override async Task<CountryGetAllResponse[]> HandleAsync(CancellationToken cancellationToken = default)
+    [HttpGet("lookup")]
+    public override async Task<CountryLookupResponse[]> HandleAsync(CancellationToken cancellationToken = default)
     {
         var result = await db.Countries
-                        .Select(c => new CountryGetAllResponse
+                        .Select(c => new CountryLookupResponse
                         {
                             ID = c.ID,
                             Name = c.Name
@@ -26,7 +26,7 @@ public class CountryGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
         return result;
     }
 
-    public class CountryGetAllResponse
+    public class CountryLookupResponse
     {
         public required int ID { get; set; }
         public required string Name { get; set; }

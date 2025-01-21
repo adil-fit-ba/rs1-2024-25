@@ -2,8 +2,9 @@ import {Injectable} from "@angular/core";
 import {MyConfig} from "../../my-config";
 import {HttpClient} from "@angular/common/http";
 import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
+import {RegionLookupEndpointService} from './region-lookup-endpoint.service';
 
-export interface CountryGetAllResponse {
+export interface CountryLookupResponse {
   id: number;
   name: string;
 }
@@ -11,13 +12,13 @@ export interface CountryGetAllResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class CountryGetAllEndpointService implements MyBaseEndpointAsync<void, CountryGetAllResponse[]> {
-  private apiUrl = `${MyConfig.api_address}/countries/all`;
+export class CountryLookupEndpointService implements MyBaseEndpointAsync<void, CountryLookupResponse[]> {
+  private apiUrl = `${MyConfig.api_address}/countries/lookup`;
 
   constructor(private httpClient: HttpClient) {
   }
 
   handleAsync() {
-    return this.httpClient.get<CountryGetAllResponse[]>(this.apiUrl);
+    return this.httpClient.get<CountryLookupResponse[]>(this.apiUrl);
   }
 }

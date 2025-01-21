@@ -10,19 +10,15 @@ using static RS1_2024_25.API.Endpoints.CityEndpoints.CityUpdateOrInsertEndpoint;
 namespace RS1_2024_25.API.Endpoints.CityEndpoints;
 
 [Route("cities")]
-public class CityUpdateOrInsertEndpoint(ApplicationDbContext db, IMyAuthService myAuthService) : MyEndpointBaseAsync
+[MyAuthorization(isAdmin: true, isManager: false)]
+public class CityUpdateOrInsertEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     .WithRequest<CityUpdateOrInsertRequest>
-    .WithActionResult<CityUpdateOrInsertResponse>
+    .WithActionResult<int>
 {
     [HttpPost]  // Using POST to support both create and update
-    public override async Task<ActionResult<CityUpdateOrInsertResponse>> HandleAsync([FromBody] CityUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<int>> HandleAsync([FromBody] CityUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
     {
 
-        MyAuthInfo myAuthInfo = myAuthService.GetAuthInfoFromRequest();
-        if (!myAuthInfo.IsLoggedIn)
-        {
-            return Unauthorized();
-        }
         // Check if we're performing an insert or update based on the ID value
         bool isInsert = (request.ID == null || request.ID == 0);
         City? city;
@@ -51,26 +47,12 @@ public class CityUpdateOrInsertEndpoint(ApplicationDbContext db, IMyAuthService 
         // Save changes to the database
         await db.SaveChangesAsync(cancellationToken);
 
-        return Ok(new CityUpdateOrInsertResponse
-        {
-            ID = city.ID,
-            Name = city.Name,
-            RegionId = city.RegionId,
-            CountryId=city.Region!.CountryId
-        });
+        return Ok(city.ID);
     }
 
     public class CityUpdateOrInsertRequest
     {
         public int? ID { get; set; } // Nullable to allow null for insert operations
-        public required string Name { get; set; }
-        public required int CountryId { get; set; }
-        public required int RegionId { get; set; }
-    }
-
-    public class CityUpdateOrInsertResponse
-    {
-        public required int ID { get; set; }
         public required string Name { get; set; }
         public required int CountryId { get; set; }
         public required int RegionId { get; set; }

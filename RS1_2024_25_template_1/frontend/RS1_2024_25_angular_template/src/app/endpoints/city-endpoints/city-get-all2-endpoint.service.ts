@@ -4,6 +4,7 @@ import {MyConfig} from '../../my-config';
 import {MyPagedRequest} from '../../helper/my-paged-request';
 import {buildHttpParams} from '../../helper/http-params.helper';
 import {MyBaseEndpointAsync} from '../../helper/my-base-endpoint-async.interface';
+import {MyPagedList} from '../../helper/my-paged-list';
 
 export interface CityGetAll2Response {
   id: number;
@@ -14,8 +15,8 @@ export interface CityGetAll2Response {
 @Injectable({
   providedIn: 'root'
 })
-export class CityGetAll2EndpointService implements MyBaseEndpointAsync<MyPagedRequest, CityGetAll2Response[]> {
-  private apiUrl = `${MyConfig.api_address}/paged`;
+export class CityGetAll2EndpointService implements MyBaseEndpointAsync<MyPagedRequest, MyPagedList<CityGetAll2Response>> {
+  private apiUrl = `${MyConfig.api_address}/cities/paged`;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -23,6 +24,6 @@ export class CityGetAll2EndpointService implements MyBaseEndpointAsync<MyPagedRe
   handleAsync(request: MyPagedRequest) {
     const params = buildHttpParams(request);  // Use the helper function here
 
-    return this.httpClient.get<CityGetAll2Response[]>(`${this.apiUrl}`, {params});
+    return this.httpClient.get<MyPagedList<CityGetAll2Response>>(`${this.apiUrl}`, {params});
   }
 }

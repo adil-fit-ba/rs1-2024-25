@@ -9,23 +9,16 @@ export interface CityUpdateOrInsertRequest {
   countryId: number;
 }
 
-export interface CityUpdateOrInsertResponse {
-  id: number;
-  name: string;
-  regionId: number;
-  countryId: number;
-}
-
 @Injectable({
   providedIn: 'root'
 })
-export class CityUpdateOrInsertEndpointService implements MyBaseEndpointAsync<CityUpdateOrInsertRequest, CityUpdateOrInsertResponse> {
+export class CityUpdateOrInsertEndpointService implements MyBaseEndpointAsync<CityUpdateOrInsertRequest, number> {
   private apiUrl = `${MyConfig.api_address}/cities`;
 
   constructor(private httpClient: HttpClient) {
   }
 
   handleAsync(request: CityUpdateOrInsertRequest) {
-    return this.httpClient.post<CityUpdateOrInsertResponse>(`${this.apiUrl}`, request);
+    return this.httpClient.post<number>(`${this.apiUrl}`, request);
   }
 }

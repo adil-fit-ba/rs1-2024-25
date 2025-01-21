@@ -2,19 +2,19 @@
 using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper.Api;
-using static RS1_2024_25.API.Endpoints.RegionEndpoints.RegionGetAllEndpoint;
+using static RS1_2024_25.API.Endpoints.LookupsEndpoints.RegionLookupEndpoint;
 
-namespace RS1_2024_25.API.Endpoints.RegionEndpoints;
+namespace RS1_2024_25.API.Endpoints.LookupsEndpoints;
 
 // GET endpoint za vraćanje svih regija sa opcionalnim filterom po državi
 [Route("regions")]
-public class RegionGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
-    .WithRequest<RegionGetAllRequest>
-    .WithResult<RegionGetAllResponse[]>
+public class RegionLookupEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
+    .WithRequest<RegionLookupRequest>
+    .WithResult<RegionLookupResponse[]>
 {
-    [HttpGet("all")]
-    public override async Task<RegionGetAllResponse[]> HandleAsync(
-        [FromQuery] RegionGetAllRequest request,
+    [HttpGet("lookup")]
+    public override async Task<RegionLookupResponse[]> HandleAsync(
+        [FromQuery] RegionLookupRequest request,
         CancellationToken cancellationToken = default)
     {
         var query = db.Regions.AsQueryable();
@@ -26,7 +26,7 @@ public class RegionGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
         }
 
         var result = await query
-            .Select(r => new RegionGetAllResponse
+            .Select(r => new RegionLookupResponse
             {
                 ID = r.ID,
                 Name = r.Name,
@@ -39,13 +39,13 @@ public class RegionGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
     }
 
     // DTO za zahtjev
-    public class RegionGetAllRequest
+    public class RegionLookupRequest
     {
         public int? CountryId { get; set; } // Opcionalni filter za ID države
     }
 
     // DTO za odgovor
-    public class RegionGetAllResponse
+    public class RegionLookupResponse
     {
         public required int ID { get; set; }
         public required string Name { get; set; }
