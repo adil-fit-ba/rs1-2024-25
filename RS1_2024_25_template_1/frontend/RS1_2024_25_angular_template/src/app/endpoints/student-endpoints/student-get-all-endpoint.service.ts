@@ -19,6 +19,9 @@ export interface StudentGetAllResponse {
   studentNumber: string;
   citizenship?: string; // Državljanstvo
   birthMunicipality?: string; // Općina rođenja
+  isDeleted?: boolean;
+  deletedAt?: Date; // added to get the delete time
+  deletedBy?: string; // added to get info who deleted the user
 }
 
 @Injectable({

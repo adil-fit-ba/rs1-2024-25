@@ -2,6 +2,10 @@
 
 <button color="primary" mat-raised-button routerLink="./new">New Student</button>
 
+<!--Added a button to show or hide the deleted users -->
+<button color="primary" mat-raised-button (click)="Toggle()">{{showDeleted ? "Hide" : "Show"}}</button>
+
+
 <div class="search-container">
   <mat-form-field appearance="outline">
     <mat-label>Search</mat-label>
@@ -32,6 +36,18 @@
     <mat-cell *matCellDef="let student">{{ student.studentNumber }}</mat-cell>
   </ng-container>
 
+  <!-- Delete Date added to the table -->
+  <ng-container matColumnDef="deleteDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Delete Date</mat-header-cell>
+    <mat-cell *matCellDef="let student">{{ student.deletedAt | date: 'short'}}</mat-cell>
+  </ng-container>
+
+  <!-- Deleted By  added to the table-->
+  <ng-container matColumnDef="deletedBy">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>deletedBy </mat-header-cell>
+    <mat-cell *matCellDef="let student">{{ student.deletedBy }}</mat-cell>
+  </ng-container>
+
   <!-- Actions Column -->
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
@@ -55,7 +71,8 @@
 
   <!-- Table Header and Rows -->
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+<!--  added [ngClass]="{'deleted' : row.isDeleted}" so when isDeleted is true the row gets the deleted CSS -->
+  <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'deleted' : row.isDeleted}"></mat-row>
 </table>
 
 <mat-paginator [length]="students.length" [pageSizeOptions]="[5, 10, 20]" [pageSize]="5"

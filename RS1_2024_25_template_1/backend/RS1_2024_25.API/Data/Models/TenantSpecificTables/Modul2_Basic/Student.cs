@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using RS1_2024_25.API.Data.Enums;
+﻿using RS1_2024_25.API.Data.Enums;
 using RS1_2024_25.API.Data.Models.SharedTables;
 using RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth;
-using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.BaseClasses;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul2_Basic;
 
@@ -40,4 +35,8 @@ public class Student : TenantSpecificTable
     public string? ContactMobilePhone { get; set; }
     public string? ContactPrivateEmail { get; set; }
     public bool IsDeleted { get; internal set; }
+    public string? DeletedBy { get; set; } //added
+    public DateTime? DeletedAt { get; set; } //added
+
+
 }

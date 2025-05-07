@@ -1,14 +1,17 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { StudentGetAllResponse } from '../../../endpoints/student-endpoints/student-get-all-endpoint.service';
-import { StudentGetAllEndpointService } from '../../../endpoints/student-endpoints/student-get-all-endpoint.service';
-import { StudentDeleteEndpointService } from '../../../endpoints/student-endpoints/student-delete-endpoint.service';
-import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
-import { MyDialogConfirmComponent } from '../../shared/dialogs/my-dialog-confirm/my-dialog-confirm.component';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {
+  StudentGetAllEndpointService,
+  StudentGetAllResponse
+} from '../../../endpoints/student-endpoints/student-get-all-endpoint.service';
+import {StudentDeleteEndpointService} from '../../../endpoints/student-endpoints/student-delete-endpoint.service';
+import {MatDialog} from '@angular/material/dialog';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {debounceTime, distinctUntilChanged, filter, map, tap} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {MyDialogConfirmComponent} from '../../shared/dialogs/my-dialog-confirm/my-dialog-confirm.component';
 import {MySnackbarHelperService} from '../../shared/snackbars/my-snackbar-helper.service';
 import {MyDialogSimpleComponent} from '../../shared/dialogs/my-dialog-simple/my-dialog-simple.component';
 
@@ -19,11 +22,14 @@ import {MyDialogSimpleComponent} from '../../shared/dialogs/my-dialog-simple/my-
   standalone: false
 })
 export class StudentsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['firstName', 'lastName', 'studentNumber', 'actions'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'studentNumber', 'deleteDate', 'deletedBy', 'actions'];
   dataSource: MatTableDataSource<StudentGetAllResponse> = new MatTableDataSource<StudentGetAllResponse>();
   students: StudentGetAllResponse[] = [];
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  showDeleted = false;  //added
   private searchSubject: Subject<string> = new Subject();
 
   constructor(
@@ -32,20 +38,27 @@ export class StudentsComponent implements OnInit, AfterViewInit {
     private snackbar: MySnackbarHelperService,
     private router: Router,
     private dialog: MatDialog
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.initSearchListener();
     this.fetchStudents();
   }
 
+  // Set up the RxJS pipeline for search input
   initSearchListener(): void {
     this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe((filterValue) => {
-      this.fetchStudents(filterValue, this.paginator.pageIndex + 1, this.paginator.pageSize);
-    });
+      debounceTime(300), 
+      map((q: string) => q.toLowerCase()), // Convert the search query to lowercase
+      filter((q: string) => q.length > 3), // Only continue if the query is longer than 3 characters
+      distinctUntilChanged(), // Only proceed if the query has changed from the previous value
+      tap((filterValue: string) => {
+        // Call fetchStudents with the filtered value
+        this.fetchStudents(filterValue);
+            
+      })
+    ).subscribe(); // Subscribe to start listening for search input changes
   }
 
   ngAfterViewInit(): void {
@@ -60,6 +73,7 @@ export class StudentsComponent implements OnInit, AfterViewInit {
     this.searchSubject.next(filterValue);
   }
 
+  // Fetch students from the backend and update the table
   fetchStudents(filter: string = '', page: number = 1, pageSize: number = 5): void {
     this.studentGetService.handleAsync({
       q: filter,
@@ -67,8 +81,15 @@ export class StudentsComponent implements OnInit, AfterViewInit {
       pageSize: pageSize
     }).subscribe({
       next: (data) => {
-        this.dataSource = new MatTableDataSource<StudentGetAllResponse>(data.dataItems);
+        // Save all students into the students array
+        this.students = data.dataItems;
+        // Set the table data: show all students if showDeleted is true, otherwise only non-deleted
+        this.dataSource.data = this.showDeleted
+          ? this.students
+          : this.students.filter(s => !s.isDeleted);
         this.paginator.length = data.totalCount;
+        // Log the number of currently shown records in the console
+        console.log('Currently shown records:', this.dataSource.data.length);
       },
       error: (err) => {
         this.snackbar.showMessage('Error fetching students. Please try again.', 5000);
@@ -113,7 +134,7 @@ export class StudentsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openStudentSemesters(id:number) {
+  openStudentSemesters(id: number) {
     this.dialog.open(MyDialogSimpleComponent, {
       width: '350px',
       data: {
@@ -121,5 +142,10 @@ export class StudentsComponent implements OnInit, AfterViewInit {
         message: 'Implementirajte matičnu knjigu?'
       }
     });
+  }
+
+  Toggle() {
+    this.showDeleted = !this.showDeleted; // change the bool value of showDeleted
+    this.fetchStudents(); // fetch the users again after change
   }
 }

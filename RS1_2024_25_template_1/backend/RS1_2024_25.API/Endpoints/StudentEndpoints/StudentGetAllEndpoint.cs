@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using RS1_2024_25.API.Data;
 using RS1_2024_25.API.Helper;
 using RS1_2024_25.API.Helper.Api;
@@ -11,16 +10,19 @@ namespace RS1_2024_25.API.Endpoints.StudentEndpoints;
 // Endpoint za vraćanje liste studenata s filtriranjem i paginacijom
 [Route("students")]
 [MyAuthorization(isAdmin: true, isManager: false)]
-public class StudentGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsync
+public class StudentGetAllEndpoint(ApplicationDbContext db, IMyAuthService authService) : MyEndpointBaseAsync
     .WithRequest<StudentGetAllRequest>
     .WithResult<MyPagedList<StudentGetAllResponse>>
 {
     [HttpGet("filter")]
     public override async Task<MyPagedList<StudentGetAllResponse>> HandleAsync([FromQuery] StudentGetAllRequest request, CancellationToken cancellationToken = default)
     {
+        // Get current user info
+        var currentUser = authService.GetAuthInfoFromRequest();
+
         // Osnovni upit za studente
         var query = db.Students
-                   .Where(s => !s.IsDeleted)
+                   //.Where(s => !s.IsDeleted) removed sp we get all users
                    .AsQueryable();
 
         // Primjena filtera po imenu, prezimenu, student broju ili državi
@@ -30,7 +32,9 @@ public class StudentGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
                 s.User.FirstName.Contains(request.Q) ||
                 s.User.LastName.Contains(request.Q) ||
                 s.StudentNumber.Contains(request.Q) ||
-                (s.Citizenship != null && s.Citizenship.Name.Contains(request.Q))
+                (s.Citizenship != null && s.Citizenship.Name.Contains(request.Q)) ||
+                 (s.DeletedBy != null && s.DeletedBy.Contains(request.Q)) //to filter by who deleted the user 
+
             );
         }
 
@@ -43,6 +47,9 @@ public class StudentGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
             StudentNumber = s.StudentNumber,
             Citizenship = s.Citizenship != null ? s.Citizenship.Name : null,
             BirthMunicipality = s.BirthMunicipality != null ? s.BirthMunicipality.Name : null,
+            DeletedAt = s.DeletedAt,//added
+            DeletedBy = s.DeletedBy,//added
+            IsDeleted = s.IsDeleted//added
         });
 
         // Kreiranje paginiranog rezultata
@@ -66,5 +73,8 @@ public class StudentGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
         public required string StudentNumber { get; set; }
         public string? Citizenship { get; set; }
         public string? BirthMunicipality { get; set; }
+        public DateTime? DeletedAt { get; set; } //added  
+        public string? DeletedBy { get; set; } //added  
+        public bool IsDeleted { get; set; } //added  
     }
 }
