@@ -292,11 +292,14 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
         }
 
         // Kreiranje akademskih godina
-        var academicYears = new List<AcademicYear>
-        {
-            new AcademicYear { StartDate = new DateOnly(2024, 9, 1), EndDate = new DateOnly(2025, 6, 30), Description = "Academic Year 2024/2025" },
-            new AcademicYear { StartDate = new DateOnly(2023, 9, 1), EndDate = new DateOnly(2024, 6, 30), Description = "Academic Year 2023/2024" }
-        };
+        var academicYears = Enumerable.Range(2015, 15)
+            .Select(year => new AcademicYear
+            {
+                StartDate = new DateOnly(year, 9, 1),
+                EndDate = new DateOnly(year + 1, 6, 30),
+                Description = $"Academic Year {year}/{year + 1}"
+            })
+            .ToList();
 
         // Kreiranje korisnika s ulogama
         var users = new List<MyAppUser>

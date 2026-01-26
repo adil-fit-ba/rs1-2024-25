@@ -17,6 +17,8 @@ import {
 } from './rxjs-subject-message-example/rxjs-subject-message-example.component';
 import {StudentsComponent} from './students/students.component';
 import {StudentEditComponent} from './students/student-edit/student-edit.component';
+import {StudentSemestersComponent} from './students/student-semesters/student-semesters.component';
+import {StudentSemestersNewComponent} from './students/student-semesters/student-semesters-new/student-semesters-new.component';
 
 //komentar
 const routes: Routes = [
@@ -37,6 +39,8 @@ const routes: Routes = [
       {path: 'cities3/edit/:id', component: Cities3EditComponent},
       {path: 'students', component: StudentsComponent},
       {path: 'students/edit/:id', component: StudentEditComponent},
+      {path: 'students/:id/semesters', component: StudentSemestersComponent},
+      {path: 'students/:id/semesters/new', component: StudentSemestersNewComponent},
       {path: 'destination', component: DestinationComponent},
       {path: 'order', component: ReservationComponent},
       {path: 'chat', component: MyChatComponent},

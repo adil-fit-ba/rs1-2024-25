@@ -28,7 +28,7 @@ export class LoginComponent {
     this.authLoginService.handleAsync(this.form.value).subscribe({
       next: () => {
         console.log('Login successful');
-        this.router.navigate(['/admin']); // Redirect to admin panel
+        this.router.navigate(['/admin/students']); // Redirect to students page
       },
     });
   }

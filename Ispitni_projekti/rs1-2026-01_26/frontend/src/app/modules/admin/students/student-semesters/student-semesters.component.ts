@@ -9,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class StudentSemestersComponent {
 
+  noviSemestar() {
+    alert('Ovo je ZADATAK B');
+  }
 }
