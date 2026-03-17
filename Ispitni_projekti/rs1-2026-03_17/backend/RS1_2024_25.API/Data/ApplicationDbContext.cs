@@ -27,6 +27,7 @@ public class ApplicationDbContext(DbContextOptions options, IHttpContextAccessor
     public DbSet<Faculty> FacultiesAll { get; set; }
     public DbSet<Professor> ProfessorsAll { get; set; }
     public DbSet<Student> StudentsAll { get; set; }
+    public DbSet<Course> CoursesAll { get; set; }
 
     // IQueryable umjesto DbSet
     public IQueryable<MyAppUser> MyAppUsers => Set<MyAppUser>().Where(e => e.TenantId == CurrentTenantIdThrowIfFail);
@@ -35,6 +36,7 @@ public class ApplicationDbContext(DbContextOptions options, IHttpContextAccessor
     public IQueryable<Faculty> Faculties => Set<Faculty>().Where(e => e.TenantId == CurrentTenantIdThrowIfFail);
     public IQueryable<Professor> Professors => Set<Professor>().Where(e => e.TenantId == CurrentTenantIdThrowIfFail);
     public IQueryable<Student> Students => Set<Student>().Where(e => e.TenantId == CurrentTenantIdThrowIfFail);
+    public IQueryable<Course> Courses => Set<Course>().Where(e => e.TenantId == CurrentTenantIdThrowIfFail);
 
     #region METHODS
     public int? _CurrentTenantId = null;
