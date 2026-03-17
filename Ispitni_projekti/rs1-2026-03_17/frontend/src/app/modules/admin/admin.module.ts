@@ -42,8 +42,8 @@ import { Receiver1Component } from './rxjs-subject-message-example/receiver1/rec
 import { Receiver3Component } from './rxjs-subject-message-example/receiver3/receiver3.component';
 import { StudentsComponent } from './students/students.component';
 import { StudentEditComponent } from './students/student-edit/student-edit.component';
-import { StudentSemestersComponent } from './students/student-semesters/student-semesters.component';
-import { StudentSemestersNewComponent } from './students/student-semesters/student-semesters-new/student-semesters-new.component';
+import { StudentExamRegistrationsComponent } from './students/student-exam-registrations/student-exam-registrations.component';
+import { StudentExamRegistrationsNewComponent } from './students/student-exam-registrations/student-exam-registrations-new/student-exam-registrations-new.component';
 
 
 @NgModule({
@@ -67,8 +67,8 @@ import { StudentSemestersNewComponent } from './students/student-semesters/stude
     Receiver3Component,
     StudentsComponent,
     StudentEditComponent,
-    StudentSemestersComponent,
-    StudentSemestersNewComponent,
+    StudentExamRegistrationsComponent,
+    StudentExamRegistrationsNewComponent,
   ],
   imports: [
     CommonModule,

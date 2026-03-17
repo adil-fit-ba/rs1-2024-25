@@ -301,6 +301,24 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
             })
             .ToList();
 
+        // Kreiranje predmeta
+        var courses = new List<Course>
+        {
+            new Course { Name = "Matematika 1" },
+            new Course { Name = "Programiranje 1" },
+            new Course { Name = "Baze podataka" },
+            new Course { Name = "Operativni sistemi" },
+            new Course { Name = "Web razvoj" },
+            new Course { Name = "Algoritmi i strukture podataka" },
+            new Course { Name = "Računarske mreže" },
+            new Course { Name = "Softversko inženjerstvo" }
+        };
+
+        foreach (var x in courses)
+        {
+            x.Tenant = tenants[0];
+        }
+
         // Kreiranje korisnika s ulogama
         var users = new List<MyAppUser>
         {
@@ -411,6 +429,7 @@ public class DataSeedGenerateEndpoint(ApplicationDbContext db)
         // Dodavanje podataka u bazu    
         await db.AddRangeAsync(faculties, cancellationToken);
         await db.AddRangeAsync(academicYears, cancellationToken);
+        await db.AddRangeAsync(courses, cancellationToken);
         await db.AddRangeAsync(users, cancellationToken);
         await db.AddRangeAsync(professors, cancellationToken);
         await db.AddRangeAsync(students, cancellationToken);

@@ -102,7 +102,7 @@ export class StudentsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openStudentSemesters(id:number) {
-    this.router.navigate(['/admin/students', id, 'semesters']);
+  openStudentExamRegistrations(id:number) {
+    this.router.navigate(['/admin/students', id, 'exam-registrations']);
   }
 }
